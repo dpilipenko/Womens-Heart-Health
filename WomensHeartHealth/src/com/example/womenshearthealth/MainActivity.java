@@ -6,9 +6,6 @@ import android.app.ActionBar.Tab;
 import android.app.Activity;
 import android.view.Menu;
 
-
-// TESTING COMMENTS - DIMA
-
 public class MainActivity extends Activity {
 
 	private ActionBar actionBar;

@@ -4,7 +4,9 @@ import android.os.Bundle;
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.Activity;
+import android.content.Intent;
 import android.view.Menu;
+import android.view.MenuItem;
 
 public class MainActivity extends Activity {
 	
@@ -26,6 +28,22 @@ public class MainActivity extends Activity {
 		return true;
 	}
 	
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+	
+		switch(item.getItemId()) {
+		case R.id.menu_settings:
+			Intent intent = new Intent(this, SettingsActivity.class);
+			this.startActivity(intent);
+			return true;
+		default:
+			return false;
+				
+		}
+		
+	}
+
 	private void setupTabs() {
 		
 		actionBar = getActionBar();

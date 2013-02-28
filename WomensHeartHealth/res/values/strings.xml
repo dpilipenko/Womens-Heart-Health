@@ -11,5 +11,12 @@
     <string name="title_activity_about_fragment">AboutFragment</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_main">MainActivity</string>
+    <string name="pref_age_key">whh_user_age</string>
+    <string name="pref_age_title">Your Age:</string>
+    <string name="pref_age_summary">Please enter in your age in years.</string>
+    <string name="pref_weight_key">whh_user_weight</string>
+    <string name="pref_weight_title">Your Weight:</string>
+    <string name="pref_weight_summary">Please enter in your weight in years.</string>
+    <string name="title_activity_settings">SettingsActivity</string>
 
 </resources>

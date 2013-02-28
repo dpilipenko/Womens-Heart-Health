@@ -2,6 +2,7 @@ package com.example.womenshearthealth;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Intent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -34,7 +35,13 @@ public class SettingsActivity extends Activity implements OnClickListener {
 		switch(view.getId()) {
 		case R.id.btn_saveSettings:
 			if (saveUI()) {
-				finish();
+				if (SettingsHelper.isInitialRun(this)) {
+					SettingsHelper.setInitialRun(this, false);
+					Intent intent = new Intent(SettingsActivity.this, MainActivity.class);
+					SettingsActivity.this.startActivity(intent);
+				} else {
+					finish();
+				}
 			}
 			break;
 			

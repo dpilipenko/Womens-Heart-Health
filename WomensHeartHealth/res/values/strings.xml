@@ -18,5 +18,7 @@
     <string name="pref_weight_title">Your Weight:</string>
     <string name="pref_weight_summary">Please enter in your weight in years.</string>
     <string name="title_activity_settings">SettingsActivity</string>
+    <string name="title_activity_splash_screen">SplashScreenActivity</string>
+    <string name="action_settings">Settings</string>
 
 </resources>

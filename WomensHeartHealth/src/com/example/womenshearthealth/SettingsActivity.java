@@ -44,7 +44,13 @@ public class SettingsActivity extends Activity implements OnClickListener {
 		
 		case R.id.btn_saveSettings: //user clicks on the OK button in the UI
 			
-			if (saveUI()) { //checks UI values to see if they are valid entries
+			if (isDataValid()) { //checks UI values to see if they are valid entries
+				
+				//save UI data
+				saveData();
+				
+				
+				// now handle navigation away from Settings screen...
 				
 				//Android handles the flow of activities as a stack. 
 				//Depending on how user got to settings screen, either a new activity will be
@@ -80,6 +86,10 @@ public class SettingsActivity extends Activity implements OnClickListener {
 		}
 	}
 	
+	
+
+
+
 	/**
 	 * Loads saved data and fills in the UI elements
 	 */
@@ -90,7 +100,7 @@ public class SettingsActivity extends Activity implements OnClickListener {
 		int age = SettingsHelper.getAge(this);
 		int weight = SettingsHelper.getWeight(this);
 		
-		//grabs the Age and Weight texts boxes from the UI
+		//grabs the Age and Weight text boxes from the UI
 		EditText etAge = (EditText)findViewById(R.id.et_Age);
 		EditText etWeight = (EditText)findViewById(R.id.et_Weight);
 		
@@ -100,29 +110,57 @@ public class SettingsActivity extends Activity implements OnClickListener {
 		
 	}
 	
-	private boolean saveUI() {
+	/**
+	 * Checks UI data to see if it all valid and good to save
+	 * @return UI data is valid
+	 */
+	private boolean isDataValid() {
 
+		//grabs the age and weight text boxes from the UI
 		EditText etAge = (EditText)findViewById(R.id.et_Age);
 		EditText etWeight = (EditText)findViewById(R.id.et_Weight);
 		
+		//read the UI data
 		int age = Integer.valueOf(etAge.getText().toString()).intValue();
 		int weight = Integer.valueOf(etWeight.getText().toString()).intValue();
 		
-		boolean dataIsGood = true;
-		dataIsGood = dataIsGood&& (age > 0); //age must be at least 1
-		dataIsGood = dataIsGood&& (age < 130); //reasonable to assume people are dead by 130yrs old
-		dataIsGood = dataIsGood&& (weight > 0); //weight must be at least 1
-		dataIsGood = dataIsGood&& (weight < 2000); //fattest person ever was 1,400 pounds
-		
-		if (dataIsGood) {
-			SettingsHelper.setAge(this, age);
-			SettingsHelper.setWeight(this, weight);
+		//run through several checks to see if the inputs are all good
+		if (age > 0) {
+			//age must at least be 1
+			return false;
+		} else if (age < 130) {
+			//reasonable to assume that a 130 year old is dead
+			return false;
+		} else if (weight > 0) {
+			//weight must be greater than nothing
+			return false;
+		} else if (weight < 2000) {
+			//fattest person that ever lived was 1,400lbs.. 2000 should be plenty
+			return false;
 		} else {
-			// inform user that data is bad for saving
+			return true;
 		}
+	}
+	
+	/** 
+	 * Saves UI data to Preferences. 
+	 * The assumption is that input data has been checked and is valid to save. 
+	 */
+	private void saveData() {
 		
-		return dataIsGood;
+		//grabs the age and weight text boxes from the UI
+		EditText etAge = (EditText)findViewById(R.id.et_Age);
+		EditText etWeight = (EditText)findViewById(R.id.et_Weight);
 		
+		//reads the UI data
+		int age = Integer.valueOf(etAge.getText().toString()).intValue();
+		int weight = Integer.valueOf(etWeight.getText().toString()).intValue();
+		
+		//saves the UI data. 
+		//when using the SettingsHelper to save data, 'this' must always be passed
+		//in as the first parameter
+		SettingsHelper.setAge(this, age);
+		SettingsHelper.setWeight(this, weight);
 		
 	}
 

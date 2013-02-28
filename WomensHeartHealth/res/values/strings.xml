@@ -17,6 +17,7 @@
     <string name="pref_weight_key">whh_user_weight</string>
     <string name="pref_weight_title">Your Weight:</string>
     <string name="pref_weight_summary">Please enter in your weight in years.</string>
+    <string name="pref_isinitialrun_key">whh_isinitialrun</string>
     <string name="title_activity_settings">SettingsActivity</string>
     <string name="title_activity_splash_screen">SplashScreenActivity</string>
     <string name="action_settings">Settings</string>

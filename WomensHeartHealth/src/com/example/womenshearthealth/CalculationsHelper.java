@@ -20,11 +20,11 @@ public class CalculationsHelper {
 		
 		// Return the desired ratio of the Target Heart Rate
 		if (hrTarget == HRTARGET_MAX) {
-			return (int)(Math.floor(HRTARGET_MAX) * maxHR);
+			return (int)(Math.floor(1.0 *maxHR));
 		} else if (hrTarget == HRTARGET_85) {
-			return (int)(Math.floor(HRTARGET_85) * maxHR);
+			return (int)(Math.floor(0.85 *maxHR));
 		} else if (hrTarget == HRTARGET_50) {
-			return (int)(Math.floor(HRTARGET_50) * maxHR);
+			return (int)(Math.floor(0.5 *maxHR));
 		} else {
 			return 0;
 		}

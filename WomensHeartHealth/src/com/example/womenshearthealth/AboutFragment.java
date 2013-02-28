@@ -12,6 +12,7 @@ public class AboutFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
+		// load in the fragment_about.xml file and display it on screen
 		return inflater.inflate(R.layout.fragment_about, container, false);
 		
 	}

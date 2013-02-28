@@ -7,6 +7,8 @@ import android.app.Activity;
 import android.view.Menu;
 
 public class MainActivity extends Activity {
+	
+	// This is a comment
 
 	private ActionBar actionBar;
 	

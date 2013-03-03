@@ -37,9 +37,9 @@ public class CalculationsHelper {
 	 * @param metHours Number of MET-hours being converted.
 	 * @return Calories burnt 
 	 */
-	public static int getCaloriesFromMet(int weight, double metHours) {
+	public static double getCaloriesFromMet(int weight, double metHours) {
 		double weightKilos = 0.453592 * weight;
-		return (int)(Math.floor(weightKilos * metHours));
+		return Math.floor(weightKilos * metHours * 100.0)/100.0;
 	}
 	
 }

@@ -125,21 +125,20 @@ public class SettingsActivity extends Activity implements OnClickListener {
 		int weight = Integer.valueOf(etWeight.getText().toString()).intValue();
 		
 		//run through several checks to see if the inputs are all good
-		if (age > 0) {
+		if (age < 0) {
 			//age must at least be 1
 			return false;
-		} else if (age < 130) {
+		} else if (age > 130) {
 			//reasonable to assume that a 130 year old is dead
 			return false;
-		} else if (weight > 0) {
+		} else if (weight < 0) {
 			//weight must be greater than nothing
 			return false;
-		} else if (weight < 2000) {
+		} else if (weight > 1400) {
 			//fattest person that ever lived was 1,400lbs.. 2000 should be plenty
 			return false;
-		} else {
-			return true;
 		}
+		return true;
 	}
 	
 	/** 

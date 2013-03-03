@@ -2,7 +2,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FF0000"
     android:orientation="vertical"
     tools:context=".HomeFragment" >
 
@@ -11,17 +10,22 @@
         android:layout_height="match_parent"
         android:orientation="vertical" >
 
-        <EditText
+        <TextView
+            android:id="@+id/METsLogged"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:text="METs Logged This Week" 
+            android:textAppearance="?android:attr/textAppearanceLarge"/>
+        
+        <TextView
             android:id="@+id/TargetHeartRates"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="textMultiLine"
-            android:text="Target Heart Rates" >
-
-            <requestFocus />
-        </EditText>
-
+            android:text="Target Heart Rates" 
+            android:textAppearance="?android:attr/textAppearanceLarge"/>
+      
         <TableLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content" >
@@ -37,16 +41,11 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:inputType="textMultiLine"
-                    android:text="100 BPM" />
-                
-                <EditText
-                    android:id="@+id/MHR1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:inputType="textMultiLine"
-                    android:text="50% MHR" />
+                    android:textAppearance="?android:attr/textAppearanceLarge" >
 
+                    <requestFocus />
+                </EditText>
+                
             </TableRow>
 
             <TableRow
@@ -60,15 +59,8 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:inputType="textMultiLine"
-                    android:text="175 BPM" />
-                
-                <EditText
-                    android:id="@+id/MHR2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:inputType="textMultiLine"
-                    android:text="75% MHR" />
+                    android:textAppearance="?android:attr/textAppearanceLarge" />
+               
             </TableRow>
 
             <TableRow
@@ -82,17 +74,32 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:inputType="textMultiLine"
-                    android:text="200 BPM" />
-                
-                <EditText
-                    android:id="@+id/MHR3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:inputType="textMultiLine"
-                    android:text="100% MHR" />
+                    android:textAppearance="?android:attr/textAppearanceLarge" />
+            	
             </TableRow>
         </TableLayout>
+        
+        <TextView
+            android:id="@+id/ThisWeekTotals"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:text="This Week Totals" 
+            android:textAppearance="?android:attr/textAppearanceLarge"/>
+        
+        <EditText
+            android:id="@+id/METs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:textAppearance="?android:attr/textAppearanceLarge"/>
+        
+        <TextView
+            android:id="@+id/Calories"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:textAppearance="?android:attr/textAppearanceLarge"/>
         
     </LinearLayout>
 

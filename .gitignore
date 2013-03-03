@@ -1,3 +1,8 @@
+# Mac OSX Preference Files
+.DS_Store
+.DS_Store~HEAD
+.DS_Store~Gah
+
 # built application files
 *.apk
 *.ap_

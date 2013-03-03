@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
 
 public class HomeFragment extends Fragment {
 	
@@ -14,7 +15,7 @@ public class HomeFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
-		populateUI();
+		//populateUI();
 		// load in the fragment_home.xml file and display it on screen
 		return inflater.inflate(R.layout.fragment_home, container, false);
 		
@@ -47,12 +48,12 @@ public class HomeFragment extends Fragment {
 		double cals = CalculationsHelper.getCaloriesFromMet(SettingsHelper.getWeight(this.getActivity()),met);
 		
 		//Grab text boxes from UI
-		EditText BPM1 = (EditText)this.getActivity().findViewById(R.id.BPM1);
-		EditText BPM2= (EditText)this.getActivity().findViewById(R.id.BPM2);
-		EditText BPM3 = (EditText)this.getActivity().findViewById(R.id.BPM3);
+		TextView BPM1 = (TextView)this.getActivity().findViewById(R.id.BPM1);
+		TextView BPM2= (TextView)this.getActivity().findViewById(R.id.BPM2);
+		TextView BPM3 = (TextView)this.getActivity().findViewById(R.id.BPM3);
 		
-		EditText METs = (EditText)this.getActivity().findViewById(R.id.METs);
-		EditText Calories = (EditText)this.getActivity().findViewById(R.id.Calories);
+		TextView METs = (TextView)this.getActivity().findViewById(R.id.METs);
+		TextView Calories = (TextView)this.getActivity().findViewById(R.id.Calories);
 		
 		//Display text boxes
 		BPM1.setText(bpm50 + " BPM \t 50% MHR");

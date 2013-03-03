@@ -7,7 +7,9 @@
     <string name="title_activity_home_fragment">HomeFragment</string>
     <string name="mets_fragment">This is the METs list fragment</string>
     <string name="title_activity_metlist_fragment">METListFragment</string>
-    <string name="about_fragment">This is the About fragment</string>
+    <string name="about_fragment">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut gravida pulvinar nulla feugiat lacinia. Donec ornare eros vitae est feugiat in fringilla purus dignissim. Integer at ligula quis neque aliquam lacinia. </string>
+    <string name="about_fragment_image_description">About fragment image</string>
+    <string name="version">Version: 0.1</string>
     <string name="title_activity_about_fragment">AboutFragment</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_main">MainActivity</string>

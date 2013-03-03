@@ -2,12 +2,30 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#0000FF"
+    android:background="#BEBEBE"
+    android:orientation="vertical"
+    android:padding="15dp"
     tools:context=".AboutFragment" >
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:contentDescription="@string/about_fragment_image_description"
+        android:fitsSystemWindows="false"
+        android:src="@drawable/mountains" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:paddingTop="15dp"
         android:text="@string/about_fragment" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="15dp"
+        android:text="@string/version" />
 
 </LinearLayout>

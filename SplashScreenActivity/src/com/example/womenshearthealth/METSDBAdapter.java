@@ -26,20 +26,23 @@ public class METSDBAdapter {
 			+ " text not null, " + KEY_METS_AMOUNT_COLUMN + " float, "
 			+ KEY_METS_DATE_COLUMN + " integer);";
 
-	final Context context;
+	private Context context;
 
 	METSDBOpenHelper DBHelper;
 	SQLiteDatabase db;
+	
+	
 
 	public METSDBAdapter(Context ctx) {
 		this.context = ctx;
-		DBHelper = new METSDBOpenHelper(context);
+		DBHelper = new METSDBOpenHelper(this.context, DATABASE_NAME, null, DATABASE_VERSION);
 	}
 
 	private static class METSDBOpenHelper extends SQLiteOpenHelper {
 
 		public METSDBOpenHelper(Context context, String name,
 				CursorFactory factory, int version) {
+			
 			super(context, name, factory, version);
 		}
 		
@@ -90,8 +93,9 @@ public class METSDBAdapter {
 	}
 
 	public Cursor getAllMETS() {
-		return db.query(DATABASE_TABLE, new String[] { KEY_ID, KEY_METS_NAME_COLUMN,
+		Cursor cur = db.query(DATABASE_TABLE, new String[] { KEY_ID, KEY_METS_NAME_COLUMN,
 				KEY_METS_AMOUNT_COLUMN, KEY_METS_DATE_COLUMN }, null, null, null, null, null);
+		return cur;
 	}
 
 	public Cursor getMET(long rowId) throws SQLException {

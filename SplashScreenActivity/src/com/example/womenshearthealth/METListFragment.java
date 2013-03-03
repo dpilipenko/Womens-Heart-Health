@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -17,7 +18,7 @@ import android.widget.Toast;
 
 public class METListFragment extends Fragment {
 
-    METSDBAdapter db = new METSDBAdapter(this.getActivity());
+    METSDBAdapter db;
 
 	
 	@Override
@@ -25,10 +26,22 @@ public class METListFragment extends Fragment {
 			Bundle savedInstanceState) {
 		// load in the fragment_metlist.xml file and display it on screen
 		
-        loadMETSDB();
 		
 		return inflater.inflate(R.layout.fragment_metlist, container, false);
 	}
+	
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        db = new METSDBAdapter(activity);
+		addMET("Running", 23, "June 6, 1972");
+		addMET("Kicking", 21, "June 77, 1972");
+		addMET("punching", 42, "June 34, 1979");
+
+        
+	    loadMETSDB();
+
+    }
 
 	private void loadMETSDB() {
 
@@ -43,7 +56,7 @@ public class METListFragment extends Fragment {
             	
             	//Copy db from assets folder to the databases folder
                 CopyDB(this.getActivity().getBaseContext().getAssets().open("METS"),
-                    new FileOutputStream(destPath + "/metsDatabase.db"));
+                    new FileOutputStream(destPath + "/METS"));
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -53,6 +66,7 @@ public class METListFragment extends Fragment {
        
 
 		db.open();
+		
         Cursor c = db.getAllMETS();
         if (c.moveToFirst())
         {
@@ -79,7 +93,7 @@ public class METListFragment extends Fragment {
         Toast.makeText(this.getActivity(),
                 "id: " + c.getString(0) + "\n" +
                 "Name: " + c.getString(1) + "\n" +
-                "METS Amount:  " + c.getString(2) + "\n" +
+                "METS Amount:  " + c.getInt(2) + "\n" +
                 "Date:  " + c.getString(3),
                 Toast.LENGTH_LONG).show();
     }

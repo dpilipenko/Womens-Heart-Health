@@ -5,37 +5,28 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.TextView;
 
 public class HomeFragment extends Fragment {
-	
-	
+		
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-
-		//populateUI();
 		// load in the fragment_home.xml file and display it on screen
 		return inflater.inflate(R.layout.fragment_home, container, false);
 		
 	}
 	
-	
-
 	@Override
 	public void onResume() {
 		super.onResume();
 		populateUI();
 	}
 
-
-
 	/**
 	 * Loads saved data and fills in the UI elements
 	 */
 	private void populateUI() {
-		
 		//loads saved data, or -1 when no there is no such saved data yet
 		//the passed-in parameter to use SettingsHelper should always be 'this'
 		int age = SettingsHelper.getAge(this.getActivity());
@@ -56,13 +47,11 @@ public class HomeFragment extends Fragment {
 		TextView Calories = (TextView)this.getActivity().findViewById(R.id.Calories);
 		
 		//Display text boxes
-		BPM1.setText(bpm50 + " BPM\t50% MHR");
-		BPM2.setText(bpm85 + " BPM\t85% MHR");
-		BPM3.setText(bpm100 + " BPM\t100% MHR");
-		METs.setText(met + " METS x Minutes");
-		Calories.setText(cals + " Calories");
+		BPM1.setText(bpm50 + " BPM\t     50% MHR");
+		BPM2.setText(bpm85 + " BPM\t     85% MHR");
+		BPM3.setText(bpm100 + " BPM\t    100% MHR");
 		
+		METs.setText(met + " METS x Minutes");
+		Calories.setText(cals + " Calories");		
 	}
-
-	
 }

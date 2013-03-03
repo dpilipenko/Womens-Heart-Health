@@ -35,17 +35,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" >
 
-                <EditText
+                <TextView
                     android:id="@+id/BPM1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:inputType="textMultiLine"
-                    android:textAppearance="?android:attr/textAppearanceLarge" >
-
-                    <requestFocus />
-                </EditText>
-                
+                    android:textAppearance="?android:attr/textAppearanceLarge" />
+                                
             </TableRow>
 
             <TableRow
@@ -53,7 +50,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" >
                 
-                <EditText
+                <TextView
                     android:id="@+id/BPM2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -68,7 +65,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" >
                 
-                <EditText
+                <TextView
                     android:id="@+id/BPM3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -87,7 +84,7 @@
             android:text="This Week Totals" 
             android:textAppearance="?android:attr/textAppearanceLarge"/>
         
-        <EditText
+        <TextView
             android:id="@+id/METs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

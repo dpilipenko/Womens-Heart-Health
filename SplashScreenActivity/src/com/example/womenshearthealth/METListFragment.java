@@ -31,7 +31,7 @@ public class METListFragment extends Fragment {
         dbHelper.addMET("Kicking", 21, "June 77, 1972");
         dbHelper.addMET("punching", 42, "June 34, 1979");
 
-        dbHelper.loadMETSDB();
+        dbHelper.displayAllMETs();
 
     }
 

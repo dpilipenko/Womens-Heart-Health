@@ -21,9 +21,10 @@ public class SQLDatabaseHelper {
 	{
 		this.activity = activity;
         this.db = new METSDBAdapter(activity);
+        initMETSDB();
 	}
 	
-	public void loadMETSDB() {
+	private void initMETSDB() {
 
 		try {
 
@@ -44,7 +45,10 @@ public class SQLDatabaseHelper {
             e.printStackTrace();
         }
        
-
+	}
+	
+	public void displayAllMETs()
+	{
 		db.open();
 		
         Cursor c = db.getAllMETS();
@@ -57,7 +61,7 @@ public class SQLDatabaseHelper {
         db.close();
     }
     
-    public void CopyDB(InputStream inputStream, 
+    private void CopyDB(InputStream inputStream, 
     OutputStream outputStream) throws IOException {
         byte[] buffer = new byte[1024];
         int length;

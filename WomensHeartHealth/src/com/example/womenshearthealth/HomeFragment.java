@@ -1,10 +1,14 @@
 package com.example.womenshearthealth;
 
+import com.jjoe64.graphview.*;
+import com.jjoe64.graphview.GraphView.*;
+
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class HomeFragment extends Fragment {
@@ -52,6 +56,23 @@ public class HomeFragment extends Fragment {
 		BPM3.setText(bpm100 + " BPM\t    100% MHR");
 		
 		METs.setText(met + " METS x Minutes");
-		Calories.setText(cals + " Calories");		
+		Calories.setText(cals + " Calories");
+		
+		
+		
+		// init example series data
+		GraphViewSeries exampleSeries = new GraphViewSeries(new GraphViewData[] {
+				new GraphViewData(1, 2.0d),
+				new GraphViewData(2, 1.5d),
+				new GraphViewData(3, 2.5d),
+				new GraphViewData(4, 1.0d)
+		});
+		GraphView graphView = new LineGraphView(this.getActivity(), "GraphViewDemo");
+		graphView.addSeries(exampleSeries);
+		LinearLayout layout = (LinearLayout) this.getActivity().findViewById(R.id.linearlayout_homeFragment);
+		layout.addView(graphView);		
+		
+		
+		
 	}
 }

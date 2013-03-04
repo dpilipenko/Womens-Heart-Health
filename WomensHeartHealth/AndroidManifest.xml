@@ -15,6 +15,8 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name="com.example.womenshearthealth.MainActivity" >
+            <data android:mimeType="vnd.android.cursor.dir/vnd.pmp.smsmessage" />
+            
         </activity>
         <activity
             android:name="com.example.womenshearthealth.SettingsActivity" >
@@ -26,6 +28,8 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <data android:mimeType="vnd.android.cursor.dir/vnd.pmp.smsmessage" />
+            
         </activity>
     </application>
 

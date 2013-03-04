@@ -15,6 +15,13 @@
             android:text="METs Logged This Week" 
             android:textAppearance="?android:attr/textAppearanceLarge"/>
       	
+        <LinearLayout
+        android:id="@+id/graph"
+        android:layout_width="match_parent"
+        android:layout_height="250px"
+        android:orientation="vertical" >
+        </LinearLayout>
+      	
         <!-- Space -->
       	<TextView
             android:layout_width="match_parent"
@@ -123,7 +130,4 @@
             		android:textAppearance="?android:attr/textAppearanceSmall"/>
        		</LinearLayout>
    		</LinearLayout>
-        
-
-
 </LinearLayout>

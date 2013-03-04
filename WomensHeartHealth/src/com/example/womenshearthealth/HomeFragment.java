@@ -58,21 +58,24 @@ public class HomeFragment extends Fragment {
 		METs.setText(met + " METS x Minutes");
 		Calories.setText(cals + " Calories");
 		
-		
-		
+		buildGraph();
+	}
+	
+	/**
+	 * Builds the graph
+	 */
+	private void buildGraph() {
 		// init example series data
 		GraphViewSeries exampleSeries = new GraphViewSeries(new GraphViewData[] {
-				new GraphViewData(1, 2.0d),
-				new GraphViewData(2, 1.5d),
-				new GraphViewData(3, 2.5d),
-				new GraphViewData(4, 1.0d)
-		});
+			new GraphViewData(1, 2.0d),
+			new GraphViewData(2, 1.5d),
+			new GraphViewData(3, 2.5d),
+			new GraphViewData(4, 1.0d)
+			});
+		
 		GraphView graphView = new LineGraphView(this.getActivity(), "GraphViewDemo");
 		graphView.addSeries(exampleSeries);
-		LinearLayout layout = (LinearLayout) this.getActivity().findViewById(R.id.linearlayout_homeFragment);
-		layout.addView(graphView);		
-		
-		
-		
+		LinearLayout graph = (LinearLayout)this.getActivity().findViewById(R.id.graph);
+		graph.addView(graphView);		
 	}
 }

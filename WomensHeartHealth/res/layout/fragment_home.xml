@@ -8,11 +8,11 @@
 
         <!-- METs Graph -->
         <TextView
-            android:id="@+id/METsLogged"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
             android:text="METs Logged This Week" 
+            android:gravity="center_horizontal"
             android:textAppearance="?android:attr/textAppearanceLarge"/>
       	
         <LinearLayout
@@ -42,7 +42,7 @@
         	android:adjustViewBounds="true"
         	android:contentDescription="@string/about_fragment_image_description"
         	android:fitsSystemWindows="false"
-        	android:src="@drawable/mountains" />
+        	android:src="@drawable/target" />
 	        
 	        <LinearLayout
     	    android:layout_width="match_parent"
@@ -50,11 +50,11 @@
         	android:orientation="vertical" >
         	
 	            <TextView
-            	android:id="@+id/TargetHeartRates"
             	android:layout_width="match_parent"
             	android:layout_height="wrap_content"
             	android:ems="10"
-            	android:text="Target Heart Rates" 
+            	android:text="Target Heart Rates"
+            	android:gravity="center_horizontal"
             	android:textAppearance="?android:attr/textAppearanceLarge"/>
 	            
                 <TextView
@@ -100,7 +100,7 @@
         	android:adjustViewBounds="true"
         	android:contentDescription="@string/about_fragment_image_description"
         	android:fitsSystemWindows="false"
-        	android:src="@drawable/mountains" />
+        	android:src="@drawable/calendar" />
 	        
 	        <LinearLayout
     	    android:layout_width="match_parent"
@@ -108,11 +108,11 @@
         	android:orientation="vertical" >
                 
         		<TextView
-        		    android:id="@+id/ThisWeeksTotals"
             		android:layout_width="match_parent"
             		android:layout_height="wrap_content"
             		android:ems="10"
-            		android:text="This Week's Totals" 
+            		android:text="This Week's Totals"
+            		android:gravity="center_horizontal"
            			android:textAppearance="?android:attr/textAppearanceLarge"/>
         
         		<TextView

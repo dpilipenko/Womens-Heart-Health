@@ -13,7 +13,7 @@
         android:adjustViewBounds="true"
         android:contentDescription="@string/about_fragment_image_description"
         android:fitsSystemWindows="false"
-        android:src="@drawable/mountains" />
+        android:src="@drawable/heartmonitor" />
 
     <TextView
         android:layout_width="wrap_content"

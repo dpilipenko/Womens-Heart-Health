@@ -5,9 +5,7 @@ import com.jjoe64.graphview.BarGraphView;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.GraphView.GraphViewData;
 import com.jjoe64.graphview.GraphViewSeries;
-import com.jjoe64.graphview.GraphViewSeries.GraphViewSeriesStyle;
 import com.jjoe64.graphview.LineGraphView;
-import com.jjoe64.graphview.ValueDependentColor;
 
 import android.app.Fragment;
 import android.os.Bundle;
@@ -69,7 +67,7 @@ public class HomeFragment extends Fragment {
 		Calories.setText(cals + " Calories");
 		
 		buildGraph();
-		jsGraph();
+		//jsGraph();
 	}
 	
 	private void jsGraph() {

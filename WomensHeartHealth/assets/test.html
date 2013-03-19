@@ -1,0 +1,8 @@
+<html><head><script type='text/javascript' src='Chart.js'></script>
+<script type='text/javascript'>
+
+function showchart(){var e=[
+1,2,4,8,6,3,4
+];var t=document.getElementById('myCanvas');var n=t.getContext('2d');var r={labels:['SUN','MON','TUE','WED','THU','FRI','SAT'],datasets:[{fillColor:'rgba(151,187,205,0.5)',strokeColor:'rgba(151,187,205,1)',pointColor:'rgba(151,187,205,1)',pointStrokeColor:'#fff',data:e}]};var i={scaleOverlay:false,scaleOverride:false,scaleSteps:null,scaleStepWidth:null,scaleStartValue:null,scaleLineColor:'rgba(0,0,0,.1)',scaleLineWidth:1,scaleShowLabels:false,scaleLabel:'<%=value%>',scaleFontFamily:'Arial',scaleFontSize:12,scaleFontStyle:'normal',scaleFontColor:'#666',scaleShowGridLines:true,scaleGridLineColor:'rgba(0,0,0,.05)',scaleGridLineWidth:1,bezierCurve:true,pointDot:true,pointDotRadius:3,pointDotStrokeWidth:1,datasetStroke:true,datasetStrokeWidth:2,datasetFill:true,animation:true,animationSteps:60,animationEasing:'easeOutQuart',onAnimationComplete:null};(new Chart(n)).Line(r,i)}
+
+</script></head><body bgcolor="darkblue"><canvas id='myCanvas' width='300' height='150'></canvas></body></html>

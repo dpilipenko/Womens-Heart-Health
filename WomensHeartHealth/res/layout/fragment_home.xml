@@ -15,12 +15,20 @@
             android:gravity="center_horizontal"
             android:textAppearance="?android:attr/textAppearanceLarge"/>
       	
+        <WebView
+            android:id="@+id/webview"
+            android:layout_width="300dp"
+            android:layout_height="150dp"
+            />
+           
+        
         <LinearLayout
         android:id="@+id/graph"
-        android:layout_width="match_parent"
-        android:layout_height="250px"
+        android:layout_width="300dp"
+        android:layout_height="150dp"
         android:orientation="vertical" >
         </LinearLayout>
+        
       	
         <!-- Space -->
       	<TextView

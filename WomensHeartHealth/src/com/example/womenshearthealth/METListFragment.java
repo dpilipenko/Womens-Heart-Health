@@ -49,7 +49,7 @@ public class METListFragment extends Fragment implements OnClickListener {
 	}
 	
     
-    public void addMeSomeMets() {
+    public void addMets() {
     	
         dbHelper.addMET("Running", 23, "June 6, 1972");
         dbHelper.addMET("Kicking", 21, "June 77, 1972");
@@ -63,7 +63,7 @@ public class METListFragment extends Fragment implements OnClickListener {
 		
 		switch (v.getId()) {
 		case R.id.btn_addmets:
-			addMeSomeMets();
+			addMets();
 		}
 		
 	}

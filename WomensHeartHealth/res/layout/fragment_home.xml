@@ -6,11 +6,56 @@
     android:orientation="vertical"
     tools:context=".HomeFragment" >
 
-        <!-- METs Graph -->
+    <!-- METs Graph -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_weight="1"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:id="@+id/graph_card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/back"
+            android:orientation="vertical" >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:gravity="center_horizontal"
+                android:text="METs Logged This Week"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            <WebView
+                android:id="@+id/webview"
+                android:layout_width="match_parent"
+                android:layout_height="150dp" />
+
+            <LinearLayout
+                android:id="@+id/graph"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:orientation="vertical" >
+            </LinearLayout>
+        </LinearLayout>
+    <View
+        android:layout_below="@id/graph_card"
+        android:layout_width="fill_parent"
+        android:layout_height="2dip"
+        android:background="@drawable/dropshadow"
+        />
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
+<<<<<<< HEAD
             android:text="METs Logged This Week" 
             android:gravity="center_horizontal"
             android:textAppearance="?android:attr/textAppearanceLarge"/>
@@ -22,120 +67,136 @@
             />
            
         
+=======
+            android:text=" "
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+>>>>>>> Added a Pretty UI
         <LinearLayout
-        android:id="@+id/graph"
-        android:layout_width="300dp"
-        android:layout_height="150dp"
-        android:orientation="vertical" >
-        </LinearLayout>
-        
-      	
-        <!-- Space -->
-      	<TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:text=" " 
-            android:textAppearance="?android:attr/textAppearanceLarge"/>
-        
-        <!-- Target Heart Rates -->
-      	<LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal" >
-       
-      		<ImageView
-        	android:layout_width="200px"
-        	android:layout_height="wrap_content"
-        	android:adjustViewBounds="true"
-        	android:contentDescription="@string/about_fragment_image_description"
-        	android:fitsSystemWindows="false"
-        	android:src="@drawable/target" />
-	        
-	        <LinearLayout
-    	    android:layout_width="match_parent"
-        	android:layout_height="wrap_content"
-        	android:orientation="vertical" >
-        	
-	            <TextView
-            	android:layout_width="match_parent"
-            	android:layout_height="wrap_content"
-            	android:ems="10"
-            	android:text="Target Heart Rates"
-            	android:gravity="center_horizontal"
-            	android:textAppearance="?android:attr/textAppearanceLarge"/>
-	            
+            android:background="@drawable/back"
+            android:orientation="horizontal" 
+        android:id="@+id/target_hr_card">
+
+            <ImageView
+                android:layout_width="200px"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:contentDescription="@string/about_fragment_image_description"
+                android:fitsSystemWindows="false"
+                android:src="@drawable/target" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:gravity="center_horizontal"
+                    android:text="Target Heart Rates"
+                    android:textAppearance="?android:attr/textAppearanceLarge" />
+
                 <TextView
                     android:id="@+id/BPM1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:textAppearance="?android:attr/textAppearanceSmall" />
-                  
+
                 <TextView
                     android:id="@+id/BPM2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:textAppearance="?android:attr/textAppearanceSmall" />
-                
+
                 <TextView
                     android:id="@+id/BPM3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:textAppearance="?android:attr/textAppearanceSmall" />
-			</LinearLayout>
-		</LinearLayout>
-   
-      	<!-- Space -->
-      	<TextView
+            </LinearLayout>
+        </LinearLayout>
+            <View
+        android:layout_below="@id/target_hr_card"
+        android:layout_width="fill_parent"
+        android:layout_height="2dip"
+        android:background="@drawable/dropshadow"
+        />
+
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:text=" " 
-            android:textAppearance="?android:attr/textAppearanceLarge"/>
-      	
-      	<!-- This Week's Totals -->
-      	<LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal" >
-       
-      		<ImageView
-        	android:layout_width="200px"
-        	android:layout_height="wrap_content"
-        	android:adjustViewBounds="true"
-        	android:contentDescription="@string/about_fragment_image_description"
-        	android:fitsSystemWindows="false"
-        	android:src="@drawable/calendar" />
-	        
-	        <LinearLayout
-    	    android:layout_width="match_parent"
-        	android:layout_height="wrap_content"
-        	android:orientation="vertical" >
-                
-        		<TextView
-            		android:layout_width="match_parent"
-            		android:layout_height="wrap_content"
-            		android:ems="10"
-            		android:text="This Week's Totals"
-            		android:gravity="center_horizontal"
-           			android:textAppearance="?android:attr/textAppearanceLarge"/>
-        
-        		<TextView
-            		android:id="@+id/METs"
-            		android:layout_width="match_parent"
-            		android:layout_height="wrap_content"
-            		android:ems="10"
-            		android:textAppearance="?android:attr/textAppearanceSmall"/>
-        		
-        		<TextView
-            		android:id="@+id/Calories"
-            		android:layout_width="match_parent"
-            		android:layout_height="wrap_content"
-            		android:ems="10"
-            		android:textAppearance="?android:attr/textAppearanceSmall"/>
-       		</LinearLayout>
-   		</LinearLayout>
+            android:text=" "
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/back"
+            android:orientation="horizontal" 
+        android:id="@+id/totals_card">
+
+            <ImageView
+                android:layout_width="200px"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:contentDescription="@string/about_fragment_image_description"
+                android:fitsSystemWindows="false"
+                android:src="@drawable/calendar" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:gravity="center_horizontal"
+                    android:text="This Week&apos;s Totals"
+                    android:textAppearance="?android:attr/textAppearanceLarge" />
+
+                <TextView
+                    android:id="@+id/METs"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
+
+                <TextView
+                    android:id="@+id/Calories"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
+            </LinearLayout>
+        </LinearLayout>
+            <View
+        android:layout_below="@id/totals_card"
+        android:layout_width="fill_parent"
+        android:layout_height="2dip"
+        android:background="@drawable/dropshadow"
+        />
+    </LinearLayout>
+
+    <!-- Space -->
+
+
+    <!-- Target Heart Rates -->
+
+
+    <!-- Space -->
+
+
+    <!-- This Week's Totals -->
+
+
 </LinearLayout>

@@ -55,23 +55,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-<<<<<<< HEAD
-            android:text="METs Logged This Week" 
-            android:gravity="center_horizontal"
-            android:textAppearance="?android:attr/textAppearanceLarge"/>
-      	
-        <WebView
-            android:id="@+id/webview"
-            android:layout_width="match_parent"
-            android:layout_height="150dp"
-            />
-           
-        
-=======
             android:text=" "
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
->>>>>>> Added a Pretty UI
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

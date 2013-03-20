@@ -24,6 +24,7 @@ public class HomeFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
+		
 		// load in the fragment_home.xml file and display it on screen
 		return inflater.inflate(R.layout.fragment_home, container, false);
 		
@@ -67,44 +68,16 @@ public class HomeFragment extends Fragment {
 		Calories.setText(cals + " Calories");
 		
 		buildGraph();
-		//jsGraph();
+		jsGraph();
 	}
 	
 	private void jsGraph() {
-		final WebView view =(WebView)getActivity().findViewById(R.id.webview);
+		WebView view =(WebView)getView().findViewById(R.id.webview);
 		WebSettings webSettings = view.getSettings();
 		webSettings.setJavaScriptEnabled(true);
 		
 		view.loadUrl("file:///android_asset/test.html");
 		
-		view.setWebViewClient(new WebViewClient(){
-			   @Override
-			   public void onPageFinished (WebView webView, String url)
-			   {
-				   
-				   view.loadUrl("javascript:showchart();");
-			   }
-			});
-		
-		/*
-		String pre = "<html><head><script type='text/javascript' src='file:///assets/Chart.js'></script>";
-		String suf = "</head><body><canvas id='myCanvas' width='300' height='150'></canvas></body></html>";
-		view.loadData(pre+suf, "text/html", null);
-		
-		view.setWebViewClient(new WebViewClient(){
-			   @Override
-			   public void onPageFinished (WebView webView, String url)
-			   {
-				   
-				
-				   String a = "var e=[";
-				   String b = "1,2,4,8,6,3,4";
-				   String c = "];var t=document.getElementById('myCanvas');var n=t.getContext('2d');var r={labels:['SUN','MON','TUE','WED','THU','FRI','SAT'],datasets:[{fillColor:'rgba(151,187,205,0.5)',strokeColor:'rgba(151,187,205,1)',pointColor:'rgba(151,187,205,1)',pointStrokeColor:'#fff',data:e}]};var i={scaleOverlay:false,scaleOverride:false,scaleSteps:null,scaleStepWidth:null,scaleStartValue:null,scaleLineColor:'rgba(0,0,0,.1)',scaleLineWidth:1,scaleShowLabels:false,scaleLabel:'<%=value%>',scaleFontFamily:'Arial',scaleFontSize:12,scaleFontStyle:'normal',scaleFontColor:'#666',scaleShowGridLines:true,scaleGridLineColor:'rgba(0,0,0,.05)',scaleGridLineWidth:1,bezierCurve:true,pointDot:true,pointDotRadius:3,pointDotStrokeWidth:1,datasetStroke:true,datasetStrokeWidth:2,datasetFill:true,animation:true,animationSteps:60,animationEasing:'easeOutQuart',onAnimationComplete:null};(new Chart(n)).Line(r,i)}";
-				   
-			         webView.loadUrl("javascript:"+a+b+c);
-			   }
-			});
-		*/
 	}
 	
 	/**
@@ -122,8 +95,9 @@ public class HomeFragment extends Fragment {
 			new GraphViewData(6, 10.0d)
 			});
 		
-		GraphView graphView = new LineGraphView(this.getActivity(), "GraphViewDemo");
+		LineGraphView graphView = new LineGraphView(this.getActivity(), "GraphViewDemo");
 		graphView.addSeries(exampleSeries);
+		graphView.setDrawBackground(true);
 		
 		LinearLayout graph = (LinearLayout)this.getActivity().findViewById(R.id.graph);
 		graph.addView(graphView);		

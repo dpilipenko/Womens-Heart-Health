@@ -124,16 +124,6 @@ public class HomeFragment extends Fragment {
 		Calories.setText(cals + " Calories");
 		
 		buildGraph();
-		jsGraph();
-	}
-	
-	private void jsGraph() {
-		WebView view =(WebView)getView().findViewById(R.id.webview);
-		WebSettings webSettings = view.getSettings();
-		webSettings.setJavaScriptEnabled(true);
-		
-		view.loadUrl("file:///android_asset/test.html");
-		
 	}
 	
 	/**

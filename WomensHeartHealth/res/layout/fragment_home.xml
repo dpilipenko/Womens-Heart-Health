@@ -41,10 +41,12 @@
                 android:id="@+id/graph"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
+                android:layout_gravity="left"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:gravity="left"
                 android:orientation="vertical" >
+
             </LinearLayout>
         </LinearLayout>
 
@@ -146,46 +148,57 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/back"
-            android:orientation="horizontal" >
+            android:orientation="vertical" >
 
-            <ImageView
-                android:layout_width="200px"
+            <TextView
+                android:id="@+id/weeksTotalTextView"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:adjustViewBounds="true"
-                android:contentDescription="@string/about_fragment_image_description"
-                android:fitsSystemWindows="false"
-                android:src="@drawable/calendar" />
+                android:ems="10"
+                android:gravity="left"
+                android:text="This Week&apos;s Totals"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="@color/googleNowGray" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical" >
+                android:layout_height="wrap_content" >
 
-                <TextView
-                    android:id="@+id/weeksTotalTextView"
+                <ImageView
+                    android:layout_width="200px"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_marginLeft="10dp"
+                    android:adjustViewBounds="true"
+                    android:contentDescription="@string/about_fragment_image_description"
+                    android:fitsSystemWindows="false"
+                    android:src="@drawable/calendar" />
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:gravity="center_horizontal"
-                    android:text="This Week&apos;s Totals"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:textColor="@color/googleNowGray" />
+                    android:orientation="vertical" >
 
-                <TextView
-                    android:id="@+id/METs"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="@color/googleNowGray" />
+                    <TextView
+                        android:id="@+id/METs"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:gravity="left"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="@color/googleNowGray" />
 
-                <TextView
-                    android:id="@+id/Calories"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
+                    <TextView
+                        android:id="@+id/Calories"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:gravity="left"
+                        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+                </LinearLayout>
+
             </LinearLayout>
         </LinearLayout>
             <View

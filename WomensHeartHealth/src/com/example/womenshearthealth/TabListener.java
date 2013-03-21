@@ -28,6 +28,9 @@ public class TabListener<T extends Fragment> implements ActionBar.TabListener {
 	@Override
 	public void onTabSelected(Tab tab, FragmentTransaction ft)
 	{	
+
+	    fragment = activity.getFragmentManager().findFragmentByTag(tag);
+
 		if (fragment == null) 
 		{
 			fragment = (Fragment)Fragment.instantiate(activity, fragmentClass.getName());
@@ -48,7 +51,6 @@ public class TabListener<T extends Fragment> implements ActionBar.TabListener {
 	public void onTabUnselected(Tab tab, FragmentTransaction ft) {
 		if (fragment != null) {
 			ft.detach(fragment);
-			//deven test comment.
 		}
 	}
 

@@ -24,7 +24,7 @@ public class HomeFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		
+
 		// load in the fragment_home.xml file and display it on screen
 		View homeFragment =  inflater.inflate(R.layout.fragment_home, container, false);
 		return homeFragment;

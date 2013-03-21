@@ -26,20 +26,28 @@
             android:orientation="vertical" >
 
             <TextView
+                android:id="@+id/metsLoggedTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:ems="10"
-                android:gravity="center_horizontal"
+                android:gravity="left"
                 android:text="METs Logged This Week"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="@color/googleNowGray" />
 
             <LinearLayout
                 android:id="@+id/graph"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:gravity="left"
                 android:orientation="vertical" >
             </LinearLayout>
         </LinearLayout>
+
     <View
         android:layout_below="@id/graph_card"
         android:layout_width="fill_parent"
@@ -61,6 +69,54 @@
             android:orientation="horizontal" 
         android:id="@+id/target_hr_card">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/targertHeartRatesTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:ems="10"
+                    android:gravity="left"
+                    android:text="Target Heart Rates"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textColor="@color/googleNowGray" />
+
+                <TextView
+                    android:id="@+id/BPM1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:gravity="left"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@color/googleNowGray" />
+
+                <TextView
+                    android:id="@+id/BPM2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:gravity="left"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@color/googleNowGray" />
+
+                <TextView
+                    android:id="@+id/BPM3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:gravity="left"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@color/googleNowGray" />
+
+            </LinearLayout>
+
             <ImageView
                 android:layout_width="200px"
                 android:layout_height="wrap_content"
@@ -69,40 +125,6 @@
                 android:fitsSystemWindows="false"
                 android:src="@drawable/target" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical" >
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:gravity="center_horizontal"
-                    android:text="Target Heart Rates"
-                    android:textAppearance="?android:attr/textAppearanceLarge" />
-
-                <TextView
-                    android:id="@+id/BPM1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
-
-                <TextView
-                    android:id="@+id/BPM2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
-
-                <TextView
-                    android:id="@+id/BPM3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
-            </LinearLayout>
         </LinearLayout>
             <View
         android:layout_below="@id/target_hr_card"
@@ -120,15 +142,16 @@
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <LinearLayout
+            android:id="@+id/totals_card"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/back"
-            android:orientation="horizontal" 
-        android:id="@+id/totals_card">
+            android:orientation="horizontal" >
 
             <ImageView
                 android:layout_width="200px"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
                 android:adjustViewBounds="true"
                 android:contentDescription="@string/about_fragment_image_description"
                 android:fitsSystemWindows="false"
@@ -140,19 +163,22 @@
                 android:orientation="vertical" >
 
                 <TextView
+                    android:id="@+id/weeksTotalTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:gravity="center_horizontal"
                     android:text="This Week&apos;s Totals"
-                    android:textAppearance="?android:attr/textAppearanceLarge" />
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textColor="@color/googleNowGray" />
 
                 <TextView
                     android:id="@+id/METs"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@color/googleNowGray" />
 
                 <TextView
                     android:id="@+id/Calories"

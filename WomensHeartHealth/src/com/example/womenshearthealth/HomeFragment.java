@@ -6,6 +6,7 @@ import com.jjoe64.graphview.GraphViewSeries;
 import com.jjoe64.graphview.LineGraphView;
 
 import android.app.Fragment;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -123,6 +124,19 @@ public class HomeFragment extends Fragment {
 		METs.setText(met + " METS x Minutes");
 		Calories.setText(cals + " Calories");
 		
+		TextView targetHR = (TextView)this.getActivity().findViewById(R.id.targertHeartRatesTextView);
+		TextView weekTotal = (TextView)this.getActivity().findViewById(R.id.weeksTotalTextView);
+		TextView metsLogged = (TextView)this.getActivity().findViewById(R.id.metsLoggedTextView);
+
+
+		Typeface myTypeface = Typeface.createFromAsset(
+		                          getActivity().getAssets(),
+		                          "font/roboto.ttf");
+
+		targetHR.setTypeface(myTypeface);
+		weekTotal.setTypeface(myTypeface);
+		metsLogged.setTypeface(myTypeface);
+
 		buildGraph();
 	}
 	

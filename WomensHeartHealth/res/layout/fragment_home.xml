@@ -100,7 +100,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="left"
-                        android:layout_marginLeft="10dp"
                         android:layout_marginRight="5dp"
                         android:adjustViewBounds="true"
                         android:contentDescription="@string/about_fragment_image_description"

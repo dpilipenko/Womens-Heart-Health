@@ -1,5 +1,8 @@
 package com.example.womenshearthealth;
 
+import java.util.Calendar;
+import java.util.Date;
+
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -11,17 +14,23 @@ public class SettingsHelper {
 	/**
 	 * Returns the age
 	 * @param a Should be 'this'.
-	 * @return Returns the age. -1 if there is no age.
+	 * @return Returns the age.
 	 */
 	public static int getAge(Activity a) {
 		// 'a' needs to be an Activity from within the application that is using SettingsHelper
 		// this is in order to access settings that are global only within the application
 		
-		// grabs the preferences for the application that contains 'a'
-		SharedPreferences prefs = a.getApplicationContext().getSharedPreferences(PREF_NAME, 0);
-		
-		// returns saved age, or -1 if there is no saved age yet
-		return prefs.getInt(a.getApplicationContext().getString(R.string.pref_age_key), -1);
+		Date birthdate = getBirthdate(a);
+		Calendar b = Calendar.getInstance();
+	    Calendar c = Calendar.getInstance();
+	    c.setTime(birthdate);
+	    int diff = c.get(Calendar.YEAR) - b.get(Calendar.YEAR);
+	    if (b.get(Calendar.MONTH) > c.get(Calendar.MONTH) || 
+	        (b.get(Calendar.MONTH) == c.get(Calendar.MONTH) && 
+	        b.get(Calendar.DATE) > c.get(Calendar.DATE))) {
+	        diff--;
+	    }
+	    return diff;
 	}
 	
 	/**
@@ -34,15 +43,10 @@ public class SettingsHelper {
 		// 'a' needs to be an Activity from within the application that is using SettingsHelper
 		// this is in order to access settings that are global only within the application
 		
-		// grabs the editor for the preferences for the application that contains 'a'
-		Editor prefsEditor = a.getApplicationContext().getSharedPreferences(PREF_NAME, 0).edit();
 		
-		// changes the saved Age value
-		prefsEditor.putInt(a.getApplicationContext().getString(R.string.pref_age_key), new_age);
-		
-		// saves the changes to preferences
-		// returns true if successful, false if not
-		return prefsEditor.commit();
+		Calendar b = Calendar.getInstance();
+		b.roll(Calendar.YEAR, -1*new_age);
+		return setBirthdate(a, b.getTime());
 	}
 	
 	/**
@@ -80,6 +84,20 @@ public class SettingsHelper {
 		// saves the changes to preferences
 		// returns true if successful, false if not
 		return prefsEditor.commit();
+	}
+	
+	public static Date getBirthdate(Activity a) {
+		SharedPreferences prefs = a.getApplicationContext().getSharedPreferences(PREF_NAME, 0);
+		long l = prefs.getLong(a.getApplicationContext().getString(R.string.pref_birthdate_key), 0);
+		
+		return new Date(l);
+	}
+	
+	public static boolean setBirthdate(Activity a, Date birthdate) {
+		Editor prefsEditor = a.getApplicationContext().getSharedPreferences(PREF_NAME, 0).edit();
+		prefsEditor.putLong(a.getApplicationContext().getString(R.string.pref_birthdate_key),
+				birthdate.getTime());
+		return prefsEditor.commit();		
 	}
 	
 	/**

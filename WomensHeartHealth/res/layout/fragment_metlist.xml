@@ -9,13 +9,28 @@
         android:id="@+id/btn_addmets"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Add Mets" />
-
+        android:text="Load Mets" />
+    
+    <!-- Selected Mets List -->
     <ListView
-        android:id="@+id/metsListView"
+        android:id="@+id/lstvw_mets_selectedMetsList"
         android:layout_width="match_parent"
-        android:layout_height="0dip"
+        android:layout_height="wrap_content"
         android:layout_weight="1" >
     </ListView>
+    <!-- Buttons -->
+    <Button
+        android:id="@+id/btn_mets_saveSelectedMetsList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Save Selected Mets Activities"
+        />
+    <!-- Available Mets List -->
+    <ListView
+	    android:id="@+id/lstvw_mets_availableMetsList"
+	    android:layout_height="wrap_content"
+	    android:layout_width="fill_parent"
+	    android:layout_weight="1" >
+	</ListView>
 
 </LinearLayout>

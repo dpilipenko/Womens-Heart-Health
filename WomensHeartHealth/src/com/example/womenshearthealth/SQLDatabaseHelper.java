@@ -85,7 +85,8 @@ public class SQLDatabaseHelper {
 	
     public void addMET(String name, int METS, String date) {
     db.open();
-    long id = db.insertMETSActivity(name, METS, date);
+    @SuppressWarnings("unused")
+	long id = db.insertMETSActivity(name, METS, date);
     db.close();
     }
 

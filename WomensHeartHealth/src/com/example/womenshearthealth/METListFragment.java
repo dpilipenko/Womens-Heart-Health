@@ -78,26 +78,13 @@ public class METListFragment extends Fragment implements OnClickListener {
 		if (container == null) {
 	        return null;
 	    }
-	    
-		listView = (ListView) ll.findViewById(R.id.metsListView);
+	  
 		activity = getActivity();
 		dbHelper = new SQLDatabaseHelper(activity);
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(activity,
 				android.R.layout.simple_list_item_1, dbHelper.getMETsList());
 		
-		listView.setAdapter(adapter);
 		*/
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		//loadAllMetsActivities();
 		
 		return inflater.inflate(R.layout.fragment_metlist, container, false);
 		
@@ -119,19 +106,11 @@ public class METListFragment extends Fragment implements OnClickListener {
     	Context context = availableMetsListAdapter.getContext();
     	availableMetsListAdapter.clear();
     	availableMetsListAdapter.notifyDataSetInvalidated();
-    	
-    	
-    	
     	List<METActivity> activities = new LinkedList<METActivity>();
     	activities = METSCSVHelper.getAllMetActivities(context);
-    	availableMetsListAdapter = new ArrayAdapter<METActivity>(getActivity(),
-    			android.R.layout.simple_list_item_1, activities);
-    	availableMetsListView.setAdapter(availableMetsListAdapter);
-    	/*
     	for (METActivity a : activities)
     		availableMetsListAdapter.add(a);
-    	availableMetsListView.setAdapter(availableMetsListAdapter);
-    	*/
+    	availableMetsListAdapter.notifyDataSetChanged();
     }
     
     public List<METActivity> getAllMetActivities() {

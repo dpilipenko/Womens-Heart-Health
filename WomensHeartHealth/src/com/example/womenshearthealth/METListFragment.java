@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Toast;
@@ -107,20 +106,12 @@ public class METListFragment extends Fragment implements OnClickListener,
 	}
 
 	public void loadMetsActivities() {
-		populateAdapter(loadedMetsListAdapter);
-	}
-
-	public void populateAdapter(ArrayAdapter<METActivity> adapter) {
-		adapter.clear();
-		adapter.add(new METActivity("running", 2.0));
-		adapter.add(new METActivity("walking", 1.6));
-		adapter.add(new METActivity("hawking", 4.7));
-		adapter.add(new METActivity("sharking", 5.6));
-		adapter.add(new METActivity("finning", 3.4));
-		adapter.add(new METActivity("icelanding", 3.2));
-		adapter.add(new METActivity("norweighing", 2.2));
-		adapter.add(new METActivity("canadaian", 1.0));
-		adapter.notifyDataSetChanged();
+		List<METActivity> l = METSCSVHelper.getAllMetActivities(activity);
+		loadedMetsListAdapter.clear();
+		for(METActivity a : l) {
+			loadedMetsListAdapter.add(a);
+		}
+		loadedMetsListAdapter.notifyDataSetChanged();
 	}
 
 	public List<METActivity> getAllMetActivities() {
@@ -135,13 +126,13 @@ public class METListFragment extends Fragment implements OnClickListener,
 		switch (v.getId()) {
 
 		case R.id.btn_metlistfragment_loadmets:
-			loadMetsActivities();
+			loadMetsActivities();/*
 			LinearLayout ll = (LinearLayout) activity
 					.findViewById(R.id.ll_metslistfragment);
 			Button b = new Button(activity);
 			b.setText("extra button");
 			b.setOnClickListener(this);
-			ll.addView(b);
+			ll.addView(b);*/
 
 			break;
 

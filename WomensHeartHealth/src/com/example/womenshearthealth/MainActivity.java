@@ -20,7 +20,16 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 		//adds tab navigation to activity
 		setupTabs();
-	}
+        if (savedInstanceState != null) {
+        	actionBar.setSelectedNavigationItem(savedInstanceState.getInt("tab", 0));
+        }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt("tab", getActionBar().getSelectedNavigationIndex());
+    }
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

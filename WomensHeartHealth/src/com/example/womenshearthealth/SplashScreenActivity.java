@@ -27,11 +27,15 @@ public class SplashScreenActivity extends Activity {
 					if (isInitRun) {
 						//SettingsActivity finishes when done. So next activity (Main) will be called here
 						Intent intent = new Intent(SplashScreenActivity.this, SettingsActivity.class);
+						Intent intent2 = new Intent(SplashScreenActivity.this, MainActivity.class);
+						SplashScreenActivity.this.startActivity(intent2);
 						SplashScreenActivity.this.startActivity(intent);
+						
 					} else {
 						Intent intent = new Intent(SplashScreenActivity.this, MainActivity.class);
 						SplashScreenActivity.this.startActivity(intent);
 					}
+					finish();
 					
 				}
 			}

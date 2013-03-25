@@ -115,12 +115,12 @@ public class HomeFragment extends Fragment {
 		TextView Calories = (TextView)this.getActivity().findViewById(R.id.Calories);
 		
 		//Display text boxes
-		BPM1.setText(bpm50 + " BPM\t     50% MHR");
-		BPM2.setText(bpm85 + " BPM\t     85% MHR");
-		BPM3.setText(bpm100 + " BPM\t    100% MHR");
+		BPM1.setText(bpm50 + " BPM \t50% \tMHR");
+		BPM2.setText(bpm85 + " BPM \t85% \tMHR");
+		BPM3.setText(bpm100 + " BPM \t100% \tMHR");
 		
-		METs.setText(met + " METS x Minutes");
-		Calories.setText(cals + " Calories");
+		METs.setText(met + " \tMETs");
+		Calories.setText(cals + " \tCal");
 		
 		TextView targetHR = (TextView)this.getActivity().findViewById(R.id.targertHeartRatesTextView);
 		TextView weekTotal = (TextView)this.getActivity().findViewById(R.id.weeksTotalTextView);

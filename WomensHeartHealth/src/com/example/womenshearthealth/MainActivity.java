@@ -1,12 +1,17 @@
 package com.example.womenshearthealth;
 
+import java.util.Calendar;
+
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 public class MainActivity extends Activity {
 	
@@ -96,5 +101,20 @@ public class MainActivity extends Activity {
 		actionBar.addTab(aboutTab);
 		
 	}
+	
+	    private void showUserSettings() {
+		        SharedPreferences sharedPrefs = PreferenceManager
+		                .getDefaultSharedPreferences(this);
+		 
+		        Calendar c  = DatePreference.getDateFor(
+		        	    PreferenceManager.getDefaultSharedPreferences(this),
+		        	    "birthday_Preference");
+		        
+				//c.set(year, monthOfYear, dayOfMonth);
+				SettingsHelper.setBirthdate(this, c.getTime());
+				SettingsHelper.setWeight(this, sharedPrefs.getInt("prefSendReport", 0));
+		    }
+		 
+
 
 }

@@ -1,53 +1,35 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/background_temp"
-    android:orientation="vertical"
-    tools:context=".SettingsActivity" >
-    
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Your Birthday:"
-         />
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
 
-    <TextView
-        android:id="@+id/txtvw_settings_bday"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="right"
-        android:textSize="24dp"
-        android:text="11/07/1990"
-        android:textStyle="bold" />
+    <PreferenceCategory
+        android:key="health_information"
+        android:title="Health information" >
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Your Weight:" />
+        <com.example.womenshearthealth.DatePreference
+            android:defaultValue="1991.01.01"
+            android:key="birthday_Preference"
+            android:title="Enter your birthday" />
 
-    <TextView
-        android:id="@+id/txtvw_settings_weight"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="right"
-        android:textSize="24dp"
-        android:text="230 lbs"
-        android:textStyle="bold" />
-    
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:textSize="10dp"
-        android:text="(tap to change)\n"
-        android:textStyle="italic" />
-    
-    <Button
-        android:id="@+id/btn_settings_savebutton"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        style="?android:attr/buttonStyleSmall"
-        android:text="Save Information" />
-    
-</LinearLayout>
+        <EditTextPreference
+            android:dialogTitle="Enter your weight"
+            android:key="weight_Preference"
+            android:title="Enter your weight" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="preferences_options"
+        android:title="Options" >
+
+        <Preference
+            android:key="save_button"
+            android:summary="Store your health information"
+            android:title="Save" >
+
+          <!--  <intent
+                android:action="android.intent.action.VIEW"
+                android:targetClass="com.example.womenshearthealth.MainActivity"
+                android:targetPackage="com.example.womenshearthealth" /> -->
+        </Preference>
+    </PreferenceCategory>
+
+</PreferenceScreen>

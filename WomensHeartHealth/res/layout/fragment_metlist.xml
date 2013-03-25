@@ -1,36 +1,33 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
     android:orientation="vertical"
+    android:background="@color/dimaNowOrange"
+    android:id="@+id/ll_metslistfragment"
     tools:context=".METListFragment" >
 
     <Button
-        android:id="@+id/btn_addmets"
-        android:layout_width="match_parent"
+        android:id="@+id/btn_metlistfragment_loadmets"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Load Mets" />
-    
-    <!-- Selected Mets List -->
-    <ListView
-        android:id="@+id/lstvw_mets_selectedMetsList"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1" >
-    </ListView>
-    <!-- Buttons -->
-    <Button
-        android:id="@+id/btn_mets_saveSelectedMetsList"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Save Selected Mets Activities"
+        android:text="Load the Mets .CSV file"
         />
-    <!-- Available Mets List -->
+    
     <ListView
-	    android:id="@+id/lstvw_mets_availableMetsList"
-	    android:layout_height="wrap_content"
-	    android:layout_width="fill_parent"
-	    android:layout_weight="1" >
-	</ListView>
+        android:id="@+id/lstvw_metlistfragment_extralistview"
+        android:layout_width="match_parent"
+        android:layout_height="150dip" />
+    
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Select Activity Below" />
+    
+    <ListView
+        android:id="@+id/lstvw_metlistfragment_loadedmets"
+        android:layout_width="match_parent"
+        android:layout_height="150dip" />
+    
 
 </LinearLayout>

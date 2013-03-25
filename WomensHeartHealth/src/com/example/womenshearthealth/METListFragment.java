@@ -1,7 +1,5 @@
 package com.example.womenshearthealth;
 
-
-import java.util.LinkedList;
 import java.util.List;
 
 import android.app.Activity;
@@ -15,119 +13,147 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Toast;
 
-public class METListFragment extends Fragment implements OnClickListener {
+public class METListFragment extends Fragment implements OnClickListener,
+		OnItemClickListener {
 
-    SQLDatabaseHelper dbHelper;
-    Activity activity;
-    ListView listView;
-    
-    ListView selectedMetsListView;
-    ListView availableMetsListView;
-    Button saveButton;
-    
-    ArrayAdapter<METActivity> selectedMetsListAdapter;
-    ArrayAdapter<METActivity> availableMetsListAdapter;
-    
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-      super.onActivityCreated(savedInstanceState);
-      
-      Button btn = (Button)getActivity().findViewById(R.id.btn_addmets);
-      btn.setOnClickListener(this);
-      
-      selectedMetsListView = (ListView)this.getActivity().findViewById(R.id.lstvw_mets_selectedMetsList);
-      availableMetsListView = (ListView)this.getActivity().findViewById(R.id.lstvw_mets_availableMetsList);
-		
-      selectedMetsListAdapter = new ArrayAdapter<METActivity>(this.getActivity(), android.R.layout.simple_list_item_1);
-      availableMetsListAdapter = new ArrayAdapter<METActivity>(this.getActivity(), android.R.layout.simple_list_item_1, getAllMetActivities());
-      
-      selectedMetsListView.setOnItemClickListener(new OnItemClickListener() {
-    	  @Override
-    	  public void onItemClick(AdapterView<?> parent, View view,
-    			  int position, long id) {
-    		  // tap on selected mets list item
-    	  }
-      });
-		
-      availableMetsListView.setOnItemClickListener(new OnItemClickListener() {
-    	  @Override
-    	  public void onItemClick(AdapterView<?> parent, View view,
-    			  int position, long id) {
-    		  // tap on available mets list item
-    	  }
-      });
-      
-      selectedMetsListView.setAdapter(selectedMetsListAdapter);
-      availableMetsListView.setAdapter(availableMetsListAdapter);
-    }
-    
-    @Override
+	SQLDatabaseHelper dbHelper;
+	Activity activity;
+
+	// ui elems
+	private Button loadMetsButton;
+	private ListView loadedMetsListView;
+	private ListView extraListView;
+
+	// ui adapter elems
+	private ArrayAdapter<METActivity> loadedMetsListAdapter;
+	private ArrayAdapter<METActivity> extraListAdapter;
+
+	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 	}
 
-
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		// load in the fragment_metlist.xml file and display it on screen
-		/*
-		if (container == null) {
-	        return null;
-	    }
-	  
-		activity = getActivity();
-		dbHelper = new SQLDatabaseHelper(activity);
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(activity,
-				android.R.layout.simple_list_item_1, dbHelper.getMETsList());
-		
-		*/
-		
 		return inflater.inflate(R.layout.fragment_metlist, container, false);
+	}
+
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+		activity = getActivity();
+		if (activity == null) {
+			return;
+		}
 		
+		// load mets button
+		loadMetsButton = (Button) activity.findViewById(R.id.btn_metlistfragment_loadmets);
+		loadMetsButton.setOnClickListener(this);
+		
+		// selected mets list
+		extraListAdapter = new ArrayAdapter<METActivity>(activity, android.R.layout.simple_list_item_1);
+		extraListView = (ListView) activity.findViewById(R.id.lstvw_metlistfragment_extralistview);
+		extraListView.setAdapter(extraListAdapter);
+		extraListView.setOnItemClickListener(this);
+		
+		// loaded mets list
+		loadedMetsListAdapter = new ArrayAdapter<METActivity>(activity, android.R.layout.simple_list_item_1);
+		//loadMetsActivities();
+		loadedMetsListView = (ListView) activity.findViewById(R.id.lstvw_metlistfragment_loadedmets);
+		loadedMetsListView.setAdapter(loadedMetsListAdapter);
+		loadedMetsListView.setOnItemClickListener(this);		
+
+	}
+
+	@Override
+	public void onStart() {
+		super.onStart();
+
+	}
+
+
+	@Override
+	public void onResume() {
+		super.onResume();
+
 	}
 	
-    
-    public void addMets() {
-    	/*
-        dbHelper.addMET("Running", 23, "June 6, 1972");
-        dbHelper.addMET("Kicking", 21, "June 77, 1972");
-        dbHelper.addMET("punching", 42, "June 34, 1979");
-        
-        dbHelper.displayAllMETs();
-        */
-    }
-    
-    
-    public void loadAllMetsActivities() {
-    	Context context = availableMetsListAdapter.getContext();
-    	availableMetsListAdapter.clear();
-    	availableMetsListAdapter.notifyDataSetInvalidated();
-    	List<METActivity> activities = new LinkedList<METActivity>();
-    	activities = METSCSVHelper.getAllMetActivities(context);
-    	for (METActivity a : activities)
-    		availableMetsListAdapter.add(a);
-    	availableMetsListAdapter.notifyDataSetChanged();
-    }
-    
-    public List<METActivity> getAllMetActivities() {
-    	Context context = getActivity().getApplicationContext();
-    	return METSCSVHelper.getAllMetActivities(context);
-    }
+	@Override
+	public void onPause() {
+		super.onPause();
+	}
+
+	@Override
+	public void onStop() {
+		super.onStop();
+	}
+
+	
+
+	public void addMets() {
+		/*
+		 * dbHelper.addMET("Running", 23, "June 6, 1972");
+		 * dbHelper.addMET("Kicking", 21, "June 77, 1972");
+		 * dbHelper.addMET("punching", 42, "June 34, 1979");
+		 * 
+		 * dbHelper.displayAllMETs();
+		 */
+	}
+
+	public void loadMetsActivities() {
+		populateAdapter(loadedMetsListAdapter);
+	}
+
+	public void populateAdapter(ArrayAdapter<METActivity> adapter) {
+		adapter.clear();
+		adapter.add(new METActivity("running", 2.0));
+		adapter.add(new METActivity("walking", 1.6));
+		adapter.add(new METActivity("hawking", 4.7));
+		adapter.add(new METActivity("sharking", 5.6));
+		adapter.add(new METActivity("finning", 3.4));
+		adapter.add(new METActivity("icelanding", 3.2));
+		adapter.add(new METActivity("norweighing", 2.2));
+		adapter.add(new METActivity("canadaian", 1.0));
+		adapter.notifyDataSetChanged();
+	}
+
+	public List<METActivity> getAllMetActivities() {
+		Context context = activity.getApplicationContext();
+		return METSCSVHelper.getAllMetActivities(context);
+	}
 
 	@Override
 	public void onClick(View v) {
-		
+		Toast.makeText(activity, "click", Toast.LENGTH_SHORT).show();
+
 		switch (v.getId()) {
-		case R.id.btn_addmets:
-			loadAllMetsActivities();
+
+		case R.id.btn_metlistfragment_loadmets:
+			loadMetsActivities();
+			LinearLayout ll = (LinearLayout) activity
+					.findViewById(R.id.ll_metslistfragment);
+			Button b = new Button(activity);
+			b.setText("extra button");
+			b.setOnClickListener(this);
+			ll.addView(b);
+
+			break;
+
 		}
-		
+
 	}
 
+	@Override
+	public void onItemClick(AdapterView<?> parent, View view, int position,
+			long id) {
+		Toast.makeText(activity, "itemclick", Toast.LENGTH_SHORT).show();
+
+	}
 
 }
-

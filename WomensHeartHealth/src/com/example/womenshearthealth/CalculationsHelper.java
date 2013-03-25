@@ -15,8 +15,7 @@ public class CalculationsHelper {
 	public static int getHeartRateFromAge(int age, double hrTarget) { 
 		
 		// Calculate the maximum target heart rate based off of entered age
-		// TODO Add Doctor Gulati's heart rate logic
-		int maxHR = 220 - age;
+		int maxHR = 206 - 88/100*age;
 		
 		// Return the desired ratio of the Target Heart Rate
 		if (hrTarget == HRTARGET_MAX) {

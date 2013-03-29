@@ -174,8 +174,11 @@ public class HomeFragment extends Fragment {
 		graphView.addSeries(exampleSeries);
 		graphView.setDrawBackground(true);
 		
-		LinearLayout graph = (LinearLayout)this.getActivity().findViewById(R.id.graph);
-		graph.addView(graphView);		
+			
+	}
+	
+	private void buildChart() {
+		//ChartView c = (ChartView)activity.findViewById(R.id.chart_view);
 	}
 	
 	private void sandbox() {

@@ -1,5 +1,6 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:chartview="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
@@ -42,6 +43,18 @@
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textColor="@color/googleNowGray" />
 
+            <com.fima.chartview.ChartView
+        		android:id="@+id/chart_view"
+       		 	android:layout_width="300dip"
+        		android:layout_height="150dip"
+        		chartview:bottomLabelHeight="20dp"
+        		chartview:gridLineColor="#E5E5E5"
+        		chartview:gridLineWidth="1dp"
+        		chartview:gridLinesHorizontal="5"
+        		chartview:gridLinesVertical="5"
+        		chartview:leftLabelWidth="56dp" />
+            
+<!--             
             <LinearLayout
                 android:id="@+id/graph"
                 android:layout_width="match_parent"
@@ -51,8 +64,9 @@
                 android:layout_marginRight="10dp"
                 android:gravity="left"
                 android:orientation="vertical" >
-
+ 
             </LinearLayout>
+            -->
         </LinearLayout>
 
     <View

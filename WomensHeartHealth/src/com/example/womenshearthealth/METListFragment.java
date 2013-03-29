@@ -1,5 +1,6 @@
 package com.example.womenshearthealth;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import android.app.Activity;
@@ -173,19 +174,21 @@ public class METListFragment extends Fragment implements OnClickListener, OnItem
 		
 		switch (v.getId()) {
 		case R.id.btn_metlistfragment_savebutton:
-			//handleSave();
-			dbHelper.sandbox();
+			handleSave();
 			break;
 		}
 		
 	}
 
 	private void handleSave() {
-		String msg = "Thanks for Saving!";
-		Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
+		int count = extraListAdapter.getCount();
+		for (int i = 0; i < count; i ++) {
+			MetActivity a = extraListAdapter.getItem(i);
+			dbHelper.saveMetActivity(a);
+		}
 		extraListAdapter.clear();
 		extraListAdapter.notifyDataSetChanged();
-		
+		Toast.makeText(activity, "Saved", Toast.LENGTH_SHORT).show();
 	}
 
 }

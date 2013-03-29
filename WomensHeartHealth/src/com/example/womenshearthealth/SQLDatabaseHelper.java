@@ -6,14 +6,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import android.app.Activity;
-import android.database.Cursor;
-import android.util.Log;
-import android.widget.Toast;
 
 public class SQLDatabaseHelper {
 
@@ -21,48 +17,21 @@ public class SQLDatabaseHelper {
 	private Activity activity;
 	private METSDBAdapter db;
 	
-	////////////////////////////////////////////////////////////////////////////////////////
-	
-	public void sandbox() {
-		
-		
-		db.open();
-		//db.sandbox();
-		List<MetActivity> as = db.getAllMetActivities();
-		for (MetActivity a: as) {
-			Log.v("SQL",a.toString());
-		}
-		/*
-		MetActivity activity = new MetActivity("Resting", 1.0, 10);
-		Date date = new Date();
-		db.addMetActivity(activity, date);
-		*/
-		//db.getAllMetActivities();
-		
-		
-		db.close();
-		return;
-		
-		
-		
-		
-	}
-	
-
-    public void saveMetActivity(MetActivity activity) {
-    	db.open();
-    	Date date = new Date();
-    	db.addMetActivity(activity, date);
-    	db.close();
-    }
-    
-    ////////////////////////////////////////////////////////////////////////////////////////
-
 	public SQLDatabaseHelper (Activity activity)
 	{
 		this.activity = activity;
         this.db = new METSDBAdapter(activity);
         initMETSDB();
+	}
+	
+	public void saveMetActivity(MetActivity activity) {
+    	Date date = new Date();
+    	db.addMetActivity(activity, date);
+    }
+	
+	public List<MetActivity> getAllMetActivities() {
+		List<MetActivity> list = db.getAllMetActivities();
+		return list;
 	}
 	
 	private void initMETSDB() {
@@ -88,19 +57,6 @@ public class SQLDatabaseHelper {
        
 	}
 	
-	public void displayAllMETs()
-	{
-		db.open();
-		
-        Cursor c = db.getAllMetActivitiesAsCursor();
-        if (c.moveToFirst())
-        {
-            do {
-                DisplayMET(c);
-            } while (c.moveToNext());
-        }
-        db.close();
-    }
     
     private void CopyDB(InputStream inputStream, 
     OutputStream outputStream) throws IOException {
@@ -113,44 +69,4 @@ public class SQLDatabaseHelper {
         outputStream.close();
     }
 
-    public void DisplayMET(Cursor c)
-    {
-        Toast.makeText(activity,
-                "id: " + c.getString(0) + "\n" +
-                "Name: " + c.getString(1) + "\n" +
-                "METS Amount:  " + c.getInt(2) + "\n" +
-                "Date:  " + c.getString(3),
-                Toast.LENGTH_LONG).show();
-    }
-	
-    
-    /*	Reimplemented as saveMetActivity(MetActivity)
-    public void addMET(String name, int METS, String date) {
-    db.open();
-    @SuppressWarnings("unused")
-	long id = db.insertMETSActivity(name, METS, date);
-    db.close();
-    }
-    */
-
-	public String[] getMETsList() {
-		ArrayList<String> metsList = new ArrayList<String>();
-		db.open();
-		
-        Cursor c = db.getAllMetActivitiesAsCursor();
-        if (c.moveToFirst())
-        {
-            do {
-            	metsList.add(c.getString(1) + "\t" +  c.getInt(2));
-            } while (c.moveToNext());
-        }
-        db.close();
-        
-        String[] metsArray = new String[metsList.size()];
-        metsArray = metsList.toArray(metsArray);
-
-        return metsArray;
-	}
-	
-	
 }

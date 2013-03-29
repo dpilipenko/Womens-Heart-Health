@@ -37,15 +37,14 @@ public class METSDBAdapter {
 			");";
 
 	private Context context;
-
-	METSDBOpenHelper DBHelper;
-	SQLiteDatabase db;
+	private METSDBOpenHelper dbHelper;
+	private SQLiteDatabase db;
 	
 	
 
-	public METSDBAdapter(Context ctx) {
-		this.context = ctx;
-		DBHelper = new METSDBOpenHelper(this.context, DATABASE_NAME, null, DATABASE_VERSION);
+	public METSDBAdapter(Context context) {
+		this.context = context;
+		dbHelper = new METSDBOpenHelper(this.context, DATABASE_NAME, null, DATABASE_VERSION);
 	}
 
 	private static class METSDBOpenHelper extends SQLiteOpenHelper {
@@ -80,22 +79,10 @@ public class METSDBAdapter {
 
 	}
 
-	public METSDBAdapter open() throws SQLException {
-		db = DBHelper.getWritableDatabase();
-		return this;
-	}
 
-	public void close() {
-		DBHelper.close();
-	}
-
-	//////////////////////////////////
-	
-	// CRUD OPERATIONS 
-	
-	// Create
+	// Creates
 	public void addMetActivity(MetActivity activity, Date date) {
-		
+		db = dbHelper.getWritableDatabase();
 		ContentValues dbInputValues = new ContentValues();
 		
 		String name = activity.getName();
@@ -111,21 +98,12 @@ public class METSDBAdapter {
 		
 		
 		db.insert(DATABASE_TABLE_NAME, null, dbInputValues);
-		
+		dbHelper.close();
 	};
 	
-	
-	public void sandbox() {
-	
-		
-		Cursor c = db.query(DATABASE_TABLE_NAME, COLUMNS, null, null, null, null, null);
-		c.moveToFirst();
-		c.close();
-		return;
-	}
-	
-	// Read
+	// Reads
 	public List<MetActivity> getAllMetActivities() {
+		db = dbHelper.getReadableDatabase();
 		List<MetActivity> activities = new LinkedList<MetActivity>();
 		String orderBy = COLUMN_DATESUBMITTEDASLONG + " DESC";
 		Cursor cursor = db.query(DATABASE_TABLE_NAME, COLUMNS, null, null, null, null, orderBy);
@@ -135,8 +113,17 @@ public class METSDBAdapter {
 			activities.add(a);
 			cursor.moveToNext();
 		}
-		return activities;
-		
+		dbHelper.close();
+		return activities;	
+	}
+	
+	
+	// Updates
+	public void updateMetActivity(MetActivity a) {
+	
+	}
+	// Deletes
+	public void deleteMetActivity() {
 		
 	}
 	
@@ -156,71 +143,4 @@ public class METSDBAdapter {
 		return m;
 	}
 
-	public MetActivity getMetActivity() {
-		return null;
-	};
-	
-	// Update
-	public void updateMetActivity(MetActivity a) {
-	
-	}
-	// Delete
-	public void deleteMetActivity() {
-		
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	/////////////////////////////////////////////////////////////////////////////////
-	
-	public boolean deleteMET(int rowId) {
-		return db.delete(DATABASE_TABLE_NAME, COLUMN_ID + "=" + rowId, null) > 0;
-	}
-
-	public Cursor getAllMetActivitiesAsCursor() {
-		
-		String table = DATABASE_TABLE_NAME;
-		String[] columns = {
-				COLUMN_ID, COLUMN_NAME, COLUMN_METSVALUE, COLUMN_MINUTESDONE, COLUMN_DATESUBMITTEDASLONG
-		};
-		String selection = "*";
-		String[] selectionArgs = null;
-		String groupBy = null;
-		String having = null;
-		String orderBy = COLUMN_DATESUBMITTEDASLONG + " DESC";
-		String limit = null;
-		
-		Cursor c = db.query(table, columns, selection, selectionArgs, groupBy, having, orderBy, limit);
-		
-		return c;
-	}
-	
-	public Cursor getMetActivityAsCursor(int rowId) {
-		
-		String table = DATABASE_TABLE_NAME;
-		String[] columns = {
-				COLUMN_ID, COLUMN_NAME, COLUMN_METSVALUE, COLUMN_MINUTESDONE, COLUMN_DATESUBMITTEDASLONG
-		};
-		String selection = COLUMN_ID+"="+rowId;
-		String[] selectionArgs = null;
-		String groupBy = null;
-		String having = null;
-		String orderBy = null;
-		String limit = null;
-		
-		Cursor c = db.query(table, columns, selection, selectionArgs, groupBy, having, orderBy, limit);
-		
-		if (c != null) {
-			c.moveToFirst();
-		}
-		return c;
-		
-	}
-	
 }

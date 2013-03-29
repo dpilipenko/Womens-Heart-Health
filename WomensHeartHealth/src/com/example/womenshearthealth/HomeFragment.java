@@ -1,13 +1,17 @@
 package com.example.womenshearthealth;
 
 
+import java.util.List;
+
 import com.jjoe64.graphview.GraphView.GraphViewData;
 import com.jjoe64.graphview.GraphViewSeries;
 import com.jjoe64.graphview.LineGraphView;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +23,9 @@ import android.widget.TextView;
 
 public class HomeFragment extends Fragment {
 		
+	private Activity activity;
+	private SQLDatabaseHelper dbHelper;
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -28,6 +35,15 @@ public class HomeFragment extends Fragment {
 		return homeFragment;
 	}
 	
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		activity = getActivity();
+		dbHelper = new SQLDatabaseHelper(activity);
+	}
+
+
+
 	@Override
 	public void onStart() {
 	super.onStart();
@@ -142,6 +158,7 @@ public class HomeFragment extends Fragment {
 	 * Builds the graph
 	 */
 	private void buildGraph() {
+		sandbox();
 		// init example series data
 		GraphViewSeries exampleSeries = new GraphViewSeries(new GraphViewData[] {
 			new GraphViewData(0, 1.0d),
@@ -160,4 +177,12 @@ public class HomeFragment extends Fragment {
 		LinearLayout graph = (LinearLayout)this.getActivity().findViewById(R.id.graph);
 		graph.addView(graphView);		
 	}
+	
+	private void sandbox() {
+		List<MetActivity> as = dbHelper.getAllMetActivities();
+		for (MetActivity a: as) {
+			Log.v("Mets", a.toString());
+		}
+	}
+	
 }

@@ -1,5 +1,9 @@
 package com.example.womenshearthealth;
 
+import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -10,39 +14,43 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 public class METSDBAdapter {
-	static final String TAG = "METSDBAdapter";
-	private static final String DATABASE_NAME = "metsDatabase.db";
-	private static final String DATABASE_TABLE = "METS";
+	
+	private static final String DATABASE_NAME = "mets.db";
 	private static final int DATABASE_VERSION = 1;
-
-	public static final String KEY_ID = "_id";
-	public static final String KEY_METS_NAME_COLUMN = "METS_NAME_COLUMN";
-	public static final String KEY_METS_AMOUNT_COLUMN = "METS_AMOUNT_COLUMN";
-	public static final String KEY_METS_DATE_COLUMN = "METS_DATE_COLUMN";
-
-	private static final String DATABASE_CREATE = "create table "
-			+ DATABASE_TABLE + " (" + KEY_ID
-			+ " integer primary key autoincrement, " + KEY_METS_NAME_COLUMN
-			+ " text not null, " + KEY_METS_AMOUNT_COLUMN + " float, "
-			+ KEY_METS_DATE_COLUMN + " integer);";
+	
+	private static final String DATABASE_TABLE_NAME = "Mets";
+	private static final String COLUMN_ID = "_id";
+	private static final String COLUMN_NAME = "Name";
+	private static final String COLUMN_METSVALUE = "MetsValue";
+	private static final String COLUMN_MINUTESDONE = "MinutesDone";
+	private static final String COLUMN_DATESUBMITTEDASLONG = "DateSubmittedAsLong";
+	private static final String[] COLUMNS = {
+		COLUMN_ID, COLUMN_NAME, COLUMN_METSVALUE, COLUMN_MINUTESDONE, COLUMN_DATESUBMITTEDASLONG
+	};
+	
+	private static final String DATABASE_CREATE_SCRIPT = "create table "+DATABASE_TABLE_NAME+" (\n" +
+			COLUMN_ID+" integer primary key autoincrement,\n" +
+			COLUMN_NAME+" Text not null,\n" +
+			COLUMN_METSVALUE+ " Double not null,\n"+
+			COLUMN_MINUTESDONE+" Integer not null,\n" +
+			COLUMN_DATESUBMITTEDASLONG+" Long not null\n" +
+			");";
 
 	private Context context;
-
-	METSDBOpenHelper DBHelper;
-	SQLiteDatabase db;
+	private METSDBOpenHelper dbHelper;
+	private SQLiteDatabase db;
 	
 	
 
-	public METSDBAdapter(Context ctx) {
-		this.context = ctx;
-		DBHelper = new METSDBOpenHelper(this.context, DATABASE_NAME, null, DATABASE_VERSION);
+	public METSDBAdapter(Context context) {
+		this.context = context;
+		dbHelper = new METSDBOpenHelper(this.context, DATABASE_NAME, null, DATABASE_VERSION);
 	}
 
 	private static class METSDBOpenHelper extends SQLiteOpenHelper {
 
 		public METSDBOpenHelper(Context context, String name,
 				CursorFactory factory, int version) {
-			
 			super(context, name, factory, version);
 		}
 		
@@ -55,7 +63,7 @@ public class METSDBAdapter {
 		@Override
 		public void onCreate(SQLiteDatabase db) {
 			try {
-				db.execSQL(DATABASE_CREATE);
+				db.execSQL(DATABASE_CREATE_SCRIPT); // creates new sqlite DB
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -65,54 +73,74 @@ public class METSDBAdapter {
 		public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 			Log.w("TaskDBAdapter", "Upgrading from version " + oldVersion
 					+ " to " + newVersion + ", which will destroy all data");
-			db.execSQL("DROP TABLE IF IT EXISTS " + DATABASE_TABLE);
+			db.execSQL("DROP TABLE IF EXISTS " + DATABASE_TABLE_NAME);
 			onCreate(db);
 		}
 
 	}
 
-	public METSDBAdapter open() throws SQLException {
-		db = DBHelper.getWritableDatabase();
-		return this;
-	}
 
-	public void close() {
-		DBHelper.close();
-	}
-
-	public long insertMETSActivity(String name, int mets, String date) {
-		ContentValues initialValues = new ContentValues();
-		initialValues.put(KEY_METS_NAME_COLUMN, name);
-		initialValues.put(KEY_METS_AMOUNT_COLUMN, mets);
-		initialValues.put(KEY_METS_DATE_COLUMN, date);
-		return db.insert(DATABASE_TABLE, null, initialValues);
-	}
-
-	public boolean deleteMET(long rowId) {
-		return db.delete(DATABASE_TABLE, KEY_ID + "=" + rowId, null) > 0;
-	}
-
-	public Cursor getAllMETS() {
-		Cursor cur = db.query(DATABASE_TABLE, new String[] { KEY_ID, KEY_METS_NAME_COLUMN,
-				KEY_METS_AMOUNT_COLUMN, KEY_METS_DATE_COLUMN }, null, null, null, null, null);
-		return cur;
-	}
-
-	public Cursor getMET(long rowId) throws SQLException {
-		Cursor mCursor = db.query(true, DATABASE_TABLE, new String[] {
-				KEY_ID, KEY_METS_NAME_COLUMN, KEY_METS_AMOUNT_COLUMN, KEY_METS_DATE_COLUMN }, KEY_ID + "=" + rowId,
-				null, null, null, null, null);
-		if (mCursor != null) {
-			mCursor.moveToFirst();
+	// Creates
+	public void addMetActivity(MetActivity activity, Date date) {
+		db = dbHelper.getWritableDatabase();
+		ContentValues dbInputValues = new ContentValues();
+		
+		String name = activity.getName();
+		double metsvalue = activity.getMetsvalue();
+		int minutes = activity.getMinutes();
+		long datelong = date.getTime();
+		
+		
+		dbInputValues.put(COLUMN_NAME, name);
+		dbInputValues.put(COLUMN_METSVALUE, metsvalue);
+		dbInputValues.put(COLUMN_MINUTESDONE, minutes);
+		dbInputValues.put(COLUMN_DATESUBMITTEDASLONG, datelong);
+		
+		
+		db.insert(DATABASE_TABLE_NAME, null, dbInputValues);
+		dbHelper.close();
+	};
+	
+	// Reads
+	public List<MetActivity> getAllMetActivities() {
+		db = dbHelper.getReadableDatabase();
+		List<MetActivity> activities = new LinkedList<MetActivity>();
+		String orderBy = COLUMN_DATESUBMITTEDASLONG + " DESC";
+		Cursor cursor = db.query(DATABASE_TABLE_NAME, COLUMNS, null, null, null, null, orderBy);
+		cursor.moveToFirst();
+		while (!cursor.isAfterLast()) {
+			MetActivity a = cursorToMetActivity(cursor);
+			activities.add(a);
+			cursor.moveToNext();
 		}
-		return mCursor;
+		dbHelper.close();
+		return activities;	
+	}
+	
+	
+	// Updates
+	public void updateMetActivity(MetActivity a) {
+	
+	}
+	// Deletes
+	public void deleteMetActivity() {
+		
+	}
+	
+	
+	private MetActivity cursorToMetActivity(Cursor cursor) {
+		
+		int colName = cursor.getColumnIndex(COLUMN_NAME);
+		int colMetsVal = cursor.getColumnIndex(COLUMN_METSVALUE);
+		int colMins = cursor.getColumnIndex(COLUMN_MINUTESDONE);
+		
+		String name = cursor.getString(colName);
+		double metsvalue = cursor.getDouble(colMetsVal);
+		int minutes = cursor.getInt(colMins);
+		
+		MetActivity m = new MetActivity(name, metsvalue, minutes);
+		
+		return m;
 	}
 
-	public boolean updateMET(long rowId, String name, String amount, String date) {
-		ContentValues args = new ContentValues();
-		args.put(KEY_METS_NAME_COLUMN, name);
-		args.put(KEY_METS_AMOUNT_COLUMN, amount);
-		args.put(KEY_METS_DATE_COLUMN, amount);
-		return db.update(DATABASE_TABLE, args, KEY_ID + "=" + rowId, null) > 0;
-	}
 }

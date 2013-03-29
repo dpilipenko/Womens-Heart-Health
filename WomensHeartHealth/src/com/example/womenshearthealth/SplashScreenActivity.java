@@ -25,6 +25,7 @@ public class SplashScreenActivity extends Activity {
 				if (!backButtonIsPressed) {
 					
 					if (isInitRun) {
+						SettingsHelper.setInitialRun(SplashScreenActivity.this, false);
 						//SettingsActivity finishes when done. So next activity (Main) will be called here
 						Intent intent = new Intent(SplashScreenActivity.this, SettingsActivity.class);
 						Intent intent2 = new Intent(SplashScreenActivity.this, MainActivity.class);

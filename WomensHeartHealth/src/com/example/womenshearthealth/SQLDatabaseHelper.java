@@ -7,9 +7,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 import android.app.Activity;
 import android.database.Cursor;
+import android.util.Log;
 import android.widget.Toast;
 
 public class SQLDatabaseHelper {
@@ -17,6 +20,43 @@ public class SQLDatabaseHelper {
 	
 	private Activity activity;
 	private METSDBAdapter db;
+	
+	////////////////////////////////////////////////////////////////////////////////////////
+	
+	public void sandbox() {
+		
+		
+		db.open();
+		//db.sandbox();
+		List<MetActivity> as = db.getAllMetActivities();
+		for (MetActivity a: as) {
+			Log.v("SQL",a.toString());
+		}
+		/*
+		MetActivity activity = new MetActivity("Resting", 1.0, 10);
+		Date date = new Date();
+		db.addMetActivity(activity, date);
+		*/
+		//db.getAllMetActivities();
+		
+		
+		db.close();
+		return;
+		
+		
+		
+		
+	}
+	
+
+    public void saveMetActivity(MetActivity activity) {
+    	db.open();
+    	Date date = new Date();
+    	db.addMetActivity(activity, date);
+    	db.close();
+    }
+    
+    ////////////////////////////////////////////////////////////////////////////////////////
 
 	public SQLDatabaseHelper (Activity activity)
 	{
@@ -52,7 +92,7 @@ public class SQLDatabaseHelper {
 	{
 		db.open();
 		
-        Cursor c = db.getAllMETS();
+        Cursor c = db.getAllMetActivitiesAsCursor();
         if (c.moveToFirst())
         {
             do {
@@ -83,18 +123,21 @@ public class SQLDatabaseHelper {
                 Toast.LENGTH_LONG).show();
     }
 	
+    
+    /*	Reimplemented as saveMetActivity(MetActivity)
     public void addMET(String name, int METS, String date) {
     db.open();
     @SuppressWarnings("unused")
 	long id = db.insertMETSActivity(name, METS, date);
     db.close();
     }
+    */
 
 	public String[] getMETsList() {
 		ArrayList<String> metsList = new ArrayList<String>();
 		db.open();
 		
-        Cursor c = db.getAllMETS();
+        Cursor c = db.getAllMetActivitiesAsCursor();
         if (c.moveToFirst())
         {
             do {

@@ -39,6 +39,8 @@ public class METListFragment extends Fragment implements OnClickListener, OnItem
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		activity = getActivity();
+		dbHelper = new SQLDatabaseHelper(activity);
 	}
 
 	@Override
@@ -171,7 +173,8 @@ public class METListFragment extends Fragment implements OnClickListener, OnItem
 		
 		switch (v.getId()) {
 		case R.id.btn_metlistfragment_savebutton:
-			handleSave();
+			//handleSave();
+			dbHelper.sandbox();
 			break;
 		}
 		

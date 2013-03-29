@@ -1,11 +1,11 @@
 package com.example.womenshearthealth;
 
-public class METActivity {
+public class GeneralMetActivity {
 
 	private String name;
 	private double metsvalue;
 	
-	public METActivity(String name, double metsvalue) {
+	public GeneralMetActivity(String name, double metsvalue) {
 		this.name = name;
 		this.metsvalue = metsvalue;
 	}
@@ -38,9 +38,6 @@ public class METActivity {
 		this.metsvalue = metsvalue;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
 	@Override
 	public String toString() {
 		return name + " " + metsvalue;

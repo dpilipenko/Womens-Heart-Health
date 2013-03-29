@@ -11,15 +11,15 @@ import android.content.res.AssetManager;
 
 public class METSCSVHelper {
 	
-	public static List<METActivity> getAllMetActivities(Context context) {
-		LinkedList<METActivity> activities = new LinkedList<METActivity>();
+	public static List<GeneralMetActivity> getAllMetActivities(Context context) {
+		LinkedList<GeneralMetActivity> activities = new LinkedList<GeneralMetActivity>();
 		try {
 			AssetManager am = context.getAssets();
 			InputStream is = am.open("metactivities.csv");
 			CSVReader reader = new CSVReader(new InputStreamReader(is));
 			String[] nextLine = reader.readNext();
 			while (nextLine != null) {
-				METActivity a = new METActivity(nextLine[0], Double.valueOf(nextLine[1]));
+				GeneralMetActivity a = new GeneralMetActivity(nextLine[0], Double.valueOf(nextLine[1]));
 				activities.add(a);
 				nextLine = reader.readNext();
 			}	

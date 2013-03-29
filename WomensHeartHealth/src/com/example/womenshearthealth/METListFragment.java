@@ -3,17 +3,21 @@ package com.example.womenshearthealth;
 import java.util.List;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.text.InputType;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.Toast;
 
 public class METListFragment extends Fragment implements OnItemClickListener {
 
@@ -25,8 +29,8 @@ public class METListFragment extends Fragment implements OnItemClickListener {
 	private ListView extraListView;
 
 	// ui adapter elems
-	private ArrayAdapter<METActivity> loadedMetsListAdapter;
-	private ArrayAdapter<METActivity> extraListAdapter;
+	private ArrayAdapter<GeneralMetActivity> loadedMetsListAdapter;
+	private ArrayAdapter<GeneralMetActivity> extraListAdapter;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -48,13 +52,13 @@ public class METListFragment extends Fragment implements OnItemClickListener {
 		}
 		
 		// selected mets list
-		extraListAdapter = new ArrayAdapter<METActivity>(activity, android.R.layout.simple_list_item_1);
+		extraListAdapter = new ArrayAdapter<GeneralMetActivity>(activity, android.R.layout.simple_list_item_1);
 		extraListView = (ListView) activity.findViewById(R.id.lstvw_metlistfragment_extralistview);
 		extraListView.setAdapter(extraListAdapter);
 		extraListView.setOnItemClickListener(this);
 		
 		// loaded mets list
-		loadedMetsListAdapter = new ArrayAdapter<METActivity>(activity, android.R.layout.simple_list_item_1);
+		loadedMetsListAdapter = new ArrayAdapter<GeneralMetActivity>(activity, android.R.layout.simple_list_item_1);
 		//loadMetsActivities();
 		loadedMetsListView = (ListView) activity.findViewById(R.id.lstvw_metlistfragment_loadedmets);
 		loadedMetsListView.setAdapter(loadedMetsListAdapter);
@@ -98,15 +102,15 @@ public class METListFragment extends Fragment implements OnItemClickListener {
 	}
 
 	public void loadMetsActivities() {
-		List<METActivity> l = METSCSVHelper.getAllMetActivities(activity);
+		List<GeneralMetActivity> l = METSCSVHelper.getAllMetActivities(activity);
 		loadedMetsListAdapter.clear();
-		for(METActivity a : l) {
+		for(GeneralMetActivity a : l) {
 			loadedMetsListAdapter.add(a);
 		}
 		loadedMetsListAdapter.notifyDataSetChanged();
 	}
 
-	public List<METActivity> getAllMetActivities() {
+	public List<GeneralMetActivity> getAllMetActivities() {
 		Context context = activity.getApplicationContext();
 		return METSCSVHelper.getAllMetActivities(context);
 	}
@@ -114,7 +118,38 @@ public class METListFragment extends Fragment implements OnItemClickListener {
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
-		Toast.makeText(activity, "itemclick", Toast.LENGTH_SHORT).show();
+		
+		final GeneralMetActivity metActivity = loadedMetsListAdapter.getItem(position);
+		
+		AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
+
+		alert.setTitle("For How Long Did You Do It?");
+		alert.setMessage("For how many minutes did you do: " + metActivity.getName());
+
+		// Set an EditText view to get user input 
+		final EditText input = new EditText(getActivity());
+		input.setHint("How many minutes?");
+		input.setInputType(InputType.TYPE_CLASS_NUMBER);
+		alert.setView(input);
+
+		alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+		public void onClick(DialogInterface dialog, int whichButton) {
+		  String value = input.getText().toString();
+		  if (value.isEmpty())
+			  value = "0";
+		  int a = Integer.valueOf(value);
+		  MetActivity m = new MetActivity(metActivity, a);
+		  Log.v("Metlist", m.toString());
+		  }
+		});
+
+		alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+		  public void onClick(DialogInterface dialog, int whichButton) {
+		    // Canceled.
+		  }
+		});
+
+		alert.show();
 
 	}
 

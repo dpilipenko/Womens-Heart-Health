@@ -12,14 +12,17 @@ import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
-public class METListFragment extends Fragment implements OnItemClickListener {
+public class METListFragment extends Fragment implements OnClickListener, OnItemClickListener {
 
 	SQLDatabaseHelper dbHelper;
 	Activity activity;
@@ -27,10 +30,11 @@ public class METListFragment extends Fragment implements OnItemClickListener {
 	// ui elems
 	private ListView loadedMetsListView;
 	private ListView extraListView;
+	private Button saveButton;
 
 	// ui adapter elems
 	private ArrayAdapter<GeneralMetActivity> loadedMetsListAdapter;
-	private ArrayAdapter<GeneralMetActivity> extraListAdapter;
+	private ArrayAdapter<MetActivity> extraListAdapter;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -52,17 +56,20 @@ public class METListFragment extends Fragment implements OnItemClickListener {
 		}
 		
 		// selected mets list
-		extraListAdapter = new ArrayAdapter<GeneralMetActivity>(activity, android.R.layout.simple_list_item_1);
+		extraListAdapter = new ArrayAdapter<MetActivity>(activity, android.R.layout.simple_list_item_1);
 		extraListView = (ListView) activity.findViewById(R.id.lstvw_metlistfragment_extralistview);
 		extraListView.setAdapter(extraListAdapter);
 		extraListView.setOnItemClickListener(this);
 		
 		// loaded mets list
 		loadedMetsListAdapter = new ArrayAdapter<GeneralMetActivity>(activity, android.R.layout.simple_list_item_1);
-		//loadMetsActivities();
 		loadedMetsListView = (ListView) activity.findViewById(R.id.lstvw_metlistfragment_loadedmets);
 		loadedMetsListView.setAdapter(loadedMetsListAdapter);
-		loadedMetsListView.setOnItemClickListener(this);		
+		loadedMetsListView.setOnItemClickListener(this);	
+		
+		// save button
+		saveButton = (Button) activity.findViewById(R.id.btn_metlistfragment_savebutton);
+		saveButton.setOnClickListener(this);
 
 	}
 
@@ -114,6 +121,11 @@ public class METListFragment extends Fragment implements OnItemClickListener {
 		Context context = activity.getApplicationContext();
 		return METSCSVHelper.getAllMetActivities(context);
 	}
+	
+	protected void addToCart(MetActivity a) {
+		extraListAdapter.add(a);
+		extraListAdapter.notifyDataSetChanged();
+	}
 
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
@@ -139,6 +151,7 @@ public class METListFragment extends Fragment implements OnItemClickListener {
 			  value = "0";
 		  int a = Integer.valueOf(value);
 		  MetActivity m = new MetActivity(metActivity, a);
+		  addToCart(m);
 		  Log.v("Metlist", m.toString());
 		  }
 		});
@@ -151,6 +164,25 @@ public class METListFragment extends Fragment implements OnItemClickListener {
 
 		alert.show();
 
+	}
+
+	@Override
+	public void onClick(View v) {
+		
+		switch (v.getId()) {
+		case R.id.btn_metlistfragment_savebutton:
+			handleSave();
+			break;
+		}
+		
+	}
+
+	private void handleSave() {
+		String msg = "Thanks for Saving!";
+		Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
+		extraListAdapter.clear();
+		extraListAdapter.notifyDataSetChanged();
+		
 	}
 
 }

@@ -6,17 +6,10 @@
     android:id="@+id/ll_metslistfragment"
     tools:context=".METListFragment" >
 
-    <Button
-        android:id="@+id/btn_metlistfragment_loadmets"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="Load the Mets .CSV file"
-        />
-    
     <ListView
         android:id="@+id/lstvw_metlistfragment_extralistview"
         android:layout_width="match_parent"
-        android:layout_height="150dip" />
+        android:layout_height="100dip" />
     
     <TextView
         android:layout_width="fill_parent"
@@ -26,7 +19,7 @@
     <ListView
         android:id="@+id/lstvw_metlistfragment_loadedmets"
         android:layout_width="match_parent"
-        android:layout_height="150dip" />
+        android:layout_height="250dip" />
     
 
 </LinearLayout>

@@ -8,23 +8,19 @@ import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Toast;
 
-public class METListFragment extends Fragment implements OnClickListener,
-		OnItemClickListener {
+public class METListFragment extends Fragment implements OnItemClickListener {
 
 	SQLDatabaseHelper dbHelper;
 	Activity activity;
 
 	// ui elems
-	private Button loadMetsButton;
 	private ListView loadedMetsListView;
 	private ListView extraListView;
 
@@ -51,10 +47,6 @@ public class METListFragment extends Fragment implements OnClickListener,
 			return;
 		}
 		
-		// load mets button
-		loadMetsButton = (Button) activity.findViewById(R.id.btn_metlistfragment_loadmets);
-		loadMetsButton.setOnClickListener(this);
-		
 		// selected mets list
 		extraListAdapter = new ArrayAdapter<METActivity>(activity, android.R.layout.simple_list_item_1);
 		extraListView = (ListView) activity.findViewById(R.id.lstvw_metlistfragment_extralistview);
@@ -80,7 +72,7 @@ public class METListFragment extends Fragment implements OnClickListener,
 	@Override
 	public void onResume() {
 		super.onResume();
-
+		loadMetsActivities();
 	}
 	
 	@Override
@@ -117,27 +109,6 @@ public class METListFragment extends Fragment implements OnClickListener,
 	public List<METActivity> getAllMetActivities() {
 		Context context = activity.getApplicationContext();
 		return METSCSVHelper.getAllMetActivities(context);
-	}
-
-	@Override
-	public void onClick(View v) {
-		Toast.makeText(activity, "click", Toast.LENGTH_SHORT).show();
-
-		switch (v.getId()) {
-
-		case R.id.btn_metlistfragment_loadmets:
-			loadMetsActivities();/*
-			LinearLayout ll = (LinearLayout) activity
-					.findViewById(R.id.ll_metslistfragment);
-			Button b = new Button(activity);
-			b.setText("extra button");
-			b.setOnClickListener(this);
-			ll.addView(b);*/
-
-			break;
-
-		}
-
 	}
 
 	@Override

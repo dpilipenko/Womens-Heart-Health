@@ -15,7 +15,7 @@
         android:id="@+id/lstvw_metlistfragment_extralistview"
         android:layout_width="match_parent"
         android:layout_height="135dip"
-        android:background="@color/dimaNowOrange" />
+        />
 
     <Button
         android:id="@+id/btn_metlistfragment_savebutton"
@@ -32,7 +32,7 @@
         android:id="@+id/lstvw_metlistfragment_loadedmets"
         android:layout_width="match_parent"
         android:layout_height="135dip"
-        android:background="@color/dimaNowOrange" />
+        />
     
 
 </LinearLayout>

@@ -3,6 +3,9 @@ package com.example.womenshearthealth;
 
 import java.util.List;
 
+import com.fima.chartview.ChartView;
+import com.fima.chartview.LinearSeries;
+import com.fima.chartview.LinearSeries.LinearPoint;
 import com.jjoe64.graphview.GraphView.GraphViewData;
 import com.jjoe64.graphview.GraphViewSeries;
 import com.jjoe64.graphview.LineGraphView;
@@ -40,6 +43,7 @@ public class HomeFragment extends Fragment {
 		super.onCreate(savedInstanceState);
 		activity = getActivity();
 		dbHelper = new SQLDatabaseHelper(activity);
+		
 	}
 
 
@@ -151,7 +155,7 @@ public class HomeFragment extends Fragment {
 		weekTotal.setTypeface(myTypeface);
 		metsLogged.setTypeface(myTypeface);
 
-		buildGraph();
+		buildChart();
 	}
 	
 	/**
@@ -174,8 +178,24 @@ public class HomeFragment extends Fragment {
 		graphView.addSeries(exampleSeries);
 		graphView.setDrawBackground(true);
 		
-		LinearLayout graph = (LinearLayout)this.getActivity().findViewById(R.id.graph);
-		graph.addView(graphView);		
+			
+	}
+	
+	private void buildChart() {
+		ChartView c = (ChartView)activity.findViewById(R.id.chart_view);
+		LinearSeries series = new LinearSeries();
+		series.setLineColor(0xFF0099CC);
+		series.setLineWidth(2);
+		
+		List<MetActivity> as = dbHelper.getAllMetActivities();
+		int count = as.size();
+		for (int i = count-1; i >= 0; i--) {
+			MetActivity a = as.get(i);
+			series.addPoint(new LinearPoint(i, a.getMetMinutes()));
+		}
+		
+		c.addSeries(series);
+		
 	}
 	
 	private void sandbox() {

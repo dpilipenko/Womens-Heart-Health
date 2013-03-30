@@ -1,8 +1,10 @@
 package com.example.womenshearthealth;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -115,6 +117,33 @@ public class METSDBAdapter {
 		}
 		dbHelper.close();
 		return activities;	
+	}
+	
+	public Set<MetActivity> getMetActivitiesByDateRange(Date start, Date end) {
+		
+		String tblname = DATABASE_TABLE_NAME;
+		String datecol = COLUMN_DATESUBMITTEDASLONG;
+		long starttime = start.getTime();
+		long endtime = end.getTime();
+		
+		String query = "SELECT * FROM "+tblname+"\n" +
+					   "WHERE "+datecol+" >='"+starttime+"'\n" +
+					   "AND "+datecol+" <='"+endtime+"'";
+		
+		db = dbHelper.getReadableDatabase();
+		Cursor cursor = db.rawQuery(query, null);
+		cursor.moveToFirst();
+		
+		Set<MetActivity> activities = new HashSet<MetActivity>();
+		while(!cursor.isAfterLast()) {
+			MetActivity a = cursorToMetActivity(cursor);
+			activities.add(a);
+			cursor.moveToNext();
+		}
+		dbHelper.close();
+		return activities;
+					   
+		
 	}
 	
 	

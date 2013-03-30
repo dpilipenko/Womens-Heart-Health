@@ -1,7 +1,11 @@
 package com.example.womenshearthealth;
 
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import com.fima.chartview.ChartView;
 import com.fima.chartview.LinearSeries;
@@ -11,6 +15,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -158,15 +163,66 @@ public class HomeFragment extends Fragment {
 		series.setLineColor(0xFF0099CC);
 		series.setLineWidth(2);
 		
-		List<MetActivity> as = dbHelper.getAllMetActivities();
-		int count = as.size();
-		for (int i = count-1; i >= 0; i--) {
-			MetActivity a = as.get(i);
-			series.addPoint(new LinearPoint(i, a.getMetMinutes()));
+		
+		List<LinearPoint> points = getLinearPointsForTheWeek();
+		for(LinearPoint p: points) {
+			series.addPoint(p);
 		}
 		
 		c.addSeries(series);
 		
+	}
+
+	private List<LinearPoint> getLinearPointsForTheWeek() {
+
+		Calendar c = Calendar.getInstance();
+		
+		int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
+		int daysSinceSunday = dayOfWeek - Calendar.SUNDAY;
+		int daysUntilSaturday = Calendar.SATURDAY - dayOfWeek;
+		
+		Calendar upperLimit = Calendar.getInstance();
+		upperLimit.roll(Calendar.DAY_OF_WEEK, daysUntilSaturday);
+		Calendar lowerLimit = Calendar.getInstance();
+		lowerLimit.roll(Calendar.DAY_OF_WEEK, -1*daysSinceSunday);
+		
+		Calendar dayCursor = lowerLimit;
+		Date sunday = dayCursor.getTime();
+		dayCursor.roll(Calendar.DATE, true);
+		Date monday = dayCursor.getTime();
+		dayCursor.roll(Calendar.DATE, true);
+		Date tuesday = dayCursor.getTime();
+		dayCursor.roll(Calendar.DATE, true);
+		Date wednesday = dayCursor.getTime();
+		dayCursor.roll(Calendar.DATE, true);
+		Date thursday = dayCursor.getTime();
+		dayCursor.roll(Calendar.DATE, true);
+		Date friday = dayCursor.getTime();
+		dayCursor.roll(Calendar.DATE, true);
+		Date saturday = dayCursor.getTime();
+		
+		ArrayList<Set<MetActivity>> days = new ArrayList<Set<MetActivity>>();
+		days.add(0, dbHelper.getMetActivitiesForDay(sunday));
+		days.add(1, dbHelper.getMetActivitiesForDay(monday));
+		days.add(2, dbHelper.getMetActivitiesForDay(tuesday));
+		days.add(3, dbHelper.getMetActivitiesForDay(wednesday));
+		days.add(4, dbHelper.getMetActivitiesForDay(thursday));
+		days.add(5, dbHelper.getMetActivitiesForDay(friday));
+		days.add(6, dbHelper.getMetActivitiesForDay(saturday));
+		
+		ArrayList<LinearPoint> points = new ArrayList<LinearPoint>();
+		for (int day = 0; day < 7; day++) {
+			int count = 0;
+			Set<MetActivity> activities = days.get(day);
+			for(MetActivity ma: activities) {
+				count += ma.getMetMinutes();
+			}
+			Log.v("Mets","day:"+day+" count:"+count);
+			points.add(new LinearPoint(day, count));
+		}
+		
+		
+		return points;
 	}
 	
 }

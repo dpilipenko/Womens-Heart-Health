@@ -35,5 +35,12 @@ public class LinearSeries extends AbstractSeries {
 		public LinearPoint(double x, double y) {
 			super(x, y);
 		}
+
+		@Override
+		public String toString() {
+			return "("+getX()+","+getY()+")";
+		}
+		
+		
 	}
 }

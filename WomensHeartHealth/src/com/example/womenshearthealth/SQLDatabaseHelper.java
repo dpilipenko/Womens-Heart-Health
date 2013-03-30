@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import android.app.Activity;
 
@@ -68,5 +69,25 @@ public class SQLDatabaseHelper {
         inputStream.close();
         outputStream.close();
     }
+
+	public Set<MetActivity> getMetActivitiesForDay(Date day) {
+		
+		Date startTime = (Date) day.clone();
+		Date endTime = (Date) day.clone();
+		
+		startTime.setHours(0);
+		startTime.setMinutes(0);
+		startTime.setSeconds(0);
+		
+		endTime.setHours(23);
+		endTime.setMinutes(59);
+		endTime.setSeconds(59);
+		
+		Set<MetActivity> activities = db.getMetActivitiesByDateRange(startTime, endTime);
+		
+		
+		return activities;
+		
+	}
 
 }

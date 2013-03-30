@@ -6,15 +6,11 @@ import java.util.List;
 import com.fima.chartview.ChartView;
 import com.fima.chartview.LinearSeries;
 import com.fima.chartview.LinearSeries.LinearPoint;
-import com.jjoe64.graphview.GraphView.GraphViewData;
-import com.jjoe64.graphview.GraphViewSeries;
-import com.jjoe64.graphview.LineGraphView;
 
 import android.app.Activity;
 import android.app.Fragment;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,9 +41,7 @@ public class HomeFragment extends Fragment {
 		dbHelper = new SQLDatabaseHelper(activity);
 		
 	}
-
-
-
+	
 	@Override
 	public void onStart() {
 	super.onStart();
@@ -158,29 +152,6 @@ public class HomeFragment extends Fragment {
 		buildChart();
 	}
 	
-	/**
-	 * Builds the graph
-	 */
-	private void buildGraph() {
-		sandbox();
-		// init example series data
-		GraphViewSeries exampleSeries = new GraphViewSeries(new GraphViewData[] {
-			new GraphViewData(0, 1.0d),
-			new GraphViewData(1, 2.0d),
-			new GraphViewData(2, 3.0d),
-			new GraphViewData(3, 4.5d),
-			new GraphViewData(4, 6.0d),
-			new GraphViewData(5, 7.0d),
-			new GraphViewData(6, 10.0d)
-			});
-		
-		LineGraphView graphView = new LineGraphView(this.getActivity(), "GraphViewDemo");
-		graphView.addSeries(exampleSeries);
-		graphView.setDrawBackground(true);
-		
-			
-	}
-	
 	private void buildChart() {
 		ChartView c = (ChartView)activity.findViewById(R.id.chart_view);
 		LinearSeries series = new LinearSeries();
@@ -196,13 +167,6 @@ public class HomeFragment extends Fragment {
 		
 		c.addSeries(series);
 		
-	}
-	
-	private void sandbox() {
-		List<MetActivity> as = dbHelper.getAllMetActivities();
-		for (MetActivity a: as) {
-			Log.v("Mets", a.toString());
-		}
 	}
 	
 }

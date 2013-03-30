@@ -3,15 +3,10 @@
 
     <string name="app_name">Women\'s Heart Health</string>
     <string name="menu_settings">Settings</string>
-    <string name="home_fragment">This is the Home fragment</string>
-    <string name="title_activity_home_fragment">HomeFragment</string>
-    <string name="mets_fragment">This is the METs list fragment</string>
-    <string name="title_activity_metlist_fragment">METListFragment</string>
     <string name="about_fragment">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut gravida pulvinar nulla feugiat lacinia. Donec ornare eros vitae est feugiat in fringilla purus dignissim. Integer at ligula quis neque aliquam lacinia. </string>
     <string name="about_fragment_image_description">About fragment image</string>
     <string name="version">Version: 0.1</string>
     <string name="title_activity_about_fragment">AboutFragment</string>
-    <string name="title_activity_main">MainActivity</string>
     <string name="pref_age_key">whh_user_age</string>
     <string name="pref_age_title">Your Age:</string>
     <string name="pref_age_summary">Please enter in your age in years.</string>
@@ -20,12 +15,5 @@
     <string name="pref_weight_title">Your Weight:</string>
     <string name="pref_weight_summary">Please enter in your weight in years.</string>
     <string name="pref_isinitialrun_key">whh_isinitialrun</string>
-    <string name="title_activity_settings">SettingsActivity</string>
-    <string name="title_activity_splash_screen">SplashScreenActivity</string>
-    <string name="action_settings">Settings</string>
-    <string name="title_activity_settings_activity2">SettingsActivity2</string>
-    <string name="title_activity_weeks_met_list_fragment">WeeksMetListFragment</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="title_activity_weeks_met_activities">WeeksMetActivities</string>
 
 </resources>

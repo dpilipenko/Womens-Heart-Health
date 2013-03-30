@@ -13,11 +13,13 @@ import com.fima.chartview.LinearSeries.LinearPoint;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
@@ -25,7 +27,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements OnClickListener {
 		
 	private Activity activity;
 	private SQLDatabaseHelper dbHelper;
@@ -52,6 +54,7 @@ public class HomeFragment extends Fragment {
 	super.onStart();
 	
 	LinearLayout graphCard = (LinearLayout) this.getActivity().findViewById(R.id.graph_card);
+	graphCard.setOnClickListener(this);
 	LinearLayout targetHRCard = (LinearLayout) this.getActivity().findViewById(R.id.target_hr_card);
 	LinearLayout totalsCard = (LinearLayout) this.getActivity().findViewById(R.id.totals_card);
 	
@@ -242,6 +245,17 @@ public class HomeFragment extends Fragment {
 		
 		
 		return points;
+	}
+
+	@Override
+	public void onClick(View v) {
+		
+		switch (v.getId()) {
+		case R.id.graph_card:
+			Intent intent = new Intent(getActivity(), WeeksMetActivities.class);
+			getActivity().startActivity(intent);
+			break;
+		}
 	}
 	
 }

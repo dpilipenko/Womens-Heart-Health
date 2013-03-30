@@ -29,13 +29,9 @@
 
             <data android:mimeType="vnd.android.cursor.dir/vnd.pmp.smsmessage" />
         </activity>
-        <activity
-            android:name="com.example.womenshearthealth.WeeksMetListFragment"
-            android:label="@string/title_activity_weeks_met_list_fragment" >
+        <activity android:name="com.example.womenshearthealth.WeeksMetListFragment" >
         </activity>
-        <activity
-            android:name="com.example.womenshearthealth.WeeksMetActivities"
-            android:label="@string/title_activity_weeks_met_activities" >
+        <activity android:name="com.example.womenshearthealth.WeeksMetActivities" >
         </activity>
     </application>
 

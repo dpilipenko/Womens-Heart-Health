@@ -122,7 +122,7 @@ public class HomeFragment extends Fragment {
 		int bpm85 = CalculationsHelper.getHeartRateFromAge(age, CalculationsHelper.HRTARGET_85);
 		int bpm100 = CalculationsHelper.getHeartRateFromAge(age, CalculationsHelper.HRTARGET_MAX);
 		
-		double met = 690.0; // TODO Implement mets
+		double met = getMetsForWeek();
 		double cals = CalculationsHelper.getCaloriesFromMet(SettingsHelper.getWeight(this.getActivity()),met);
 		
 		//Grab text boxes from UI
@@ -139,7 +139,8 @@ public class HomeFragment extends Fragment {
 		BPM3.setText(bpm100 + " BPM \t100% \tMHR");
 		
 		METs.setText(met + " \tMETs");
-		Calories.setText(cals + " \tCal");
+		
+		Calories.setText(String.format("%.3f", cals/1000.0) + " \tkCal");
 		
 		TextView targetHR = (TextView)this.getActivity().findViewById(R.id.targertHeartRatesTextView);
 		TextView weekTotal = (TextView)this.getActivity().findViewById(R.id.weeksTotalTextView);
@@ -157,6 +158,17 @@ public class HomeFragment extends Fragment {
 		buildChart();
 	}
 	
+	private double getMetsForWeek() {
+		double count = 0;
+		List<Set<MetActivity>> days = getMetActivitiesForTheWeek();
+		for (Set<MetActivity> day: days) {
+			for (MetActivity activity: day) {
+				count += activity.getMetMinutes();
+			}
+		}
+		return count;
+	}
+
 	private void buildChart() {
 		ChartView c = (ChartView)activity.findViewById(R.id.chart_view);
 		LinearSeries series = new LinearSeries();
@@ -172,9 +184,9 @@ public class HomeFragment extends Fragment {
 		c.addSeries(series);
 		
 	}
-
-	private List<LinearPoint> getLinearPointsForTheWeek() {
-
+	
+	private List<Set<MetActivity>> getMetActivitiesForTheWeek() {
+		
 		Calendar c = Calendar.getInstance();
 		
 		int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
@@ -209,6 +221,13 @@ public class HomeFragment extends Fragment {
 		days.add(4, dbHelper.getMetActivitiesForDay(thursday));
 		days.add(5, dbHelper.getMetActivitiesForDay(friday));
 		days.add(6, dbHelper.getMetActivitiesForDay(saturday));
+		
+		return days;
+	}
+	
+	private List<LinearPoint> getLinearPointsForTheWeek() {
+
+		List<Set<MetActivity>> days = getMetActivitiesForTheWeek();
 		
 		ArrayList<LinearPoint> points = new ArrayList<LinearPoint>();
 		for (int day = 0; day < 7; day++) {

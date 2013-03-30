@@ -30,6 +30,11 @@ public class SettingsHelper {
 	        b.get(Calendar.DATE) > c.get(Calendar.DATE))) {
 	        diff--;
 	    }
+	    
+	    if (diff < 0) {
+	    	return 22;
+	    }
+	    
 	    return diff;
 	}
 	
@@ -62,7 +67,12 @@ public class SettingsHelper {
 		SharedPreferences prefs = a.getApplicationContext().getSharedPreferences(PREF_NAME, 0);
 		
 		// returns saved weight, or -1 if there is no saved weight yet
-		return prefs.getInt(a.getApplicationContext().getString(R.string.pref_weight_key), -1);
+		int weight = prefs.getInt(a.getApplicationContext().getString(R.string.pref_weight_key), -1);
+		
+		if (weight < 0) {
+			return 230;
+		}
+		return weight;
 	}
 	
 	/**

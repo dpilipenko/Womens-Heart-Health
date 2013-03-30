@@ -13,11 +13,13 @@ import com.fima.chartview.LinearSeries.LinearPoint;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
@@ -25,7 +27,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements OnClickListener {
 		
 	private Activity activity;
 	private SQLDatabaseHelper dbHelper;
@@ -52,6 +54,7 @@ public class HomeFragment extends Fragment {
 	super.onStart();
 	
 	LinearLayout graphCard = (LinearLayout) this.getActivity().findViewById(R.id.graph_card);
+	graphCard.setOnClickListener(this);
 	LinearLayout targetHRCard = (LinearLayout) this.getActivity().findViewById(R.id.target_hr_card);
 	LinearLayout totalsCard = (LinearLayout) this.getActivity().findViewById(R.id.totals_card);
 	
@@ -122,7 +125,7 @@ public class HomeFragment extends Fragment {
 		int bpm85 = CalculationsHelper.getHeartRateFromAge(age, CalculationsHelper.HRTARGET_85);
 		int bpm100 = CalculationsHelper.getHeartRateFromAge(age, CalculationsHelper.HRTARGET_MAX);
 		
-		double met = 690.0; // TODO Implement mets
+		double met = getMetsForWeek();
 		double cals = CalculationsHelper.getCaloriesFromMet(SettingsHelper.getWeight(this.getActivity()),met);
 		
 		//Grab text boxes from UI
@@ -134,12 +137,13 @@ public class HomeFragment extends Fragment {
 		TextView Calories = (TextView)this.getActivity().findViewById(R.id.Calories);
 		
 		//Display text boxes
-		BPM1.setText(bpm50 + " BPM \t50% \tMHR");
-		BPM2.setText(bpm85 + " BPM \t85% \tMHR");
-		BPM3.setText(bpm100 + " BPM \t100% \tMHR");
+		BPM1.setText(bpm50 + " BPM: 50% MHR");
+		BPM2.setText(bpm85 + " BPM: 85% MHR");
+		BPM3.setText(bpm100 + " BPM: 100% MHR");
 		
 		METs.setText(met + " \tMETs");
-		Calories.setText(cals + " \tCal");
+		
+		Calories.setText(String.format("%.3f", cals/1000.0) + " \tkCal");
 		
 		TextView targetHR = (TextView)this.getActivity().findViewById(R.id.targertHeartRatesTextView);
 		TextView weekTotal = (TextView)this.getActivity().findViewById(R.id.weeksTotalTextView);
@@ -157,6 +161,17 @@ public class HomeFragment extends Fragment {
 		buildChart();
 	}
 	
+	private double getMetsForWeek() {
+		double count = 0;
+		List<Set<MetActivity>> days = getMetActivitiesForTheWeek();
+		for (Set<MetActivity> day: days) {
+			for (MetActivity activity: day) {
+				count += activity.getMetMinutes();
+			}
+		}
+		return count;
+	}
+
 	private void buildChart() {
 		ChartView c = (ChartView)activity.findViewById(R.id.chart_view);
 		LinearSeries series = new LinearSeries();
@@ -172,9 +187,9 @@ public class HomeFragment extends Fragment {
 		c.addSeries(series);
 		
 	}
-
-	private List<LinearPoint> getLinearPointsForTheWeek() {
-
+	
+	private List<Set<MetActivity>> getMetActivitiesForTheWeek() {
+		
 		Calendar c = Calendar.getInstance();
 		
 		int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
@@ -210,6 +225,13 @@ public class HomeFragment extends Fragment {
 		days.add(5, dbHelper.getMetActivitiesForDay(friday));
 		days.add(6, dbHelper.getMetActivitiesForDay(saturday));
 		
+		return days;
+	}
+	
+	private List<LinearPoint> getLinearPointsForTheWeek() {
+
+		List<Set<MetActivity>> days = getMetActivitiesForTheWeek();
+		
 		ArrayList<LinearPoint> points = new ArrayList<LinearPoint>();
 		for (int day = 0; day < 7; day++) {
 			int count = 0;
@@ -223,6 +245,17 @@ public class HomeFragment extends Fragment {
 		
 		
 		return points;
+	}
+
+	@Override
+	public void onClick(View v) {
+		
+		switch (v.getId()) {
+		case R.id.graph_card:
+			Intent intent = new Intent(getActivity(), WeeksMetActivities.class);
+			getActivity().startActivity(intent);
+			break;
+		}
 	}
 	
 }

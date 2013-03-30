@@ -162,12 +162,15 @@ public class METSDBAdapter {
 		int colName = cursor.getColumnIndex(COLUMN_NAME);
 		int colMetsVal = cursor.getColumnIndex(COLUMN_METSVALUE);
 		int colMins = cursor.getColumnIndex(COLUMN_MINUTESDONE);
+		int colDateSubmitted = cursor.getColumnIndex(COLUMN_DATESUBMITTEDASLONG);
 		
 		String name = cursor.getString(colName);
 		double metsvalue = cursor.getDouble(colMetsVal);
 		int minutes = cursor.getInt(colMins);
+		Date date = new Date(cursor.getLong(colDateSubmitted));
 		
 		MetActivity m = new MetActivity(name, metsvalue, minutes);
+		m.setDateSaved(date);
 		
 		return m;
 	}

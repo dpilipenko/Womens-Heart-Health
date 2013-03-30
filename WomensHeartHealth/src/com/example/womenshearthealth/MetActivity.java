@@ -1,9 +1,14 @@
 package com.example.womenshearthealth;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+
 
 public class MetActivity extends GeneralMetActivity {
 
 	private int minutes;
+	private Date dateSaved;
 	
 	public MetActivity(GeneralMetActivity activity, int minutes) {
 		super(activity.getName(), activity.getMetsvalue());
@@ -49,7 +54,26 @@ public class MetActivity extends GeneralMetActivity {
 		String name = getName();
 		String min = getMinutes() + " mins";
 		String metsvalue = getMetMinutes() + " Met-mins";
-		return name + " " + min + " " + metsvalue;
+		String display = name + " " + min + " " + metsvalue;
+		
+		if (dateSaved != null) {
+			Calendar c = Calendar.getInstance();
+			c.setTime(dateSaved);
+			String month = c.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.US);
+			int day = Integer.valueOf(c.get(Calendar.DAY_OF_MONTH));
+			String date = month+"/"+day;
+			
+			display = "("+date+") "+name+" "+min+" "+metsvalue;
+		}
+		return display;
+	}
+
+	public Date getDateSaved() {
+		return dateSaved;
+	}
+
+	public void setDateSaved(Date dateSaved) {
+		this.dateSaved = dateSaved;
 	}
 
 }

@@ -134,9 +134,9 @@ public class HomeFragment extends Fragment {
 		TextView Calories = (TextView)this.getActivity().findViewById(R.id.Calories);
 		
 		//Display text boxes
-		BPM1.setText(bpm50 + " BPM \t50% \tMHR");
-		BPM2.setText(bpm85 + " BPM \t85% \tMHR");
-		BPM3.setText(bpm100 + " BPM \t100% \tMHR");
+		BPM1.setText(bpm50 + " BPM: 50% MHR");
+		BPM2.setText(bpm85 + " BPM: 85% MHR");
+		BPM3.setText(bpm100 + " BPM: 100% MHR");
 		
 		METs.setText(met + " \tMETs");
 		

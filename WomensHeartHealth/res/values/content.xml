@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	
+    <string name="about_fragment">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut gravida pulvinar nulla feugiat lacinia. Donec ornare eros vitae est feugiat in fringilla purus dignissim. Integer at ligula quis neque aliquam lacinia. </string>
+    <string name="target_hr_activity">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut gravida pulvinar nulla feugiat lacinia. Donec ornare eros vitae est feugiat in fringilla purus dignissim. Integer at ligula quis neque aliquam lacinia. </string>
+    <string name="totals_activity">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut gravida pulvinar nulla feugiat lacinia. Donec ornare eros vitae est feugiat in fringilla purus dignissim. Integer at ligula quis neque aliquam lacinia. </string>
+	
+</resources>

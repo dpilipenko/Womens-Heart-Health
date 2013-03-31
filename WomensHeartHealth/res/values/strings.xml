@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+    
     <string name="app_name">Women\'s Heart Health</string>
     <string name="menu_settings">Settings</string>
-    <string name="about_fragment">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut gravida pulvinar nulla feugiat lacinia. Donec ornare eros vitae est feugiat in fringilla purus dignissim. Integer at ligula quis neque aliquam lacinia. </string>
-    <string name="target_hr_activity">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut gravida pulvinar nulla feugiat lacinia. Donec ornare eros vitae est feugiat in fringilla purus dignissim. Integer at ligula quis neque aliquam lacinia. </string>
-    <string name="totals_activity">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut gravida pulvinar nulla feugiat lacinia. Donec ornare eros vitae est feugiat in fringilla purus dignissim. Integer at ligula quis neque aliquam lacinia. </string>
     <string name="about_fragment_image_description">About fragment image</string>
     <string name="version">Version: 0.1</string>
     <string name="title_activity_about_fragment">AboutFragment</string>
@@ -17,5 +14,5 @@
     <string name="pref_weight_title">Your Weight:</string>
     <string name="pref_weight_summary">Please enter in your weight in years.</string>
     <string name="pref_isinitialrun_key">whh_isinitialrun</string>
-
+	
 </resources>

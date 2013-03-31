@@ -259,11 +259,11 @@ public class HomeFragment extends Fragment implements OnClickListener {
 			getActivity().startActivity(intent);
 			break;
 		case R.id.target_hr_card: //Display info on target heart rates
-			intent = new Intent(getActivity(), TargetHRActivity.class);
+			intent = new Intent(getActivity(), TargetHRInformationActivity.class);
 			getActivity().startActivity(intent);
 			break;
 		case R.id.totals_card: //Display info on METs
-			intent = new Intent(getActivity(), TotalsActivity.class);
+			intent = new Intent(getActivity(), MetsInformationActivity.class);
 			getActivity().startActivity(intent);
 			break;
 		}

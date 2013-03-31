@@ -8,7 +8,7 @@ import android.view.Menu;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-public class TotalsActivity extends Activity {
+public class TargetHRInformationActivity extends Activity {
 
 	private ListView listview;
 	private ArrayAdapter<MetActivity> listviewadapter;
@@ -16,7 +16,7 @@ public class TotalsActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_totals);
+		setContentView(R.layout.activity_target_hr);
 	}
 	
 }

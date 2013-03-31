@@ -33,6 +33,10 @@
         </activity>
         <activity android:name="com.example.womenshearthealth.WeeksMetActivities" >
         </activity>
+        <activity android:name="com.example.womenshearthealth.TargetHRActivity" >
+        </activity>
+        <activity android:name="com.example.womenshearthealth.TotalsActivity" >
+        </activity>
     </application>
 
 </manifest>

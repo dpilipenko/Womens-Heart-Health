@@ -56,7 +56,9 @@ public class HomeFragment extends Fragment implements OnClickListener {
 	LinearLayout graphCard = (LinearLayout) this.getActivity().findViewById(R.id.graph_card);
 	graphCard.setOnClickListener(this);
 	LinearLayout targetHRCard = (LinearLayout) this.getActivity().findViewById(R.id.target_hr_card);
+	targetHRCard.setOnClickListener(this);
 	LinearLayout totalsCard = (LinearLayout) this.getActivity().findViewById(R.id.totals_card);
+	totalsCard.setOnClickListener(this);
 	
 	graphCard.setVisibility(8);
 	targetHRCard.setVisibility(8);
@@ -249,10 +251,19 @@ public class HomeFragment extends Fragment implements OnClickListener {
 
 	@Override
 	public void onClick(View v) {
+		Intent intent = null;
 		
 		switch (v.getId()) {
-		case R.id.graph_card:
-			Intent intent = new Intent(getActivity(), WeeksMetActivities.class);
+		case R.id.graph_card: //Display past activities
+			intent = new Intent(getActivity(), WeeksMetActivities.class);
+			getActivity().startActivity(intent);
+			break;
+		case R.id.target_hr_card: //Display info on target heart rates
+			intent = new Intent(getActivity(), TargetHRActivity.class);
+			getActivity().startActivity(intent);
+			break;
+		case R.id.totals_card: //Display info on METs
+			intent = new Intent(getActivity(), TotalsActivity.class);
 			getActivity().startActivity(intent);
 			break;
 		}

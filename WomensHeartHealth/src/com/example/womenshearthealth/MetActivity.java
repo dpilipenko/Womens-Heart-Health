@@ -52,25 +52,19 @@ public class MetActivity extends GeneralMetActivity {
 	@Override
 	public String toString() {
 		String name = getName();
-		String min = ""+getMinutes()%60;
-		if(min.length() == 1)
-			min = "0"+min;
-		String time = getMinutes()/60+":"+min;
-		double mets_double = Math.floor(getMetMinutes() * 100) / 100;
-		String metsvalue = mets_double + " MET-mins";
-		String display = "";
+		String min = getMinutes() + " mins";
+		String metsvalue = getMetMinutes() + " Met-mins";
+		String display = name + " " + min + " " + metsvalue;
 		
 		if (dateSaved != null) {
 			Calendar c = Calendar.getInstance();
 			c.setTime(dateSaved);
-			//String month = c.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.US);
-			int month = Integer.valueOf(c.get(Calendar.MONTH));
+			String month = c.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.US);
 			int day = Integer.valueOf(c.get(Calendar.DAY_OF_MONTH));
-			String date = "("+month+"/"+day+")";
+			String date = month+"/"+day;
 			
-			display = date + " - ";
+			display = "("+date+") "+name+" "+min+" "+metsvalue;
 		}
-		display += name+"\n\t "+time+", "+metsvalue;
 		return display;
 	}
 

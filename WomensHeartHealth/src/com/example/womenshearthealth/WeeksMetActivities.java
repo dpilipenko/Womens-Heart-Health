@@ -20,7 +20,6 @@ public class WeeksMetActivities extends Activity {
 		listview = (ListView)findViewById(R.id.weeksmets_listview);
 		listviewadapter = new ArrayAdapter<MetActivity>(this, android.R.layout.simple_list_item_1);
 		listview.setAdapter(listviewadapter);
-		
 		repopulateActivitiesList();
 	}
 	

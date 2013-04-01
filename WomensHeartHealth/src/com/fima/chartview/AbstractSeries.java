@@ -70,7 +70,7 @@ public abstract class AbstractSeries {
 
 		mPointsSorted = false;
 	}
-
+	
 	// Line properties
 
 	public void setLineColor(int color) {

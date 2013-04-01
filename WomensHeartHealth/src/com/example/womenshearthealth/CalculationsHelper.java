@@ -14,16 +14,15 @@ public class CalculationsHelper {
 	 */
 	public static int getHeartRateFromAge(int age, double hrTarget) { 
 		
-		// Calculate the maximum target heart rate based off of entered age
-		int maxHR = 206 - 88/100*age;
+		double maxHR = 206 - (0.88 * age);
 		
 		// Return the desired ratio of the Target Heart Rate
 		if (hrTarget == HRTARGET_MAX) {
-			return (int)(Math.floor(1.0 *maxHR));
+			return (int)(Math.floor(1.0 * maxHR));
 		} else if (hrTarget == HRTARGET_85) {
-			return (int)(Math.floor(0.85 *maxHR));
+			return (int)(Math.floor(0.85 * maxHR));
 		} else if (hrTarget == HRTARGET_50) {
-			return (int)(Math.floor(0.5 *maxHR));
+			return (int)(Math.floor(0.5 * maxHR));
 		} else {
 			return 0;
 		}

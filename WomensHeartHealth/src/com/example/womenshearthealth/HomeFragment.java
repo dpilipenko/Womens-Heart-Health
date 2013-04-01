@@ -204,6 +204,7 @@ public class HomeFragment extends Fragment implements OnClickListener {
 		lowerLimit.roll(Calendar.DAY_OF_WEEK, -1*daysSinceSunday);
 		
 		Calendar dayCursor = lowerLimit;
+		dayCursor.roll(Calendar.MONTH, true);
 		Date sunday = dayCursor.getTime();
 		dayCursor.roll(Calendar.DATE, true);
 		Date monday = dayCursor.getTime();

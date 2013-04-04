@@ -39,7 +39,7 @@
                 android:layout_marginRight="10dp"
                 android:ems="10"
                 android:gravity="left"
-                android:text="METs Logged This Week"
+                android:text="@string/mets_logged"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textColor="@color/googleNowGray" />
 
@@ -93,7 +93,7 @@
                     android:layout_marginBottom="10dp"
                     android:ems="10"
                     android:gravity="left"
-                    android:text="Target Heart Rates"
+                    android:text="@string/target_hr"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:textColor="@color/googleNowGray" />
 
@@ -181,7 +181,7 @@
                 android:layout_marginLeft="10dp"
                 android:ems="10"
                 android:gravity="left"
-                android:text="This Week&apos;s Totals"
+                android:text="@string/weeks_totals"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textColor="@color/googleNowGray" />
 

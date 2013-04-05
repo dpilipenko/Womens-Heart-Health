@@ -16,6 +16,6 @@
     <string name="pref_isinitialrun_key">whh_isinitialrun</string>
     <string name="mets_logged">METs Logged This Week</string>
     <string name="target_hr">Target Heart Rates</string>
-    <string name="weeks_totals">This Week&amp;apos;s Totals</string>
+    <string name="weeks_totals">This Week\'s Totals</string>
 	
 </resources>

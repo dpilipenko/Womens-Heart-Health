@@ -4,6 +4,7 @@ package com.example.womenshearthealth;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
@@ -123,9 +124,9 @@ public class HomeFragment extends Fragment implements OnClickListener {
 		//the passed-in parameter to use SettingsHelper should always be 'this'
 		int age = SettingsHelper.getAge(this.getActivity());
 		
-		int bpm50 = CalculationsHelper.getHeartRateFromAge(age, CalculationsHelper.HRTARGET_50);
-		int bpm85 = CalculationsHelper.getHeartRateFromAge(age, CalculationsHelper.HRTARGET_85);
-		int bpm100 = CalculationsHelper.getHeartRateFromAge(age, CalculationsHelper.HRTARGET_MAX);
+		int bpm50 = CalculationsHelper.getTargetHeartRateFromAge(age, CalculationsHelper.TARGET_50);
+		int bpm85 = CalculationsHelper.getTargetHeartRateFromAge(age, CalculationsHelper.TARGET_85);
+		int bpm100 = CalculationsHelper.getTargetHeartRateFromAge(age, CalculationsHelper.TARGET_MAX);
 		
 		double met = getMetsForWeek();
 		double cals = CalculationsHelper.getCaloriesFromMet(SettingsHelper.getWeight(this.getActivity()),met);
@@ -176,18 +177,40 @@ public class HomeFragment extends Fragment implements OnClickListener {
 
 	private void buildChart() {
 		ChartView c = (ChartView)activity.findViewById(R.id.chart_view);
-		LinearSeries series = new LinearSeries();
-		series.setLineColor(0xFF0099CC);
-		series.setLineWidth(2);
 		
+		LinearSeries weeklyMetsSeries = new LinearSeries();
+		weeklyMetsSeries.setLineColor(0xFFFF99CC);
+		weeklyMetsSeries.setLineWidth(4);
 		
-		List<LinearPoint> points = getLinearPointsForTheWeek();
-		for(LinearPoint p: points) {
-			series.addPoint(p);
+		List<LinearPoint> points1 = getLinearPointsForTheWeek();
+		for(LinearPoint p: points1) {
+			weeklyMetsSeries.addPoint(p);
 		}
 		
-		c.addSeries(series);
 		
+		
+		LinearSeries targetMetsSeries = new LinearSeries();
+		targetMetsSeries.setLineColor(0xFF0099CC);
+		targetMetsSeries.setLineWidth(6);
+		
+		int age = SettingsHelper.getAge(getActivity());
+		double target = CalculationsHelper.TARGET_85;
+		double capacity = CalculationsHelper.getTargetPredictedExerciseCapacityFromAge(age, target);
+		ArrayList<LinearPoint> points2 = new ArrayList<LinearPoint>();
+		points2.add(new LinearPoint((double)1, (double)50));
+		points2.add(new LinearPoint((double)5, (double)50));/*
+		for (int day = 0; day < 7; day++) {
+			points2.add(new LinearPoint(day, 50.0));
+		}
+		*/
+		for(LinearPoint p: points2) {
+			targetMetsSeries.addPoint(p);
+		}
+		
+		
+
+		c.addSeries(weeklyMetsSeries);
+		c.addSeries(targetMetsSeries);
 	}
 	
 	private List<Set<MetActivity>> getMetActivitiesForTheWeek() {

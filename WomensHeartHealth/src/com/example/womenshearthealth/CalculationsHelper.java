@@ -2,31 +2,62 @@ package com.example.womenshearthealth;
 
 public class CalculationsHelper {
 
-	public static final double HRTARGET_MAX = 1.0;
-	public static final double HRTARGET_85 = 0.85;
-	public static final double HRTARGET_50 = 0.5;
+	public static final double TARGET_MAX = 1.0;
+	public static final double TARGET_85 = 0.85;
+	public static final double TARGET_50 = 0.5;
 	
 	/**
 	 * Returns the Heart Rates at various target levels based on Doctor Gulati's research
 	 * @param age User's age in years
-	 * @param hrTarget The target level desired. Look at HRTARGET_*
+	 * @param hrTarget The target level desired. Look at CalculationsHelper.TARGET_*
 	 * @return Heart rate target at specific level
 	 */
-	public static int getHeartRateFromAge(int age, double hrTarget) { 
+	public static int getTargetHeartRateFromAge(int age, double hrTarget) { 
 		
+		/*
+		 * From:
+		 * 	Heart Rate Response to Exercise Stress Testing in Asymptomatic Women:
+		 * 	Circulation: Journal of the American Heart Association, June 28
+		 */
 		double maxHR = 206 - (0.88 * age);
 		
 		// Return the desired ratio of the Target Heart Rate
-		if (hrTarget == HRTARGET_MAX) {
-			return (int)(Math.floor(1.0 * maxHR));
-		} else if (hrTarget == HRTARGET_85) {
-			return (int)(Math.floor(0.85 * maxHR));
-		} else if (hrTarget == HRTARGET_50) {
-			return (int)(Math.floor(0.5 * maxHR));
+		if (hrTarget == TARGET_MAX) {
+			return (int)(1.0 * maxHR);
+		} else if (hrTarget == TARGET_85) {
+			return (int)(0.85 * maxHR);
+		} else if (hrTarget == TARGET_50) {
+			return (int)(0.5 * maxHR);
 		} else {
 			return 0;
 		}
 		
+	}
+	
+	/**
+	 * Returns the Predicted Exercise Capacity at various target levels based on Doctor Gulati's research
+	 * @param age User's age in years
+	 * @param hrTarget The target level desired. Look at CalculationsHelper.TARGET_*
+	 * @return
+	 */
+	public static double getTargetPredictedExerciseCapacityFromAge(int age, double hrTarget) {
+		/*
+		 * From:
+		 * 	The Prognostic Value of a Nomogram for Exercise Capacity in Women:
+		 * 	New England Journal of Medicine, August 4th 2005
+		 */
+		double maxHR = 14.7 - (0.13 * age);
+		
+		// return the desired ratio of the Target Predicted Excercise Capacity
+		if (hrTarget == TARGET_MAX) {
+			return (1.0 * maxHR);
+		} else if (hrTarget == TARGET_85) {
+			return (0.85 * maxHR);
+		} else if (hrTarget == TARGET_50) {
+			return (0.50 * maxHR);
+		} else {
+			return 0.0;
+		}
 	}
 	
 	/**
@@ -39,5 +70,7 @@ public class CalculationsHelper {
 		double weightKilos = 0.453592 * weight;
 		return Math.floor(weightKilos * metHours * 100.0)/100.0;
 	}
+	
+	
 	
 }

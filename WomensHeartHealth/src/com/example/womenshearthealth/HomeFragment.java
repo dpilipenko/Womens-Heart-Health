@@ -208,7 +208,9 @@ public class HomeFragment extends Fragment implements OnClickListener {
 		}
 		
 		
-
+		c.setLineHeight(43);
+		c.setLineHeight(200);
+		c.setLineHeight(89);
 		c.addSeries(weeklyMetsSeries);
 		c.addSeries(targetMetsSeries);
 	}

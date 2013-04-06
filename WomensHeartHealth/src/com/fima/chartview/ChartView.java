@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.example.womenshearthealth.R;
 
+import android.R.color;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
@@ -17,9 +18,9 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 public class ChartView extends RelativeLayout {
-	//////////////////////////////////////////////////////////////////////////////////////
+	// ////////////////////////////////////////////////////////////////////////////////////
 	// PRIVATE MEMBERS
-	//////////////////////////////////////////////////////////////////////////////////////
+	// ////////////////////////////////////////////////////////////////////////////////////
 
 	// View
 
@@ -61,9 +62,11 @@ public class ChartView extends RelativeLayout {
 	private int mGridLinesHorizontal;
 	private int mGridLinesVertical;
 
-	//////////////////////////////////////////////////////////////////////////////////////
+	private ArrayList<Integer> mListOfLinesToDraw;
+
+	// ////////////////////////////////////////////////////////////////////////////////////
 	// CONSTRUCTORS
-	//////////////////////////////////////////////////////////////////////////////////////
+	// ////////////////////////////////////////////////////////////////////////////////////
 
 	public ChartView(Context context) {
 		this(context, null, 0);
@@ -79,29 +82,41 @@ public class ChartView extends RelativeLayout {
 		setWillNotDraw(false);
 		setBackgroundColor(Color.TRANSPARENT);
 
-		final TypedArray attributes = context.obtainStyledAttributes(attrs, R.styleable.ChartView);
+		final TypedArray attributes = context.obtainStyledAttributes(attrs,
+				R.styleable.ChartView);
 
-		mGridLineColor = attributes.getInt(R.styleable.ChartView_gridLineColor, Color.BLACK);
-		mGridLineWidth = attributes.getDimensionPixelSize(R.styleable.ChartView_gridLineWidth, 1);
-		mGridLinesHorizontal = attributes.getInt(R.styleable.ChartView_gridLinesHorizontal, 5);
-		mGridLinesVertical = attributes.getInt(R.styleable.ChartView_gridLinesVertical, 5);
-		mLeftLabelWidth = attributes.getDimensionPixelSize(R.styleable.ChartView_leftLabelWidth, 0);
-		mTopLabelHeight = attributes.getDimensionPixelSize(R.styleable.ChartView_topLabelHeight, 0);
-		mRightLabelWidth = attributes.getDimensionPixelSize(R.styleable.ChartView_rightLabelWidth, 0);
-		mBottomLabelHeight = attributes.getDimensionPixelSize(R.styleable.ChartView_bottomLabelHeight, 0);
+		mGridLineColor = attributes.getInt(R.styleable.ChartView_gridLineColor,
+				Color.BLACK);
+		mGridLineWidth = attributes.getDimensionPixelSize(
+				R.styleable.ChartView_gridLineWidth, 1);
+		mGridLinesHorizontal = attributes.getInt(
+				R.styleable.ChartView_gridLinesHorizontal, 5);
+		mGridLinesVertical = attributes.getInt(
+				R.styleable.ChartView_gridLinesVertical, 5);
+		mLeftLabelWidth = attributes.getDimensionPixelSize(
+				R.styleable.ChartView_leftLabelWidth, 0);
+		mTopLabelHeight = attributes.getDimensionPixelSize(
+				R.styleable.ChartView_topLabelHeight, 0);
+		mRightLabelWidth = attributes.getDimensionPixelSize(
+				R.styleable.ChartView_rightLabelWidth, 0);
+		mBottomLabelHeight = attributes.getDimensionPixelSize(
+				R.styleable.ChartView_bottomLabelHeight, 0);
 
 		// left label layout
 		mLeftLabelLayout = new LinearLayout(context);
-		mLeftLabelLayout.setLayoutParams(new LayoutParams(mLeftLabelWidth, LayoutParams.MATCH_PARENT));
+		mLeftLabelLayout.setLayoutParams(new LayoutParams(mLeftLabelWidth,
+				LayoutParams.MATCH_PARENT));
 		mLeftLabelLayout.setOrientation(LinearLayout.VERTICAL);
 
 		// top label layout
 		mTopLabelLayout = new LinearLayout(context);
-		mTopLabelLayout.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, mTopLabelHeight));
+		mTopLabelLayout.setLayoutParams(new LayoutParams(
+				LayoutParams.MATCH_PARENT, mTopLabelHeight));
 		mTopLabelLayout.setOrientation(LinearLayout.HORIZONTAL);
 
 		// right label layout
-		LayoutParams rightLabelParams = new LayoutParams(mRightLabelWidth, LayoutParams.MATCH_PARENT);
+		LayoutParams rightLabelParams = new LayoutParams(mRightLabelWidth,
+				LayoutParams.MATCH_PARENT);
 		rightLabelParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
 
 		mRightLabelLayout = new LinearLayout(context);
@@ -109,7 +124,8 @@ public class ChartView extends RelativeLayout {
 		mRightLabelLayout.setOrientation(LinearLayout.VERTICAL);
 
 		// bottom label layout
-		LayoutParams bottomLabelParams = new LayoutParams(LayoutParams.MATCH_PARENT, mBottomLabelHeight);
+		LayoutParams bottomLabelParams = new LayoutParams(
+				LayoutParams.MATCH_PARENT, mBottomLabelHeight);
 		bottomLabelParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
 
 		mBottomLabelLayout = new LinearLayout(context);
@@ -123,9 +139,9 @@ public class ChartView extends RelativeLayout {
 		addView(mBottomLabelLayout);
 	}
 
-	//////////////////////////////////////////////////////////////////////////////////////
+	// ////////////////////////////////////////////////////////////////////////////////////
 	// PUBLIC METHODS
-	//////////////////////////////////////////////////////////////////////////////////////
+	// ////////////////////////////////////////////////////////////////////////////////////
 
 	public void clearSeries() {
 		mSeries = new ArrayList<AbstractSeries>();
@@ -214,35 +230,59 @@ public class ChartView extends RelativeLayout {
 		mGridLinesVertical = count;
 	}
 
-	//////////////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Set the height of the line to be drawn horizontally. Each time this is
+	 * called, a new line at that height will be created
+	 * 
+	 * @param y
+	 *            The height of the line to draw. Same coordinate system as used
+	 *            in addPoint
+	 */
+	public void setLineHeight(int y) {
+
+		if (mListOfLinesToDraw == null) {
+			mListOfLinesToDraw = new ArrayList<Integer>();
+		}
+
+		mListOfLinesToDraw.add(y);
+
+	}
+
+	// ////////////////////////////////////////////////////////////////////////////////////
 	// OVERRIDEN METHODS
-	//////////////////////////////////////////////////////////////////////////////////////
+	// ////////////////////////////////////////////////////////////////////////////////////
 
 	@Override
-	protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+	protected void onLayout(boolean changed, int left, int top, int right,
+			int bottom) {
 		super.onLayout(changed, left, top, right, bottom);
 
 		final int gridLeft = mLeftLabelWidth + mGridLineWidth - 1;
 		final int gridTop = mTopLabelHeight + mGridLineWidth - 1;
 		final int gridRight = getWidth() - mRightLabelWidth - mGridLineWidth;
-		final int gridBottom = getHeight() - mBottomLabelHeight - mGridLineWidth;
+		final int gridBottom = getHeight() - mBottomLabelHeight
+				- mGridLineWidth;
 
 		mGridBounds.set(gridLeft, gridTop, gridRight, gridBottom);
 
 		// Set sizes
-		LayoutParams leftParams = (LayoutParams) mLeftLabelLayout.getLayoutParams();
+		LayoutParams leftParams = (LayoutParams) mLeftLabelLayout
+				.getLayoutParams();
 		leftParams.height = mGridBounds.height();
 		mLeftLabelLayout.setLayoutParams(leftParams);
 
-		LayoutParams topParams = (LayoutParams) mTopLabelLayout.getLayoutParams();
+		LayoutParams topParams = (LayoutParams) mTopLabelLayout
+				.getLayoutParams();
 		topParams.width = mGridBounds.width();
 		mTopLabelLayout.setLayoutParams(topParams);
 
-		LayoutParams rightParams = (LayoutParams) mRightLabelLayout.getLayoutParams();
+		LayoutParams rightParams = (LayoutParams) mRightLabelLayout
+				.getLayoutParams();
 		rightParams.height = mGridBounds.height();
 		mRightLabelLayout.setLayoutParams(rightParams);
 
-		LayoutParams bottomParams = (LayoutParams) mBottomLabelLayout.getLayoutParams();
+		LayoutParams bottomParams = (LayoutParams) mBottomLabelLayout
+				.getLayoutParams();
 		bottomParams.width = mGridBounds.width();
 		mBottomLabelLayout.setLayoutParams(bottomParams);
 
@@ -260,15 +300,16 @@ public class ChartView extends RelativeLayout {
 		// Start drawing
 		drawGrid(canvas);
 		drawLabels(canvas);
+		drawLines(canvas);
 
 		for (AbstractSeries series : mSeries) {
 			series.draw(canvas, mGridBounds, mValueBounds);
 		}
 	}
 
-	//////////////////////////////////////////////////////////////////////////////////////
+	// ////////////////////////////////////////////////////////////////////////////////////
 	// PRIVATE METHODS
-	//////////////////////////////////////////////////////////////////////////////////////
+	// ////////////////////////////////////////////////////////////////////////////////////
 
 	private void resetRange() {
 		mMinX = Double.MAX_VALUE;
@@ -301,12 +342,30 @@ public class ChartView extends RelativeLayout {
 
 	// Drawing methods
 
+	private void drawLines(Canvas canvas) {
+		if ((mListOfLinesToDraw != null) && (mListOfLinesToDraw.size() > 0)) {
+			mPaint.setColor(color.holo_red_dark);
+			mPaint.setStrokeWidth(mGridLineWidth);
+
+			final float left = mGridBounds.left;
+			final float right = mGridBounds.right;
+
+			for (int i = 0; i < this.mListOfLinesToDraw.size(); i++) {
+
+				canvas.drawLine(left, mListOfLinesToDraw.get(i), right,
+						mListOfLinesToDraw.get(i), mPaint);
+			}
+		}
+	}
+
 	private void drawGrid(Canvas canvas) {
 		mPaint.setColor(mGridLineColor);
 		mPaint.setStrokeWidth(mGridLineWidth);
 
-		final float stepX = mGridBounds.width() / (float) (mGridLinesHorizontal + 1);
-		final float stepY = mGridBounds.height() / (float) (mGridLinesVertical + 1);
+		final float stepX = mGridBounds.width()
+				/ (float) (mGridLinesHorizontal + 1);
+		final float stepY = mGridBounds.height()
+				/ (float) (mGridLinesVertical + 1);
 
 		final float left = mGridBounds.left;
 		final float top = mGridBounds.top;
@@ -314,11 +373,13 @@ public class ChartView extends RelativeLayout {
 		final float right = mGridBounds.right;
 
 		for (int i = 0; i < mGridLinesHorizontal + 2; i++) {
-			canvas.drawLine(left + (stepX * i), top, left + (stepX * i), bottom, mPaint);
+			canvas.drawLine(left + (stepX * i), top, left + (stepX * i),
+					bottom, mPaint);
 		}
 
 		for (int i = 0; i < mGridLinesVertical + 2; i++) {
-			canvas.drawLine(left, top + (stepY * i), right, top + (stepY * i), mPaint);
+			canvas.drawLine(left, top + (stepY * i), right, top + (stepY * i),
+					mPaint);
 		}
 	}
 
@@ -349,21 +410,22 @@ public class ChartView extends RelativeLayout {
 			View view = mLeftLabelLayout.getChildAt(i);
 
 			if (view == null) {
-				LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, 0);
+				LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+						LayoutParams.MATCH_PARENT, 0);
 				if (i == 0 || i == labelCount - 1) {
 					params.weight = 0.5f;
-				}
-				else {
+				} else {
 					params.weight = 1;
 				}
 
-				view = mLeftLabelAdapter.getView((labelCount - 1) - i, view, mLeftLabelLayout);
+				view = mLeftLabelAdapter.getView((labelCount - 1) - i, view,
+						mLeftLabelLayout);
 				view.setLayoutParams(params);
 
 				mLeftLabelLayout.addView(view);
-			}
-			else {
-				mLeftLabelAdapter.getView((labelCount - 1) - i, view, mLeftLabelLayout);
+			} else {
+				mLeftLabelAdapter.getView((labelCount - 1) - i, view,
+						mLeftLabelLayout);
 			}
 		}
 
@@ -381,11 +443,11 @@ public class ChartView extends RelativeLayout {
 			View view = mTopLabelLayout.getChildAt(i);
 
 			if (view == null) {
-				LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, LayoutParams.MATCH_PARENT);
+				LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+						0, LayoutParams.MATCH_PARENT);
 				if (i == 0 || i == labelCount - 1) {
 					params.weight = 0.5f;
-				}
-				else {
+				} else {
 					params.weight = 1;
 				}
 
@@ -393,8 +455,7 @@ public class ChartView extends RelativeLayout {
 				view.setLayoutParams(params);
 
 				mTopLabelLayout.addView(view);
-			}
-			else {
+			} else {
 				mTopLabelAdapter.getView(i, view, mTopLabelLayout);
 			}
 		}
@@ -413,21 +474,22 @@ public class ChartView extends RelativeLayout {
 			View view = mRightLabelLayout.getChildAt(i);
 
 			if (view == null) {
-				LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, 0);
+				LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+						LayoutParams.MATCH_PARENT, 0);
 				if (i == 0 || i == labelCount - 1) {
 					params.weight = 0.5f;
-				}
-				else {
+				} else {
 					params.weight = 1;
 				}
 
-				view = mRightLabelAdapter.getView((labelCount - 1) - i, view, mRightLabelLayout);
+				view = mRightLabelAdapter.getView((labelCount - 1) - i, view,
+						mRightLabelLayout);
 				view.setLayoutParams(params);
 
 				mRightLabelLayout.addView(view);
-			}
-			else {
-				mRightLabelAdapter.getView((labelCount - 1) - i, view, mRightLabelLayout);
+			} else {
+				mRightLabelAdapter.getView((labelCount - 1) - i, view,
+						mRightLabelLayout);
 			}
 		}
 
@@ -445,11 +507,11 @@ public class ChartView extends RelativeLayout {
 			View view = mBottomLabelLayout.getChildAt(i);
 
 			if (view == null) {
-				LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, LayoutParams.MATCH_PARENT);
+				LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+						0, LayoutParams.MATCH_PARENT);
 				if (i == 0 || i == labelCount - 1) {
 					params.weight = 0.5f;
-				}
-				else {
+				} else {
 					params.weight = 1;
 				}
 
@@ -457,8 +519,7 @@ public class ChartView extends RelativeLayout {
 				view.setLayoutParams(params);
 
 				mBottomLabelLayout.addView(view);
-			}
-			else {
+			} else {
 				mBottomLabelAdapter.getView(i, view, mBottomLabelLayout);
 			}
 		}

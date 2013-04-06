@@ -349,13 +349,15 @@ public class ChartView extends RelativeLayout {
 
 			final float left = mGridBounds.left;
 			final float right = mGridBounds.right;
+			final float top = mGridBounds.top;
 
 			for (int i = 0; i < this.mListOfLinesToDraw.size(); i++) {
 
-				canvas.drawLine(left, mListOfLinesToDraw.get(i), right,
-						mListOfLinesToDraw.get(i), mPaint);
+				canvas.drawLine(left,top + mListOfLinesToDraw.get(i), right,
+						top + mListOfLinesToDraw.get(i), mPaint);
 			}
 		}
+		mPaint.setColor(mGridLineColor);
 	}
 
 	private void drawGrid(Canvas canvas) {

@@ -245,6 +245,8 @@ public class ChartView extends RelativeLayout {
 		}
 
 		mListOfLinesToDraw.add(y);
+		invalidate();
+
 
 	}
 

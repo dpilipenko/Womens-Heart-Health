@@ -6,6 +6,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 
 import com.fima.chartview.ChartView;
@@ -15,6 +16,7 @@ import com.fima.chartview.LinearSeries.LinearPoint;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
@@ -60,18 +62,23 @@ public class HomeFragment extends Fragment implements OnClickListener {
 	targetHRCard.setOnClickListener(this);
 	LinearLayout totalsCard = (LinearLayout) this.getActivity().findViewById(R.id.totals_card);
 	totalsCard.setOnClickListener(this);
-	
+	LinearLayout randomFactsCard = (LinearLayout) this.getActivity().findViewById(R.id.random_facts_card);
+	randomFactsCard.setOnClickListener(this);
+
 	graphCard.setVisibility(8);
 	targetHRCard.setVisibility(8);
 	totalsCard.setVisibility(8);
+	randomFactsCard.setVisibility(8);
 	
 	View graphCardDropshadow = (View) this.getActivity().findViewById(R.id.graphCardDropshadow);
 	View targetHRCardDropshadow = (View) this.getActivity().findViewById(R.id.targerHRCardDropshadow);
 	View totalsCardDropshadow = (View) this.getActivity().findViewById(R.id.totalsCardDropshadow);
+	View randomFactCardDropshadow = (View) this.getActivity().findViewById(R.id.factsCardDropshadow);
 
 	graphCardDropshadow.setVisibility(8);
 	targetHRCardDropshadow.setVisibility(8);
 	totalsCardDropshadow.setVisibility(8);
+	randomFactCardDropshadow.setVisibility(8);
 	
 	}
 	
@@ -84,6 +91,8 @@ public class HomeFragment extends Fragment implements OnClickListener {
 		startAnimationPopOut(R.id.targerHRCardDropshadow);
 		startAnimationPopOut(R.id.totals_card);
 		startAnimationPopOut(R.id.totalsCardDropshadow);
+		startAnimationPopOut(R.id.random_facts_card);
+		startAnimationPopOut(R.id.factsCardDropshadow);
 		
 		populateUI();
 	}
@@ -106,7 +115,7 @@ public class HomeFragment extends Fragment implements OnClickListener {
 
 	        @Override
 	        public void onAnimationEnd(Animation animation) {
-
+	        	
 	        }
 	    });
 
@@ -120,6 +129,11 @@ public class HomeFragment extends Fragment implements OnClickListener {
 	 * Loads saved data and fills in the UI elements
 	 */
 	private void populateUI() {
+		
+		Resources res = getResources();
+		String[] randomFacts = res.getStringArray(R.array.random_facts_array);
+		Random rand = new Random();
+
 		//loads saved data, or -1 when no there is no such saved data yet
 		//the passed-in parameter to use SettingsHelper should always be 'this'
 		int age = SettingsHelper.getAge(this.getActivity());
@@ -138,6 +152,10 @@ public class HomeFragment extends Fragment implements OnClickListener {
 		
 		TextView METs = (TextView)this.getActivity().findViewById(R.id.METs);
 		TextView Calories = (TextView)this.getActivity().findViewById(R.id.Calories);
+		
+		TextView randomFactsTextView = (TextView)this.getActivity().findViewById(R.id.randomFact);
+		
+		randomFactsTextView.setText(randomFacts[rand.nextInt(randomFacts.length)]);
 		
 		//Display text boxes
 		BPM1.setText(bpm50 + " BPM: 50% MHR");
@@ -162,6 +180,7 @@ public class HomeFragment extends Fragment implements OnClickListener {
 		metsLogged.setTypeface(myTypeface);
 
 		buildChart();
+
 	}
 	
 	private double getMetsForWeek() {
@@ -207,10 +226,8 @@ public class HomeFragment extends Fragment implements OnClickListener {
 			targetMetsSeries.addPoint(p);
 		}
 		
-		
-		c.setLineHeight(43);
-		c.setLineHeight(200);
-		c.setLineHeight(89);
+		c.setLineHeight(5);
+		c.setLineHeight(90);
 		c.addSeries(weeklyMetsSeries);
 		c.addSeries(targetMetsSeries);
 	}

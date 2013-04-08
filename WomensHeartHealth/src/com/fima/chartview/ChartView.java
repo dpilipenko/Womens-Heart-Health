@@ -245,7 +245,7 @@ public class ChartView extends RelativeLayout {
 		}
 
 		mListOfLinesToDraw.add(y);
-		invalidate();
+		//invalidate();
 
 
 	}
@@ -303,10 +303,10 @@ public class ChartView extends RelativeLayout {
 		drawGrid(canvas);
 		drawLabels(canvas);
 		drawLines(canvas);
-
 		for (AbstractSeries series : mSeries) {
 			series.draw(canvas, mGridBounds, mValueBounds);
 		}
+
 	}
 
 	// ////////////////////////////////////////////////////////////////////////////////////
@@ -346,19 +346,21 @@ public class ChartView extends RelativeLayout {
 
 	private void drawLines(Canvas canvas) {
 		if ((mListOfLinesToDraw != null) && (mListOfLinesToDraw.size() > 0)) {
-			mPaint.setColor(color.holo_red_dark);
+			mPaint.setColor(Color.RED);
 			mPaint.setStrokeWidth(mGridLineWidth);
 
+		
 			final float left = mGridBounds.left;
 			final float right = mGridBounds.right;
 			final float top = mGridBounds.top;
 
-			for (int i = 0; i < this.mListOfLinesToDraw.size(); i++) {
+			for (int i = 0; i < mListOfLinesToDraw.size(); i++) {
 
-				canvas.drawLine(left,top + mListOfLinesToDraw.get(i), right,
-						top + mListOfLinesToDraw.get(i), mPaint);
+				float line = mListOfLinesToDraw.get(i);
+				canvas.drawLine(left, line, right, line, mPaint);
 			}
 		}
+		
 		mPaint.setColor(mGridLineColor);
 	}
 

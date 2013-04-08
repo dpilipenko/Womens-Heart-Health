@@ -15,6 +15,9 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.View.OnTouchListener;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -22,6 +25,7 @@ public class MainActivity extends Activity {
 	
 	private ActionBar actionBar; //holds the tabs
 	private Dialog splashscreenDialog;
+	private int SPLASH_DURATION = 2000;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +48,19 @@ public class MainActivity extends Activity {
 		splashscreenDialog = new Dialog(this, R.style.SplashScreen);
 		splashscreenDialog.setTitle(R.string.app_name);
 		ImageView i = new ImageView(this);
+		
+		i.setOnTouchListener(new OnTouchListener()
+        {
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event)
+            {
+            	dismissSplashScreen(); 
+                return false;
+            }
+            
+       });
+		
 		Bitmap myImage = BitmapFactory.decodeResource(getResources(), R.drawable.splashscreen);
 		i.setImageBitmap(myImage);
 		splashscreenDialog.setContentView(i);
@@ -68,7 +85,7 @@ public class MainActivity extends Activity {
 				}
 	    	  
 	      }
-	    }, 3000);
+	    }, SPLASH_DURATION);
 		
 	}
 

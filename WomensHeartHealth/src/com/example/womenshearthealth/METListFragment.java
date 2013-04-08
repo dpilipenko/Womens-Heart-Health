@@ -138,17 +138,14 @@ public class METListFragment extends Fragment implements OnClickListener,
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
 
-		int a = parent.getId();
-		int b = view.getId();
-
 		switch (parent.getId()) {
 
 		case R.id.lstvw_metlistfragment_extralistview:
-			b(position);
+			handleExtraList(position);
 			Log.v("hi", "hi");
 			return;
 		case R.id.lstvw_metlistfragment_loadedmets:
-			a(position);
+			handleLoadList(position);
 			Log.v("hi", "hi");
 			return;
 
@@ -156,7 +153,7 @@ public class METListFragment extends Fragment implements OnClickListener,
 
 	}
 
-	public void a(int position) {
+	public void handleLoadList(int position) {
 		final GeneralMetActivity metActivity = loadedMetsListAdapter
 				.getItem(position);
 
@@ -194,7 +191,7 @@ public class METListFragment extends Fragment implements OnClickListener,
 		alert.show();
 	}
 
-	public void b(int position) {
+	public void handleExtraList(int position) {
 		final MetActivity metActivity = extraListAdapter.getItem(position);
 
 		AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());

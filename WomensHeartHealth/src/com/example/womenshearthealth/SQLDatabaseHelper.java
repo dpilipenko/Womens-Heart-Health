@@ -30,6 +30,10 @@ public class SQLDatabaseHelper {
     	db.addMetActivity(activity, date);
     }
 	
+	public void deleteMetActivity(MetActivity activity) {
+		db.deleteMetActivity(activity.getUUID());
+	}
+	
 	public List<MetActivity> getAllMetActivities() {
 		List<MetActivity> list = db.getAllMetActivities();
 		return list;

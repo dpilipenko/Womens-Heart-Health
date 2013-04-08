@@ -2,11 +2,11 @@ package com.example.womenshearthealth;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Locale;
 
 
 public class MetActivity extends GeneralMetActivity {
 
+	private String uuid;
 	private int minutes;
 	private Date dateSaved;
 	
@@ -17,10 +17,12 @@ public class MetActivity extends GeneralMetActivity {
 		
 	}
 	
-	public MetActivity(String name, double metsvalue, int minutes) {
+	public MetActivity(String uuid, String name, double metsvalue, int minutes) {
 		super(name, metsvalue);
 		this.minutes = 0; // default value in case input is invalid
 		setMinutes(minutes);
+		this.uuid = uuid;
+		
 	}
 
 	public int getMinutes() {
@@ -82,4 +84,7 @@ public class MetActivity extends GeneralMetActivity {
 		this.dateSaved = dateSaved;
 	}
 
+	public String getUUID() {
+		return this.uuid;
+	}
 }

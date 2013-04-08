@@ -18,20 +18,22 @@ import android.util.Log;
 public class METSDBAdapter {
 	
 	private static final String DATABASE_NAME = "mets.db";
-	private static final int DATABASE_VERSION = 1;
+	private static final int DATABASE_VERSION = 2;
 	
 	private static final String DATABASE_TABLE_NAME = "Mets";
 	private static final String COLUMN_ID = "_id";
+	private static final String COLUMN_UUID = "MetActivityUUID";
 	private static final String COLUMN_NAME = "Name";
 	private static final String COLUMN_METSVALUE = "MetsValue";
 	private static final String COLUMN_MINUTESDONE = "MinutesDone";
 	private static final String COLUMN_DATESUBMITTEDASLONG = "DateSubmittedAsLong";
 	private static final String[] COLUMNS = {
-		COLUMN_ID, COLUMN_NAME, COLUMN_METSVALUE, COLUMN_MINUTESDONE, COLUMN_DATESUBMITTEDASLONG
+		COLUMN_ID, COLUMN_UUID, COLUMN_NAME, COLUMN_METSVALUE, COLUMN_MINUTESDONE, COLUMN_DATESUBMITTEDASLONG
 	};
 	
 	private static final String DATABASE_CREATE_SCRIPT = "create table "+DATABASE_TABLE_NAME+" (\n" +
 			COLUMN_ID+" integer primary key autoincrement,\n" +
+			COLUMN_UUID+" Text not null,\n" +
 			COLUMN_NAME+" Text not null,\n" +
 			COLUMN_METSVALUE+ " Double not null,\n"+
 			COLUMN_MINUTESDONE+" Integer not null,\n" +
@@ -87,12 +89,13 @@ public class METSDBAdapter {
 		db = dbHelper.getWritableDatabase();
 		ContentValues dbInputValues = new ContentValues();
 		
+		String uuid = java.util.UUID.randomUUID().toString();
 		String name = activity.getName();
 		double metsvalue = activity.getMetsvalue();
 		int minutes = activity.getMinutes();
 		long datelong = date.getTime();
 		
-		
+		dbInputValues.put(COLUMN_UUID, uuid);
 		dbInputValues.put(COLUMN_NAME, name);
 		dbInputValues.put(COLUMN_METSVALUE, metsvalue);
 		dbInputValues.put(COLUMN_MINUTESDONE, minutes);
@@ -102,6 +105,12 @@ public class METSDBAdapter {
 		db.insert(DATABASE_TABLE_NAME, null, dbInputValues);
 		dbHelper.close();
 	};
+	
+	// Deletes
+	public void deleteMetActivity(String activityUUID) {
+		db = dbHelper.getWritableDatabase();
+		db.delete(DATABASE_TABLE_NAME, COLUMN_UUID+"='"+activityUUID+"'", null);
+	}
 	
 	// Reads
 	public List<MetActivity> getAllMetActivities() {
@@ -147,29 +156,24 @@ public class METSDBAdapter {
 	}
 	
 	
-	// Updates
-	public void updateMetActivity(MetActivity a) {
 	
-	}
-	// Deletes
-	public void deleteMetActivity() {
-		
-	}
 	
 	
 	private MetActivity cursorToMetActivity(Cursor cursor) {
 		
+		int colUuid = cursor.getColumnIndex(COLUMN_UUID);
 		int colName = cursor.getColumnIndex(COLUMN_NAME);
 		int colMetsVal = cursor.getColumnIndex(COLUMN_METSVALUE);
 		int colMins = cursor.getColumnIndex(COLUMN_MINUTESDONE);
 		int colDateSubmitted = cursor.getColumnIndex(COLUMN_DATESUBMITTEDASLONG);
 		
+		String uuid = cursor.getString(colUuid);
 		String name = cursor.getString(colName);
 		double metsvalue = cursor.getDouble(colMetsVal);
 		int minutes = cursor.getInt(colMins);
 		Date date = new Date(cursor.getLong(colDateSubmitted));
 		
-		MetActivity m = new MetActivity(name, metsvalue, minutes);
+		MetActivity m = new MetActivity(uuid, name, metsvalue, minutes);
 		m.setDateSaved(date);
 		
 		return m;

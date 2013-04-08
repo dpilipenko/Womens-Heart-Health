@@ -31,7 +31,7 @@
         </activity>
         <activity android:name="com.example.womenshearthealth.WeeksMetListFragment" >
         </activity>
-        <activity android:name="com.example.womenshearthealth.WeeksMetActivities" >
+        <activity android:name="com.example.womenshearthealth.ShowAllMetsActivity" >
         </activity>
         <activity android:name="com.example.womenshearthealth.TargetHRInformationActivity" >
         </activity>

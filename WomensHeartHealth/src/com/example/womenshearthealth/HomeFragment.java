@@ -298,7 +298,7 @@ public class HomeFragment extends Fragment implements OnClickListener {
 		
 		switch (v.getId()) {
 		case R.id.graph_card: //Display past activities
-			intent = new Intent(getActivity(), WeeksMetActivities.class);
+			intent = new Intent(getActivity(), ShowAllMetsActivity.class);
 			getActivity().startActivity(intent);
 			break;
 		case R.id.target_hr_card: //Display info on target heart rates

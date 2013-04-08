@@ -8,7 +8,7 @@ import android.view.Menu;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-public class WeeksMetActivities extends Activity {
+public class ShowAllMetsActivity extends Activity {
 
 	private ListView listview;
 	private ArrayAdapter<MetActivity> listviewadapter;

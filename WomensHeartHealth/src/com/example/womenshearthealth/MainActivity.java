@@ -76,10 +76,10 @@ public class MainActivity extends Activity {
 	    	  dismissSplashScreen();
 	    	  
 	    	  if (isInitalRun()) {
-	    		  
+	    		  SettingsHelper.setInitialRun(MainActivity.this, false);
 	    		  Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
 	    		  startActivity(intent);
-					
+				
 				} else {
 					
 				}

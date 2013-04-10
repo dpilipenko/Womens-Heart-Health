@@ -56,10 +56,19 @@ public class ShowAllMetsActivity extends Activity implements OnItemClickListener
 			int min = metActivity.getMinutes();
 			AlertDialog.Builder alert = new AlertDialog.Builder(this);
 			alert.setTitle(""+name);
-			alert.setMessage("You did "+name+" for "+min+" minutes");
+			alert.setMessage("How many minutes did you "+name+"?:");
+			
+			final EditText input = new EditText(this);
+			input.setText(""+min);
+			input.setInputType(InputType.TYPE_CLASS_NUMBER);
+			alert.setView(input);
+			
 			alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int whichButton) {
 					// Do nothing
+					int newval = Integer.valueOf(input.getText().toString());
+					metActivity.setMinutes(newval);
+					dbhelper.saveMetActivity(metActivity);
 				}
 			});
 

@@ -83,6 +83,18 @@ public class METSDBAdapter {
 
 	}
 
+	public void saveMetActivity(MetActivity activity, Date date) {
+		
+		// find an activity with same uuid
+		MetActivity original = getMetActivityByUUID(activity.getUUID());
+		
+		// if exsits then delete it
+		if (original != null) {
+			deleteMetActivityByUUID(activity.getUUID());
+		}
+		// then add met activity
+		addMetActivity(activity, date);
+	}
 
 	// Creates
 	public void addMetActivity(MetActivity activity, Date date) {
@@ -109,7 +121,7 @@ public class METSDBAdapter {
 	};
 	
 	// Deletes
-	public void deleteMetActivity(String activityUUID) {
+	public void deleteMetActivityByUUID(String activityUUID) {
 		db = dbHelper.getWritableDatabase();
 		db.delete(DATABASE_TABLE_NAME, COLUMN_UUID+"='"+activityUUID+"'", null);
 	}
@@ -154,6 +166,27 @@ public class METSDBAdapter {
 		dbHelper.close();
 		return activities;
 		
+	}
+	
+	private MetActivity getMetActivityByUUID(String validUUID) {
+		
+		String tblname = DATABASE_TABLE_NAME;
+		String col = COLUMN_UUID;
+		
+		String query = "SELECT * FROM "+tblname+"\n" +
+					   "WHERE "+col+" ='"+validUUID+"'";
+		
+		db = dbHelper.getReadableDatabase();
+		Cursor cursor = db.rawQuery(query, null);
+		cursor.moveToFirst();
+		if (cursor.getCount() > 0) {
+			MetActivity a = cursorToMetActivity(cursor);
+			dbHelper.close();
+			return a;
+		} else {
+			dbHelper.close();
+			return null;
+		}
 	}
 	
 	private MetActivity cursorToMetActivity(Cursor cursor) {

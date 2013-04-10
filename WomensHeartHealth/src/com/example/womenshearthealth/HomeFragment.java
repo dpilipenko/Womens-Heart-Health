@@ -179,7 +179,7 @@ public class HomeFragment extends Fragment implements OnClickListener {
 		weekTotal.setTypeface(myTypeface);
 		metsLogged.setTypeface(myTypeface);
 
-		buildChart();
+		buildMetsChart();
 
 	}
 	
@@ -193,6 +193,30 @@ public class HomeFragment extends Fragment implements OnClickListener {
 		}
 		return count;
 	}
+	
+
+	private void buildMetsChart() {
+		ChartView c = (ChartView)activity.findViewById(R.id.chart_view);
+		
+		LinearSeries weeklyMetsSeries = new LinearSeries();
+		weeklyMetsSeries.setLineColor(0xFFFF99CC);
+		weeklyMetsSeries.setLineWidth(4);
+		
+		List<LinearPoint> points1 = getLinearPointsForTheWeek();
+		for(LinearPoint p: points1) {
+			weeklyMetsSeries.addPoint(p);
+		}
+		
+		int age = SettingsHelper.getAge(activity);
+		double targetLevel = CalculationsHelper.TARGET_85;
+		double capacity = CalculationsHelper.getTargetPredictedExerciseCapacityFromAge(age, targetLevel);
+		
+		int a = (int)capacity;
+		c.setLineHeight(a);
+		c.addSeries(weeklyMetsSeries);
+		
+	}
+	
 	
 	/**
 	 * This returns a list of 7 linear points for each of the 7 days of the week.
@@ -224,28 +248,12 @@ public class HomeFragment extends Fragment implements OnClickListener {
 		return points;
 	}
 
-	private void buildChart() {
-		ChartView c = (ChartView)activity.findViewById(R.id.chart_view);
-		
-		LinearSeries weeklyMetsSeries = new LinearSeries();
-		weeklyMetsSeries.setLineColor(0xFFFF99CC);
-		weeklyMetsSeries.setLineWidth(4);
-		
-		List<LinearPoint> points1 = getLinearPointsForTheWeek();
-		for(LinearPoint p: points1) {
-			weeklyMetsSeries.addPoint(p);
-		}
-		
-		int age = SettingsHelper.getAge(activity);
-		double targetLevel = CalculationsHelper.TARGET_85;
-		double capacity = CalculationsHelper.getTargetPredictedExerciseCapacityFromAge(age, targetLevel);
-		
-		int a = (int)capacity;
-		c.setLineHeight(a);
-		c.addSeries(weeklyMetsSeries);
-		
-	}
-	
+	/**
+	 * This method returns all the met activities saved for the current calendar week. (Sun - Sat)
+	 * The List represents a 7 day, each element of the list represents a day of the week
+	 * Each Set is a collection of all the met activities for that day
+	 * @return
+	 */
 	private List<Set<MetActivity>> getMetActivitiesForTheWeek() {
 		
 		Calendar c = Calendar.getInstance();

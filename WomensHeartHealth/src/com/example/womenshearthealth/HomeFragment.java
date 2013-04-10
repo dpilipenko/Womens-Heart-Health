@@ -142,7 +142,7 @@ public class HomeFragment extends Fragment implements OnClickListener {
 		int bpm85 = CalculationsHelper.getTargetHeartRateFromAge(age, CalculationsHelper.TARGET_85);
 		int bpm100 = CalculationsHelper.getTargetHeartRateFromAge(age, CalculationsHelper.TARGET_MAX);
 		
-		double met = getMetsForWeek();
+		double met = getTotalMetsCountForWeek();
 		double cals = CalculationsHelper.getCaloriesFromMet(SettingsHelper.getWeight(this.getActivity()),met);
 		
 		//Grab text boxes from UI
@@ -183,7 +183,7 @@ public class HomeFragment extends Fragment implements OnClickListener {
 
 	}
 	
-	private double getMetsForWeek() {
+	private double getTotalMetsCountForWeek() {
 		double count = 0;
 		List<Set<MetActivity>> days = getMetActivitiesForTheWeek();
 		for (Set<MetActivity> day: days) {
@@ -192,6 +192,36 @@ public class HomeFragment extends Fragment implements OnClickListener {
 			}
 		}
 		return count;
+	}
+	
+	/**
+	 * This returns a list of 7 linear points for each of the 7 days of the week.
+	 * The y-value is the highest recorded met activity for that day.
+	 * @return
+	 */
+	private List<LinearPoint> getLinearPointsForTheWeek() {
+
+		List<Set<MetActivity>> days = getMetActivitiesForTheWeek();
+		
+		ArrayList<LinearPoint> points = new ArrayList<LinearPoint>();
+		for (int day = 0; day < 7; day++) {
+			
+			double max = 0; // there is no such thing as negative met values
+			Set<MetActivity> activities = days.get(day);
+			for (MetActivity activity: activities) {
+				double metval = activity.getMetsvalue();
+				if (max < metval) {
+					max = metval;
+				}
+			}
+			
+			points.add(new LinearPoint(day, max));
+			Log.v("Mets","day:"+day+" max:"+max);
+			
+		}
+		
+		
+		return points;
 	}
 
 	private void buildChart() {
@@ -206,30 +236,14 @@ public class HomeFragment extends Fragment implements OnClickListener {
 			weeklyMetsSeries.addPoint(p);
 		}
 		
+		int age = SettingsHelper.getAge(activity);
+		double targetLevel = CalculationsHelper.TARGET_85;
+		double capacity = CalculationsHelper.getTargetPredictedExerciseCapacityFromAge(age, targetLevel);
 		
-		
-		LinearSeries targetMetsSeries = new LinearSeries();
-		targetMetsSeries.setLineColor(0xFF0099CC);
-		targetMetsSeries.setLineWidth(6);
-		
-		int age = SettingsHelper.getAge(getActivity());
-		double target = CalculationsHelper.TARGET_85;
-		double capacity = CalculationsHelper.getTargetPredictedExerciseCapacityFromAge(age, target);
-		ArrayList<LinearPoint> points2 = new ArrayList<LinearPoint>();
-		points2.add(new LinearPoint((double)1, (double)50));
-		points2.add(new LinearPoint((double)5, (double)50));/*
-		for (int day = 0; day < 7; day++) {
-			points2.add(new LinearPoint(day, 50.0));
-		}
-		*/
-		for(LinearPoint p: points2) {
-			targetMetsSeries.addPoint(p);
-		}
-		
-		c.setLineHeight(5);
-		c.setLineHeight(90);
+		int a = (int)capacity;
+		c.setLineHeight(a);
 		c.addSeries(weeklyMetsSeries);
-		c.addSeries(targetMetsSeries);
+		
 	}
 	
 	private List<Set<MetActivity>> getMetActivitiesForTheWeek() {
@@ -246,7 +260,6 @@ public class HomeFragment extends Fragment implements OnClickListener {
 		lowerLimit.roll(Calendar.DAY_OF_WEEK, -1*daysSinceSunday);
 		
 		Calendar dayCursor = lowerLimit;
-		dayCursor.roll(Calendar.MONTH, true);
 		Date sunday = dayCursor.getTime();
 		dayCursor.roll(Calendar.DATE, true);
 		Date monday = dayCursor.getTime();
@@ -273,24 +286,7 @@ public class HomeFragment extends Fragment implements OnClickListener {
 		return days;
 	}
 	
-	private List<LinearPoint> getLinearPointsForTheWeek() {
-
-		List<Set<MetActivity>> days = getMetActivitiesForTheWeek();
-		
-		ArrayList<LinearPoint> points = new ArrayList<LinearPoint>();
-		for (int day = 0; day < 7; day++) {
-			int count = 0;
-			Set<MetActivity> activities = days.get(day);
-			for(MetActivity ma: activities) {
-				count += ma.getMetMinutes();
-			}
-			Log.v("Mets","day:"+day+" count:"+count);
-			points.add(new LinearPoint(day, count));
-		}
-		
-		
-		return points;
-	}
+	
 
 	@Override
 	public void onClick(View v) {

@@ -93,6 +93,8 @@ public class METSDBAdapter {
 		String name = activity.getName();
 		double metsvalue = activity.getMetsvalue();
 		int minutes = activity.getMinutes();
+		
+		
 		long datelong = date.getTime();
 		
 		dbInputValues.put(COLUMN_UUID, uuid);
@@ -151,13 +153,8 @@ public class METSDBAdapter {
 		}
 		dbHelper.close();
 		return activities;
-					   
 		
 	}
-	
-	
-	
-	
 	
 	private MetActivity cursorToMetActivity(Cursor cursor) {
 		

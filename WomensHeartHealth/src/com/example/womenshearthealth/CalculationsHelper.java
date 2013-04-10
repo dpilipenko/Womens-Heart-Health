@@ -37,10 +37,10 @@ public class CalculationsHelper {
 	/**
 	 * Returns the Predicted Exercise Capacity at various target levels based on Doctor Gulati's research
 	 * @param age User's age in years
-	 * @param hrTarget The target level desired. Look at CalculationsHelper.TARGET_*
+	 * @param targetLevel The target level desired. Look at CalculationsHelper.TARGET_*
 	 * @return
 	 */
-	public static double getTargetPredictedExerciseCapacityFromAge(int age, double hrTarget) {
+	public static double getTargetPredictedExerciseCapacityFromAge(int age, double targetLevel) {
 		/*
 		 * From:
 		 * 	The Prognostic Value of a Nomogram for Exercise Capacity in Women:
@@ -49,11 +49,11 @@ public class CalculationsHelper {
 		double maxHR = 14.7 - (0.13 * age);
 		
 		// return the desired ratio of the Target Predicted Excercise Capacity
-		if (hrTarget == TARGET_MAX) {
+		if (targetLevel == TARGET_MAX) {
 			return (1.0 * maxHR);
-		} else if (hrTarget == TARGET_85) {
+		} else if (targetLevel == TARGET_85) {
 			return (0.85 * maxHR);
-		} else if (hrTarget == TARGET_50) {
+		} else if (targetLevel == TARGET_50) {
 			return (0.50 * maxHR);
 		} else {
 			return 0.0;

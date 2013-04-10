@@ -65,8 +65,7 @@ public class MetActivity extends GeneralMetActivity {
 		if (dateSaved != null) {
 			Calendar c = Calendar.getInstance();
 			c.setTime(dateSaved);
-			//String month = c.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.US);
-			int month = Integer.valueOf(c.get(Calendar.MONTH));
+			int month = Integer.valueOf(c.get(Calendar.MONTH))+1;
 			int day = Integer.valueOf(c.get(Calendar.DAY_OF_MONTH));
 			String date = "("+month+"/"+day+")";
 			

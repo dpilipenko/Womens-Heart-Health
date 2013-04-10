@@ -215,6 +215,12 @@ public class HomeFragment extends Fragment implements OnClickListener {
 		
 	}
 	
+	private void buildCalsChart() {
+		
+		
+		
+	}
+	
 	private List<LinearPoint> getCaloriePointsForTheWeek() {
 		List<Set<MetActivity>> days = getMetActivitiesForTheWeek();
 		

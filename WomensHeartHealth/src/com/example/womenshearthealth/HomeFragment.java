@@ -134,8 +134,6 @@ public class HomeFragment extends Fragment implements OnClickListener {
 		String[] randomFacts = res.getStringArray(R.array.random_facts_array);
 		Random rand = new Random();
 
-		//loads saved data, or -1 when no there is no such saved data yet
-		//the passed-in parameter to use SettingsHelper should always be 'this'
 		int age = SettingsHelper.getAge(this.getActivity());
 		
 		int bpm50 = CalculationsHelper.getTargetHeartRateFromAge(age, CalculationsHelper.TARGET_50);
@@ -143,7 +141,7 @@ public class HomeFragment extends Fragment implements OnClickListener {
 		int bpm100 = CalculationsHelper.getTargetHeartRateFromAge(age, CalculationsHelper.TARGET_MAX);
 		
 		double met = getTotalMetsCountForWeek();
-		double cals = CalculationsHelper.getCaloriesFromMet(SettingsHelper.getWeight(this.getActivity()),met);
+		double cals = CalculationsHelper.getCaloriesFromMetHours(SettingsHelper.getWeight(this.getActivity()),met);
 		
 		//Grab text boxes from UI
 		TextView BPM1 = (TextView)this.getActivity().findViewById(R.id.BPM1);
@@ -215,6 +213,27 @@ public class HomeFragment extends Fragment implements OnClickListener {
 		c.setLineHeight(a);
 		c.addSeries(weeklyMetsSeries);
 		
+	}
+	
+	private List<LinearPoint> getCaloriePointsForTheWeek() {
+		List<Set<MetActivity>> days = getMetActivitiesForTheWeek();
+		
+		ArrayList<LinearPoint> points = new ArrayList<LinearPoint>();
+		for (int day = 0; day < 7; day++) {
+			Set<MetActivity> activities = days.get(day);
+			int count = 0;
+			for (MetActivity activity: activities) {
+				count += activity.getMetMinutes();
+			}
+			int weight = SettingsHelper.getWeight(getActivity());
+			double cals = CalculationsHelper.getCaloriesFromMetMinutes(weight, count);
+			points.add(new LinearPoint(day, cals));
+			Log.v("Cals","day:"+day+" cals:"+cals);
+			
+		}
+		
+		
+		return points;
 	}
 	
 	

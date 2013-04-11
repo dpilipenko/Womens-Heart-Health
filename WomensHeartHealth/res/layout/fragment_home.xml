@@ -22,7 +22,7 @@
             android:layout_marginTop="20dp"
             android:layout_weight="1"
             android:orientation="vertical" >
-
+<!-- Start graph chart -->
             <LinearLayout
                 android:id="@+id/graph_card"
                 android:layout_width="match_parent"
@@ -68,7 +68,7 @@
                 android:ems="10"
                 android:text=" "
                 android:textAppearance="?android:attr/textAppearanceLarge" />
-
+ <!-- end graph chart -->>
             <LinearLayout
                 android:id="@+id/target_hr_card"
                 android:layout_width="match_parent"
@@ -159,7 +159,54 @@
                 android:ems="10"
                 android:text=" "
                 android:textAppearance="?android:attr/textAppearanceLarge" />
+<!-- start -->
+            <LinearLayout
+                android:id="@+id/graph_card2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/back"
+                android:orientation="vertical" >
 
+                <TextView
+                    android:id="@+id/metsLoggedTextView2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:ems="10"
+                    android:gravity="left"
+                    android:text="@string/mets_logged"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textColor="@color/googleNowGray" />
+
+                <com.fima.chartview.ChartView
+                    android:id="@+id/chart_view2"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dip"
+                    chartview:bottomLabelHeight="20dp"
+                    chartview:gridLineColor="#E5E5E5"
+                    chartview:gridLineWidth="1dp"
+                    chartview:gridLinesHorizontal="6"
+                    chartview:gridLinesVertical="5"
+                    chartview:leftLabelWidth="56dp" />
+            </LinearLayout>
+
+            <View
+                android:id="@+id/graphCardDropshadow2"
+                android:layout_width="fill_parent"
+                android:layout_height="2dip"
+                android:layout_below="@id/graph_card"
+                android:background="@drawable/dropshadow" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:text=" "
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+ <!-- end graph chart -->>
+            
             <LinearLayout
                 android:id="@+id/totals_card"
                 android:layout_width="match_parent"

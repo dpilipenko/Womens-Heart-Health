@@ -12,6 +12,8 @@ import java.util.Set;
 import com.fima.chartview.ChartView;
 import com.fima.chartview.LinearSeries;
 import com.fima.chartview.LinearSeries.LinearPoint;
+import com.fima.chartview.ValueLabelAdapter;
+import com.fima.chartview.ValueLabelAdapter.LabelOrientation;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -29,6 +31,9 @@ import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+//labels
+
 
 public class HomeFragment extends Fragment implements OnClickListener {
 		
@@ -60,6 +65,10 @@ public class HomeFragment extends Fragment implements OnClickListener {
 	graphCard.setOnClickListener(this);
 	LinearLayout targetHRCard = (LinearLayout) this.getActivity().findViewById(R.id.target_hr_card);
 	targetHRCard.setOnClickListener(this);
+	
+	LinearLayout graphCard2 = (LinearLayout) this.getActivity().findViewById(R.id.graph_card2);
+	targetHRCard.setOnClickListener(this);
+	
 	LinearLayout totalsCard = (LinearLayout) this.getActivity().findViewById(R.id.totals_card);
 	totalsCard.setOnClickListener(this);
 	LinearLayout randomFactsCard = (LinearLayout) this.getActivity().findViewById(R.id.random_facts_card);
@@ -67,16 +76,19 @@ public class HomeFragment extends Fragment implements OnClickListener {
 
 	graphCard.setVisibility(8);
 	targetHRCard.setVisibility(8);
+	graphCard2.setVisibility(8);
 	totalsCard.setVisibility(8);
 	randomFactsCard.setVisibility(8);
 	
 	View graphCardDropshadow = (View) this.getActivity().findViewById(R.id.graphCardDropshadow);
 	View targetHRCardDropshadow = (View) this.getActivity().findViewById(R.id.targerHRCardDropshadow);
+	View graphCardDropshadow2 = (View) this.getActivity().findViewById(R.id.graphCardDropshadow2);
 	View totalsCardDropshadow = (View) this.getActivity().findViewById(R.id.totalsCardDropshadow);
 	View randomFactCardDropshadow = (View) this.getActivity().findViewById(R.id.factsCardDropshadow);
 
 	graphCardDropshadow.setVisibility(8);
 	targetHRCardDropshadow.setVisibility(8);
+	graphCardDropshadow2.setVisibility(8);
 	totalsCardDropshadow.setVisibility(8);
 	randomFactCardDropshadow.setVisibility(8);
 	
@@ -89,6 +101,8 @@ public class HomeFragment extends Fragment implements OnClickListener {
 		startAnimationPopOut(R.id.graphCardDropshadow);
 		startAnimationPopOut(R.id.target_hr_card);
 		startAnimationPopOut(R.id.targerHRCardDropshadow);
+		startAnimationPopOut(R.id.graph_card2);
+		startAnimationPopOut(R.id.graphCardDropshadow2);
 		startAnimationPopOut(R.id.totals_card);
 		startAnimationPopOut(R.id.totalsCardDropshadow);
 		startAnimationPopOut(R.id.random_facts_card);
@@ -178,7 +192,7 @@ public class HomeFragment extends Fragment implements OnClickListener {
 		metsLogged.setTypeface(myTypeface);
 
 		buildMetsChart();
-
+		buildCalsChart();
 	}
 	
 	private double getTotalMetsCountForWeek() {
@@ -209,13 +223,46 @@ public class HomeFragment extends Fragment implements OnClickListener {
 		double targetLevel = CalculationsHelper.TARGET_85;
 		double capacity = CalculationsHelper.getTargetPredictedExerciseCapacityFromAge(age, targetLevel);
 		
+		
 		int a = (int)capacity;
 		c.setLineHeight(a);
 		c.addSeries(weeklyMetsSeries);
 		
+		//label
+				//TODO
+			    
+				c.setLeftLabelAdapter(new ValueLabelAdapter(getActivity(), LabelOrientation.VERTICAL));
+				c.setBottomLabelAdapter(new ValueLabelAdapter(getActivity(), LabelOrientation.HORIZONTAL));
+				
+		
 	}
 	
 	private void buildCalsChart() {
+		ChartView c = (ChartView)activity.findViewById(R.id.chart_view2);
+		
+		LinearSeries weeklyCalSeries = new LinearSeries();
+		weeklyCalSeries.setLineColor(0xFFFF99CC);
+		weeklyCalSeries.setLineWidth(4);
+		
+		List<LinearPoint> points1 = getCaloriePointsForTheWeek();
+		for(LinearPoint p: points1) {
+			weeklyCalSeries.addPoint(p);
+		}
+		
+		//int age = SettingsHelper.getAge(activity);
+		//double targetLevel = CalculationsHelper.TARGET_85;
+		//double capacity = CalculationsHelper.getTargetPredictedExerciseCapacityFromAge(age, targetLevel);
+		
+		
+		//int a = (int)capacity;
+		//c.setLineHeight(a);
+		c.addSeries(weeklyCalSeries);
+		
+		//label
+				//TODO
+			    
+				c.setLeftLabelAdapter(new ValueLabelAdapter(getActivity(), LabelOrientation.VERTICAL));
+				c.setBottomLabelAdapter(new ValueLabelAdapter(getActivity(), LabelOrientation.HORIZONTAL));
 		
 		
 		
@@ -336,6 +383,10 @@ public class HomeFragment extends Fragment implements OnClickListener {
 			break;
 		case R.id.totals_card: //Display info on METs
 			intent = new Intent(getActivity(), MetsInformationActivity.class);
+			getActivity().startActivity(intent);
+			break;
+		case R.id.graph_card2: //Display past activites
+			intent = new Intent(getActivity(), ShowAllMetsActivity.class);
 			getActivity().startActivity(intent);
 			break;
 		}

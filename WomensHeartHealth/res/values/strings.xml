@@ -14,7 +14,8 @@
     <string name="pref_weight_title">Your Weight:</string>
     <string name="pref_weight_summary">Please enter in your weight in years.</string>
     <string name="pref_isinitialrun_key">whh_isinitialrun</string>
-    <string name="mets_logged">METs Logged This Week</string>
+    <string name="mets_logged">Highest MET Achievent Per Day</string>
+    <string name="cals_logged">Calories Logged This Week</string>
     <string name="target_hr">Target Heart Rates</string>
     <string name="weeks_totals">This Week\'s Totals</string>
     <string name="random_facts_title">The More You Know</string>

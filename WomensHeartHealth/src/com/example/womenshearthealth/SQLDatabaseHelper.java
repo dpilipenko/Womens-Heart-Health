@@ -27,11 +27,11 @@ public class SQLDatabaseHelper {
 	
 	public void saveMetActivity(MetActivity activity) {
     	Date date = new Date();
-    	db.addMetActivity(activity, date);
+    	db.saveMetActivity(activity, date);
     }
 	
 	public void deleteMetActivity(MetActivity activity) {
-		db.deleteMetActivity(activity.getUUID());
+		db.deleteMetActivityByUUID(activity.getUUID());
 	}
 	
 	public List<MetActivity> getAllMetActivities() {

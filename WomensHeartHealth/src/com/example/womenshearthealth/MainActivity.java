@@ -3,26 +3,40 @@ package com.example.womenshearthealth;
 import java.util.Calendar;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.View.OnTouchListener;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class MainActivity extends Activity {
 	
 	private ActionBar actionBar; //holds the tabs
+	private Dialog splashscreenDialog;
+	private int SPLASH_DURATION = 2000;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		//takes care of whatever overhead it needs
 		super.onCreate(savedInstanceState);
+
+        showSplashScreen();
+        
 		//loads activity_main.xml UI
 		setContentView(R.layout.activity_main);
+		
 		//adds tab navigation to activity
 		setupTabs();
         if (savedInstanceState != null) {
@@ -30,6 +44,62 @@ public class MainActivity extends Activity {
         }
     }
 
+	protected void showSplashScreen() {
+		splashscreenDialog = new Dialog(this, R.style.SplashScreen);
+		splashscreenDialog.setTitle(R.string.app_name);
+		ImageView i = new ImageView(this);
+		
+		i.setOnTouchListener(new OnTouchListener()
+        {
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event)
+            {
+            	dismissSplashScreen(); 
+                return false;
+            }
+            
+       });
+		
+		Bitmap myImage = BitmapFactory.decodeResource(getResources(), R.drawable.splashscreen);
+		i.setImageBitmap(myImage);
+		splashscreenDialog.setContentView(i);
+		splashscreenDialog.setCancelable(false);
+		splashscreenDialog.show();
+		
+		// Set Runnable to remove splash screen just in case
+	    final Handler handler = new Handler();
+	    handler.postDelayed(new Runnable() {
+	      @Override
+	      public void run() {
+
+	    	  dismissSplashScreen();
+	    	  
+	    	  if (isInitalRun()) {
+	    		  SettingsHelper.setInitialRun(MainActivity.this, false);
+	    		  Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+	    		  startActivity(intent);
+				
+				} else {
+					
+				}
+	    	  
+	      }
+	    }, SPLASH_DURATION);
+		
+	}
+
+	private boolean isInitalRun() {
+		return SettingsHelper.isInitialRun(this);
+	}
+	
+	protected void dismissSplashScreen() {
+		if (splashscreenDialog != null) {
+			splashscreenDialog.dismiss();
+			splashscreenDialog = null;
+		}
+	}
+	
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);

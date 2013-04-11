@@ -8,7 +8,7 @@ import android.content.Intent;
 public class SplashScreenActivity extends Activity {
 
 	private boolean backButtonIsPressed;
-	public static final int SPLASH_DURATION = 1000; // 1 second
+	public static final int SPLASH_DURATION = 0; // 0 seconds
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

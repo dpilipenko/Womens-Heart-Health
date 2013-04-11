@@ -139,7 +139,7 @@ public class CalculationsHelperTest extends TestCase {
 		weight = 220;
 		metHours = 3;
 		expectedCals = 299;
-		calculatedCals = CalculationsHelper.getCaloriesFromMet(weight, metHours);
+		calculatedCals = CalculationsHelper.getCaloriesFromMetHours(weight, metHours);
 		assertTrue("Calculated Calories (" + calculatedCals + ") outside acceptable error of " +
 					"Expected Calories (" + expectedCals + "). Acceptable Error: " + ACCEPTABLE_PERCENT_ERROR,
 				(Math.abs(expectedCals - calculatedCals) / expectedCals) < ACCEPTABLE_PERCENT_ERROR);
@@ -147,7 +147,7 @@ public class CalculationsHelperTest extends TestCase {
 		weight = 100;
 		metHours = 13.5;
 		expectedCals = 612;
-		calculatedCals = CalculationsHelper.getCaloriesFromMet(weight, metHours);
+		calculatedCals = CalculationsHelper.getCaloriesFromMetHours(weight, metHours);
 		assertTrue("Calculated Calories (" + calculatedCals + ") outside acceptable error of " +
 					"Expected Calories (" + expectedCals + "). Acceptable Error: " + ACCEPTABLE_PERCENT_ERROR,
 				(Math.abs(expectedCals - calculatedCals) / expectedCals) < ACCEPTABLE_PERCENT_ERROR);
@@ -155,7 +155,7 @@ public class CalculationsHelperTest extends TestCase {
 		weight = 135;
 		metHours = 3.3;
 		expectedCals = 202;
-		calculatedCals = CalculationsHelper.getCaloriesFromMet(weight, metHours);
+		calculatedCals = CalculationsHelper.getCaloriesFromMetHours(weight, metHours);
 		assertTrue("Calculated Calories (" + calculatedCals + ") outside acceptable error of " +
 					"Expected Calories (" + expectedCals + "). Acceptable Error: " + ACCEPTABLE_PERCENT_ERROR,
 				(Math.abs(expectedCals - calculatedCals) / expectedCals) < ACCEPTABLE_PERCENT_ERROR);
@@ -163,7 +163,7 @@ public class CalculationsHelperTest extends TestCase {
 		weight = 160;
 		metHours = 6.5;
 		expectedCals = 472;
-		calculatedCals = CalculationsHelper.getCaloriesFromMet(weight, metHours);
+		calculatedCals = CalculationsHelper.getCaloriesFromMetHours(weight, metHours);
 		assertTrue("Calculated Calories (" + calculatedCals + ") outside acceptable error of " +
 					"Expected Calories (" + expectedCals + "). Acceptable Error: " + ACCEPTABLE_PERCENT_ERROR,
 				(Math.abs(expectedCals - calculatedCals) / expectedCals) < ACCEPTABLE_PERCENT_ERROR);

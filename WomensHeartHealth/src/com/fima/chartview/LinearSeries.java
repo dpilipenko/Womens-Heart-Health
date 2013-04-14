@@ -1,6 +1,8 @@
 package com.fima.chartview;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.PointF;
 import android.graphics.Rect;
 
@@ -20,6 +22,9 @@ public class LinearSeries extends AbstractSeries {
 		}
 
 		mLastPoint.set(x, y);
+
+		canvas.drawCircle(x, y, 6, mPaint);
+		
 	}
 
 	@Override

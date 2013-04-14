@@ -206,8 +206,8 @@ public class ChartView extends RelativeLayout {
 		final double[] values = new double[mGridLinesHorizontal + 2];
 		
 		//commented out original code so that bottom labels inc by 1.
-		//final double step = mValueBounds.width() / (mGridLinesHorizontal + 1);
-		final double step = 1;
+		final double step = mValueBounds.width() / (mGridLinesHorizontal + 1);
+		//final double step = 1;
 		for (int i = 0; i < values.length; i++) {
 			values[i] = mValueBounds.left + (step * i);
 		}

@@ -26,8 +26,103 @@
             android:layout_weight="1"
             android:gravity="center_horizontal"
             android:orientation="vertical" >
+           <!-- Start Heart Rate card -->
 
-            <LinearLayout 
+            <LinearLayout
+                android:id="@+id/target_hr_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/back"
+                android:orientation="horizontal" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        android:id="@+id/targertHeartRatesTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:layout_marginBottom="10dp"
+                        android:ems="10"
+                        android:gravity="left"
+                        android:text="@string/target_hr"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textColor="@color/googleNowGray" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" >
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="left"
+                            android:layout_marginRight="5dp"
+                            android:adjustViewBounds="true"
+                            android:contentDescription="@string/about_fragment_image_description"
+                            android:fitsSystemWindows="false"
+                            android:src="@drawable/target" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical" >
+
+                            <TextView
+                                android:id="@+id/BPM1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:ems="10"
+                                android:gravity="left"
+                                android:textAppearance="?android:attr/textAppearanceSmall"
+                                android:textColor="@color/googleNowGray" />
+
+                            <TextView
+                                android:id="@+id/BPM2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:ems="10"
+                                android:gravity="left"
+                                android:textAppearance="?android:attr/textAppearanceSmall"
+                                android:textColor="@color/googleNowGray" />
+
+                            <TextView
+                                android:id="@+id/BPM3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:ems="10"
+                                android:gravity="left"
+                                android:textAppearance="?android:attr/textAppearanceSmall"
+                                android:textColor="@color/googleNowGray" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <View
+                android:id="@+id/targerHRCardDropshadow"
+                android:layout_width="fill_parent"
+                android:layout_height="2dip"
+                android:layout_below="@id/target_hr_card"
+                android:background="@drawable/dropshadow" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:text=" "
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+            <!-- End Heart Rate card -->
+            
+                        <!-- Start METs card -->
+
+            <LinearLayout
                 android:id="@+id/graph_card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -43,22 +138,20 @@
                     android:layout_marginRight="10dp"
                     android:ems="10"
                     android:gravity="left"
-                    android:text="METs Logged This Week"
+                    android:text="@string/mets_logged"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:textColor="@color/googleNowGray" />
 
-            <com.fima.chartview.ChartView
-                android:id="@+id/chart_view"
-                android:layout_width="match_parent"
-                android:layout_height="150dip"
-                android:layout_marginRight="20dp"
-                chartview:bottomLabelHeight="20dp"
-                chartview:gridLineColor="#E5E5E5"
-                chartview:gridLineWidth="1dp"
-                chartview:gridLinesHorizontal="6"
-                chartview:gridLinesVertical="5"
-                chartview:leftLabelWidth="56dp" />
-            
+                <com.fima.chartview.ChartView
+                    android:id="@+id/chart_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dip"
+                    chartview:bottomLabelHeight="20dp"
+                    chartview:gridLineColor="#E5E5E5"
+                    chartview:gridLineWidth="1dp"
+                    chartview:gridLinesHorizontal="0"
+                    chartview:gridLinesVertical="5"
+                    chartview:leftLabelWidth="56dp" />
             </LinearLayout>
 
             <View
@@ -74,169 +167,49 @@
                 android:ems="10"
                 android:text=" "
                 android:textAppearance="?android:attr/textAppearanceLarge" />
+            <!-- End METs card -->
+
+
+            <!-- Start Calories card -->
 
             <LinearLayout
+                android:id="@+id/graph_card2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal" >
+                android:background="@drawable/back"
+                android:orientation="vertical" >
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/metsLoggedTextView2"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical" >
-
-                    <LinearLayout
-                        android:id="@+id/target_hr_card"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="10dp"
-                        android:background="@drawable/back"
-                        android:orientation="horizontal" >
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="left"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginRight="10dp"
-                            android:orientation="vertical" >
-
-                            <TextView
-                                android:id="@+id/targertHeartRatesTextView"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="left"
-                                android:layout_marginBottom="10dp"
-                                android:ems="10"
-                                android:gravity="left"
-                                android:text="Target Heart Rates"
-                                android:textAppearance="?android:attr/textAppearanceLarge"
-                                android:textColor="@color/googleNowGray" />
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content" >
-
-                                <ImageView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="left"
-                                    android:layout_marginRight="5dp"
-                                    android:adjustViewBounds="true"
-                                    android:contentDescription="@string/about_fragment_image_description"
-                                    android:fitsSystemWindows="false"
-                                    android:src="@drawable/target" />
-
-                                <LinearLayout
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="match_parent"
-                                    android:orientation="vertical" >
-
-                                    <TextView
-                                        android:id="@+id/BPM1"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:ems="10"
-                                        android:gravity="left"
-                                        android:textAppearance="?android:attr/textAppearanceSmall"
-                                        android:textColor="@color/googleNowGray" />
-
-                                    <TextView
-                                        android:id="@+id/BPM2"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:ems="10"
-                                        android:gravity="left"
-                                        android:textAppearance="?android:attr/textAppearanceSmall"
-                                        android:textColor="@color/googleNowGray" />
-
-                                    <TextView
-                                        android:id="@+id/BPM3"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:ems="10"
-                                        android:gravity="left"
-                                        android:textAppearance="?android:attr/textAppearanceSmall"
-                                        android:textColor="@color/googleNowGray" />
-                                </LinearLayout>
-                            </LinearLayout>
-                        </LinearLayout>
-                    </LinearLayout>
-
-                    <View
-                        android:id="@+id/targerHRCardDropshadow"
-                        android:layout_width="fill_parent"
-                        android:layout_height="2dip"
-                        android:background="@drawable/dropshadow" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/totals_card"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right"
+                    android:layout_marginBottom="10dp"
                     android:layout_marginLeft="10dp"
-                    android:background="@drawable/back"
-                    android:orientation="vertical" >
+                    android:layout_marginRight="10dp"
+                    android:ems="10"
+                    android:gravity="left"
+                    android:text="@string/cals_logged"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textColor="@color/googleNowGray" />
 
-                    <TextView
-                        android:id="@+id/weeksTotalTextView"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="10dp"
-                        android:layout_marginLeft="10dp"
-                        android:ems="10"
-                        android:gravity="left"
-                        android:text="This Week&apos;s Totals"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:textColor="@color/googleNowGray" />
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" >
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="left"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginRight="5dp"
-                            android:adjustViewBounds="true"
-                            android:contentDescription="@string/about_fragment_image_description"
-                            android:fitsSystemWindows="false"
-                            android:src="@drawable/calendar" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical" >
-
-                            <TextView
-                                android:id="@+id/METs"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:ems="10"
-                                android:gravity="left"
-                                android:textAppearance="?android:attr/textAppearanceSmall"
-                                android:textColor="@color/googleNowGray" />
-
-                            <TextView
-                                android:id="@+id/Calories"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:ems="10"
-                                android:gravity="left"
-                                android:textAppearance="?android:attr/textAppearanceSmall" />
-                        </LinearLayout>
-                    </LinearLayout>
-
-                    <View
-                        android:id="@+id/totalsCardDropshadow"
-                        android:layout_width="fill_parent"
-                        android:layout_height="2dip"
-                        android:background="@drawable/dropshadow" />
-                </LinearLayout>
+                <com.fima.chartview.ChartView
+                    android:id="@+id/chart_view2"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dip"
+                    chartview:bottomLabelHeight="20dp"
+                    chartview:gridLineColor="#E5E5E5"
+                    chartview:gridLineWidth="1dp"
+                    chartview:gridLinesHorizontal="0"
+                    chartview:gridLinesVertical="5"
+                    chartview:leftLabelWidth="56dp" />
             </LinearLayout>
+
+            <View
+                android:id="@+id/graphCardDropshadow2"
+                android:layout_width="fill_parent"
+                android:layout_height="2dip"
+                android:layout_below="@id/graph_card"
+                android:background="@drawable/dropshadow" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -244,6 +217,58 @@
                 android:ems="10"
                 android:text=" "
                 android:textAppearance="?android:attr/textAppearanceLarge" />
+            <!-- End Calories card -->
+
+            <!-- Start Random Facts Card -->
+
+            <LinearLayout
+                android:id="@+id/random_facts_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/back"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/randomFactsTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:ems="10"
+                    android:gravity="left"
+                    android:text="@string/random_facts_title"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textColor="@color/googleNowGray" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp" >
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical" >
+
+                        <TextView
+                            android:id="@+id/randomFact"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:ems="10"
+                            android:gravity="left"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:textColor="@color/googleNowGray" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <View
+                android:id="@+id/factsCardDropshadow"
+                android:layout_width="fill_parent"
+                android:layout_height="2dip"
+                android:background="@drawable/dropshadow" />
+            <!-- End Random Facts Card -->
         </LinearLayout>
 
     </RelativeLayout>

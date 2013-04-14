@@ -93,9 +93,9 @@ public class SQLDatabaseHelper {
 		startCal.set(Calendar.MINUTE, 0);
 		startCal.set(Calendar.SECOND, 0);
 		
-		endCal.set(Calendar.HOUR, 0);
-		endCal.set(Calendar.MINUTE, 0);
-		endCal.set(Calendar.SECOND, 0);
+		endCal.set(Calendar.HOUR, 11);
+		endCal.set(Calendar.MINUTE, 59);
+		endCal.set(Calendar.SECOND, 59);
 		
 		Date startTime = startCal.getTime();
 		Date endTime = endCal.getTime();

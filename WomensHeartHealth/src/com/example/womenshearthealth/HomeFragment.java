@@ -200,13 +200,6 @@ public class HomeFragment extends Fragment implements OnClickListener {
 			weeklyMetsSeries.addPoint(p);
 		}
 
-		int age = SettingsHelper.getAge(activity);
-		double targetLevel = CalculationsHelper.TARGET_85;
-		double capacity = CalculationsHelper
-				.getTargetPredictedExerciseCapacityFromAge(age, targetLevel);
-
-		int a = (int) capacity;
-		c.setLineHeight(a);
 		c.addSeries(weeklyMetsSeries);
 
 		// label

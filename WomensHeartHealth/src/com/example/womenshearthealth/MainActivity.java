@@ -1,6 +1,5 @@
 package com.example.womenshearthealth;
 
-
 import com.example.womenshearthealth.helpers.SettingsHelper;
 import com.example.womenshearthealth.utils.TabListener;
 
@@ -21,34 +20,30 @@ import android.view.View.OnTouchListener;
 import android.widget.ImageView;
 
 public class MainActivity extends Activity {
+
+	final private int SPLASH_DURATION = 2000;
 	
-	private ActionBar actionBar; //holds the tabs
-	private Dialog splashscreenDialog;
-	private int SPLASH_DURATION = 2000;
+	private ActionBar mActionBar;
+	private Dialog mSplashScreenDialog;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		//takes care of whatever overhead it needs
 		super.onCreate(savedInstanceState);
 
         showSplashScreen();
         
-		//loads activity_main.xml UI
-		setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main);
 		
-		//adds tab navigation to activity
-		setupTabs();
+        setupTabs();
         if (savedInstanceState != null) {
-        	actionBar.setSelectedNavigationItem(savedInstanceState.getInt("tab", 0));
+        	mActionBar.setSelectedNavigationItem(savedInstanceState.getInt("tab", 0));
         }
     }
 
 	protected void showSplashScreen() {
-		splashscreenDialog = new Dialog(this, R.style.SplashScreen);
-		splashscreenDialog.setTitle(R.string.app_name);
-		ImageView i = new ImageView(this);
 		
-		i.setOnTouchListener(new OnTouchListener()
+		ImageView splashscreen = new ImageView(this);
+		splashscreen.setOnTouchListener(new OnTouchListener()
         {
 
             @Override
@@ -60,14 +55,16 @@ public class MainActivity extends Activity {
             
        });
 		
-		Bitmap myImage = BitmapFactory.decodeResource(getResources(), R.drawable.splashscreen);
-		i.setImageBitmap(myImage);
-		splashscreenDialog.setContentView(i);
-		splashscreenDialog.setCancelable(false);
-		splashscreenDialog.show();
+		Bitmap image = BitmapFactory.decodeResource(getResources(), R.drawable.splashscreen);
+		splashscreen.setImageBitmap(image);
 		
-		// Set Runnable to remove splash screen just in case
-	    final Handler handler = new Handler();
+		mSplashScreenDialog = new Dialog(this, R.style.SplashScreen);
+		mSplashScreenDialog.setTitle(R.string.app_name);
+		mSplashScreenDialog.setContentView(splashscreen);
+		mSplashScreenDialog.setCancelable(false);
+		mSplashScreenDialog.show();
+		
+		final Handler handler = new Handler();
 	    handler.postDelayed(new Runnable() {
 	      @Override
 	      public void run() {
@@ -75,12 +72,15 @@ public class MainActivity extends Activity {
 	    	  dismissSplashScreen();
 	    	  
 	    	  if (isInitalRun()) {
-	    		  SettingsHelper.setInitialRun(MainActivity.this, false);
+	    		  setInitialRun(false);
+	    		  
+	    		  // user will be redirected to the settings activity in order to
+	    		  // save their weight and birthday
 	    		  Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
 	    		  startActivity(intent);
 				
 				} else {
-					
+					return;
 				}
 	    	  
 	      }
@@ -92,10 +92,14 @@ public class MainActivity extends Activity {
 		return SettingsHelper.isInitialRun(this);
 	}
 	
+	private void setInitialRun (boolean initRun) {
+		SettingsHelper.setInitialRun(this, initRun);
+	}
+	
 	protected void dismissSplashScreen() {
-		if (splashscreenDialog != null) {
-			splashscreenDialog.dismiss();
-			splashscreenDialog = null;
+		if (mSplashScreenDialog != null) {
+			mSplashScreenDialog.dismiss();
+			mSplashScreenDialog = null;
 		}
 	}
 	
@@ -119,13 +123,8 @@ public class MainActivity extends Activity {
 		switch(item.getItemId()) {
 		
 		case R.id.menu_settings: //user selects "Settings" from the menu
-			
-			//sets up a redirect from 'this' activity to a new instance of SettingsActivity
-			//this is done only to go from Activity to Activity, not for Fragments
 			Intent intent = new Intent(this, SettingsActivity.class);
-			//this executes the redirect
 			this.startActivity(intent);
-	
 			return true;
 			
 		default:
@@ -140,34 +139,29 @@ public class MainActivity extends Activity {
 	 */
 	private void setupTabs() {
 		
-		//initializes the action bar
-		actionBar = getActionBar();
-		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+		mActionBar = getActionBar();
+		mActionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
-		//creates a new tab, "Home"
-		Tab homeTab = actionBar.newTab();
+		// Home tab
+		Tab homeTab = mActionBar.newTab();
 		homeTab.setText("Home");
-		
-		//the TabListener waits for tab to be clicked on to execute code
-		//if you ever need to add a new tab, just follow the same pattern 
 		homeTab.setTabListener(new TabListener<HomeFragment>(this,
 				"home", HomeFragment.class));
-		//adds Home tab to the action bar
-		actionBar.addTab(homeTab);
+		mActionBar.addTab(homeTab);
 		
-		//repeat process for METs and About tab
-		
-		Tab metsTab = actionBar.newTab();
+		// METs tab
+		Tab metsTab = mActionBar.newTab();
 		metsTab.setText("METs");
 		metsTab.setTabListener(new TabListener<METListFragment>(this,
 				"mets", METListFragment.class));
-		actionBar.addTab(metsTab);
+		mActionBar.addTab(metsTab);
 		
-		Tab aboutTab = actionBar.newTab();
+		// About tab
+		Tab aboutTab = mActionBar.newTab();
 		aboutTab.setText("About");
 		aboutTab.setTabListener(new TabListener<AboutFragment>(this,
 				"about", AboutFragment.class));
-		actionBar.addTab(aboutTab);
+		mActionBar.addTab(aboutTab);
 		
 	}
 

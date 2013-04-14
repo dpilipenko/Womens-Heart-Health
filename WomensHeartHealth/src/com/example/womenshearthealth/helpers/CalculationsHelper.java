@@ -3,8 +3,8 @@ package com.example.womenshearthealth.helpers;
 public class CalculationsHelper {
 
 	public static final double TARGET_MAX = 1.0;
-	public static final double TARGET_85 = 0.85;
-	public static final double TARGET_50 = 0.5;
+	public static final double TARGET_85_PERCENT = 0.85;
+	public static final double TARGET_50_PERCENT = 0.5;
 	
 	/**
 	 * Returns the Heart Rates at various target levels based on Doctor Gulati's research
@@ -21,17 +21,22 @@ public class CalculationsHelper {
 		 */
 		double maxHR = 206 - (0.88 * age);
 		
-		// Return the desired ratio of the Target Heart Rate
 		if (hrTarget == TARGET_MAX) {
+			
 			return (int)(1.0 * maxHR);
-		} else if (hrTarget == TARGET_85) {
+			
+		} else if (hrTarget == TARGET_85_PERCENT) {
+			
 			return (int)(0.85 * maxHR);
-		} else if (hrTarget == TARGET_50) {
-			return (int)(0.5 * maxHR);
-		} else {
-			return 0;
-		}
 		
+		} else if (hrTarget == TARGET_50_PERCENT) {
+		
+			return (int)(0.5 * maxHR);
+		
+		} else {
+			
+			return 0;
+		}		
 	}
 	
 	/**
@@ -41,6 +46,7 @@ public class CalculationsHelper {
 	 * @return
 	 */
 	public static double getTargetPredictedExerciseCapacityFromAge(int age, double targetLevel) {
+		
 		/*
 		 * From:
 		 * 	The Prognostic Value of a Nomogram for Exercise Capacity in Women:
@@ -48,14 +54,20 @@ public class CalculationsHelper {
 		 */
 		double maxHR = 14.7 - (0.13 * age);
 		
-		// return the desired ratio of the Target Predicted Excercise Capacity
 		if (targetLevel == TARGET_MAX) {
+			
 			return (1.0 * maxHR);
-		} else if (targetLevel == TARGET_85) {
+			
+		} else if (targetLevel == TARGET_85_PERCENT) {
+			
 			return (0.85 * maxHR);
-		} else if (targetLevel == TARGET_50) {
+			
+		} else if (targetLevel == TARGET_50_PERCENT) {
+			
 			return (0.50 * maxHR);
+			
 		} else {
+			
 			return 0.0;
 		}
 	}
@@ -67,7 +79,9 @@ public class CalculationsHelper {
 	 * @return Calories burnt 
 	 */
 	public static double getCaloriesFromMetHours(int weight, double metHours) {
-		double weightKilos = 0.453592 * weight;
+		
+		double weightKilos = 0.453592 * weight; // convert to kilograms
+		
 		return Math.floor(weightKilos * metHours * 100.0)/100.0;
 	}
 	

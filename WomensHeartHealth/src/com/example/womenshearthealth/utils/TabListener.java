@@ -14,16 +14,16 @@ import android.os.Build;
 
 public class TabListener<T extends Fragment> implements ActionBar.TabListener {
 	
-	private Fragment fragment;
-	private final Activity activity;
-	private final Class<T> fragmentClass;
-	private final String tag;
+	private Fragment mFragment;
+	private final Activity mActivity;
+	private final Class<T> mFragmentClass;
+	private final String mTag;
 	
 	public TabListener(Activity activity, String tag, Class<T> fragmentClass)
 	{
-		this.activity = activity;
-		this.fragmentClass = fragmentClass;
-		this.tag = tag;
+		this.mActivity = activity;
+		this.mFragmentClass = fragmentClass;
+		this.mTag = tag;
 	}
 	
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
@@ -31,14 +31,14 @@ public class TabListener<T extends Fragment> implements ActionBar.TabListener {
 	public void onTabSelected(Tab tab, FragmentTransaction ft)
 	{	
 
-	    fragment = activity.getFragmentManager().findFragmentByTag(tag);
+	    mFragment = mActivity.getFragmentManager().findFragmentByTag(mTag);
 
-		if (fragment == null) 
+		if (mFragment == null) 
 		{
-			fragment = (Fragment)Fragment.instantiate(activity, fragmentClass.getName());
-			ft.add(R.id.fragmentContainer, fragment, tag);
+			mFragment = (Fragment)Fragment.instantiate(mActivity, mFragmentClass.getName());
+			ft.add(R.id.fragmentContainer, mFragment, mTag);
 		} else {
-			ft.attach(fragment);
+			ft.attach(mFragment);
 		}	
 	}
 
@@ -51,8 +51,8 @@ public class TabListener<T extends Fragment> implements ActionBar.TabListener {
 	@SuppressLint("NewApi")
 	@Override
 	public void onTabUnselected(Tab tab, FragmentTransaction ft) {
-		if (fragment != null) {
-			ft.detach(fragment);
+		if (mFragment != null) {
+			ft.detach(mFragment);
 		}
 	}
 

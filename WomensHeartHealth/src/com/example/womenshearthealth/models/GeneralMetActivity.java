@@ -2,45 +2,45 @@ package com.example.womenshearthealth.models;
 
 public class GeneralMetActivity {
 
-	private String name;
-	private double metsvalue;
+	private String mName;
+	private double mMetValue;
 	
 	public GeneralMetActivity(String name, double metsvalue) {
-		this.name = name;
-		this.metsvalue = metsvalue;
+		this.mName = name;
+		this.mMetValue = metsvalue;
 	}
 
 	/**
 	 * @return the name
 	 */
 	public String getName() {
-		return name;
+		return mName;
 	}
 
 	/**
 	 * @param name the name to set
 	 */
 	public void setName(String name) {
-		this.name = name;
+		this.mName = name;
 	}
 
 	/**
 	 * @return the metsvalue
 	 */
 	public double getMetsvalue() {
-		return metsvalue;
+		return mMetValue;
 	}
 
 	/**
 	 * @param metsvalue the metsvalue to set
 	 */
 	public void setMetsvalue(double metsvalue) {
-		this.metsvalue = metsvalue;
+		this.mMetValue = metsvalue;
 	}
 
 	@Override
 	public String toString() {
-		return name + " " + metsvalue;
+		return mName + " " + mMetValue;
 	}
 	
 	

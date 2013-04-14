@@ -1,7 +1,5 @@
 package com.example.womenshearthealth;
 
-import java.util.List;
-
 import com.example.womenshearthealth.helpers.SQLDatabaseHelper;
 import com.example.womenshearthealth.models.MetActivity;
 
@@ -19,71 +17,81 @@ import android.widget.ListView;
 
 public class AllMetsPrintedActivity extends Activity implements OnItemClickListener {
 
-	private ListView listview;
-	private ArrayAdapter<MetActivity> listviewadapter;
-	private SQLDatabaseHelper dbhelper;
+	private ListView mMetsList;
+	private ArrayAdapter<MetActivity> mListAdapter;
+	private SQLDatabaseHelper mSqlDBHelper;
+	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_weeks_met_activities);
-		dbhelper = new SQLDatabaseHelper(this);
-		listview = (ListView)findViewById(R.id.weeksmets_listview);
-		listviewadapter = new ArrayAdapter<MetActivity>(this, android.R.layout.simple_list_item_1);
-		listview.setAdapter(listviewadapter);
-		listview.setOnItemClickListener(this);
-		repopulateActivitiesList();
+		
+		mSqlDBHelper = new SQLDatabaseHelper(this);
+		
+		// list of Mets Activities
+		mListAdapter = new ArrayAdapter<MetActivity>(this, android.R.layout.simple_list_item_1);
+		mMetsList = (ListView)findViewById(R.id.weeksmets_listview);
+		mMetsList.setAdapter(mListAdapter);
+		mMetsList.setOnItemClickListener(this);
+		
 	}
 	
-	public void repopulateActivitiesList() {
-		listviewadapter.clear();
-		List<MetActivity> activities = dbhelper.getAllMetActivities();
-		for (MetActivity a: activities) {
-			listviewadapter.add(a);
+	@Override
+	protected void onResume() {
+		super.onResume();
+		updateMetActivitiesList();
+	}
+
+	private void updateMetActivitiesList() {
+		mListAdapter.clear();
+		for (MetActivity a: mSqlDBHelper.getAllMetActivities()) {
+			mListAdapter.add(a);
 		}
-		listviewadapter.notifyDataSetChanged();
+		mListAdapter.notifyDataSetChanged();
 	}
 
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 		
-		// display dialog to see if want to delete
-		// and then add this as listener
-		
 		switch (parent.getId()) {
+		
 		case R.id.weeksmets_listview:
-			final MetActivity metActivity = listviewadapter.getItem(position);
-			String name = metActivity.getName();
-			int min = metActivity.getMinutes();
+			
+			final MetActivity metActivity = mListAdapter.getItem(position);
+			final String name = metActivity.getName();
+			final int min = metActivity.getMinutes();
+			
+			// alert dialog
 			AlertDialog.Builder alert = new AlertDialog.Builder(this);
 			alert.setTitle(""+name);
 			alert.setMessage("How many minutes did you "+name+"?:");
 			
+			// minutes input 
 			final EditText input = new EditText(this);
 			input.setText(""+min);
 			input.setInputType(InputType.TYPE_CLASS_NUMBER);
 			alert.setView(input);
 			
-			alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+			// save button
+			alert.setPositiveButton("Save", new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int whichButton) {
-					// Do nothing
 					int newval = Integer.valueOf(input.getText().toString());
 					metActivity.setMinutes(newval);
-					dbhelper.saveMetActivity(metActivity);
+					mSqlDBHelper.saveMetActivity(metActivity);
 				}
 			});
 
+			// delete button
 			alert.setNegativeButton("Delete Record", new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int whichButton) {
-					// Canceled.
-					dbhelper.deleteMetActivity(metActivity);
-					listviewadapter.remove(metActivity);
-					listviewadapter.notifyDataSetChanged();
+					mSqlDBHelper.deleteMetActivity(metActivity);
+					mListAdapter.remove(metActivity);
+					mListAdapter.notifyDataSetChanged();
 				}
 			});
 
 			alert.show();
-			
 			break;
 		}
 		

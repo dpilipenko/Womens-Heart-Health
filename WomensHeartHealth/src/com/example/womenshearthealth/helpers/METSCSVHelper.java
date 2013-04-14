@@ -10,25 +10,30 @@ import com.example.womenshearthealth.models.GeneralMetActivity;
 import com.example.womenshearthealth.utils.CSVReader;
 
 import android.content.Context;
-import android.content.res.AssetManager;
 
 public class METSCSVHelper {
 	
-	public static List<GeneralMetActivity> getAllMetActivities(Context context) {
+	public static List<GeneralMetActivity> getAllAvailableMetActivities(Context context) {
+		
 		LinkedList<GeneralMetActivity> activities = new LinkedList<GeneralMetActivity>();
 		try {
-			AssetManager am = context.getAssets();
-			InputStream is = am.open("metactivities.csv");
+			
+			InputStream is = context.getAssets().open("metactivities.csv");
 			CSVReader reader = new CSVReader(new InputStreamReader(is));
+			
 			String[] nextLine = reader.readNext();
 			while (nextLine != null) {
-				GeneralMetActivity a = new GeneralMetActivity(nextLine[0], Double.valueOf(nextLine[1]));
-				activities.add(a);
+				String name = nextLine[0];
+				double metsValue = Double.valueOf(nextLine[1]);
+				GeneralMetActivity activity = new GeneralMetActivity(name, metsValue);
+				activities.add(activity);
+				
 				nextLine = reader.readNext();
 			}	
+			
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
+		}	
 		return activities;
 	}
 

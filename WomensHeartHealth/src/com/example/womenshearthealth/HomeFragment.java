@@ -23,7 +23,6 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -34,73 +33,70 @@ import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-//labels
-
 public class HomeFragment extends Fragment implements OnClickListener {
 
-	private Activity activity;
-	private SQLDatabaseHelper dbHelper;
+	private Activity mActivity;
+	private SQLDatabaseHelper mSqlDBHelper;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-
-		// load in the fragment_home.xml file and display it on screen
-		View homeFragment = inflater.inflate(R.layout.fragment_home, container, false);
-		return homeFragment;
+		return inflater.inflate(R.layout.fragment_home, container, false);
 	}
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		activity = getActivity();
-		dbHelper = new SQLDatabaseHelper(activity);
-
+		mActivity = getActivity();
+		mSqlDBHelper = new SQLDatabaseHelper(mActivity);
 	}
 
 	@Override
 	public void onStart() {
 		super.onStart();
 
-		LinearLayout graphCard = (LinearLayout) this.getActivity()
-				.findViewById(R.id.graph_card);
-		graphCard.setOnClickListener(this);
-		LinearLayout targetHRCard = (LinearLayout) this.getActivity()
-				.findViewById(R.id.target_hr_card);
+		// Mets Chart Card
+		LinearLayout metsCard = (LinearLayout) this.getActivity().findViewById(R.id.graph_card);
+		metsCard.setOnClickListener(this);
+		metsCard.setVisibility(8);
+		
+		View metsCardDropshadow = (View) this.getActivity().findViewById(R.id.graphCardDropshadow);
+		metsCardDropshadow.setVisibility(8);
+		
+		
+		// Target HR Card
+		LinearLayout targetHRCard = (LinearLayout) this.getActivity().findViewById(R.id.target_hr_card);
 		targetHRCard.setOnClickListener(this);
-
-		LinearLayout graphCard2 = (LinearLayout) this.getActivity()
-				.findViewById(R.id.graph_card2);
-		graphCard2.setOnClickListener(this);
-
-		LinearLayout randomFactsCard = (LinearLayout) this.getActivity()
-				.findViewById(R.id.random_facts_card);
-		randomFactsCard.setOnClickListener(this);
-
-		graphCard.setVisibility(8);
 		targetHRCard.setVisibility(8);
-		graphCard2.setVisibility(8);
-		randomFactsCard.setVisibility(8);
-
-		View graphCardDropshadow = (View) this.getActivity().findViewById(
-				R.id.graphCardDropshadow);
-		View targetHRCardDropshadow = (View) this.getActivity().findViewById(
-				R.id.targerHRCardDropshadow);
-		View graphCardDropshadow2 = (View) this.getActivity().findViewById(
-				R.id.graphCardDropshadow2);
-		View randomFactCardDropshadow = (View) this.getActivity().findViewById(
-				R.id.factsCardDropshadow);
-
-		graphCardDropshadow.setVisibility(8);
+		
+		View targetHRCardDropshadow = (View) this.getActivity().findViewById(R.id.targerHRCardDropshadow);
 		targetHRCardDropshadow.setVisibility(8);
-		graphCardDropshadow2.setVisibility(8);
-		randomFactCardDropshadow.setVisibility(8);
 
+		
+		// Calories Chart Card
+		LinearLayout caloriesCard = (LinearLayout) this.getActivity().findViewById(R.id.graph_card2);
+		caloriesCard.setOnClickListener(this);
+		caloriesCard.setVisibility(8);
+		
+		View caloriesCardDropshadow = (View) this.getActivity().findViewById(R.id.graphCardDropshadow2);
+		caloriesCardDropshadow.setVisibility(8);
+
+		
+		// Random Facts Card
+		LinearLayout randomFactsCard = (LinearLayout) this.getActivity().findViewById(R.id.random_facts_card);
+		randomFactsCard.setOnClickListener(this);
+		randomFactsCard.setVisibility(8);
+		
+		View randomFactsCardDropshadow = (View) this.getActivity().findViewById(R.id.factsCardDropshadow);
+		randomFactsCardDropshadow.setVisibility(8);
+		
 	}
 
 	@Override
 	public void onResume() {
 		super.onResume();
+		
+		// start card animation
 		startAnimationPopOut(R.id.graph_card);
 		startAnimationPopOut(R.id.graphCardDropshadow);
 		startAnimationPopOut(R.id.target_hr_card);
@@ -110,7 +106,7 @@ public class HomeFragment extends Fragment implements OnClickListener {
 		startAnimationPopOut(R.id.random_facts_card);
 		startAnimationPopOut(R.id.factsCardDropshadow);
 
-		populateUI();
+		updateUIValues();
 	}
 
 	private void startAnimationPopOut(int id) {
@@ -144,123 +140,110 @@ public class HomeFragment extends Fragment implements OnClickListener {
 	/**
 	 * Loads saved data and fills in the UI elements
 	 */
-	private void populateUI() {
+	private void updateUIValues() {
 
-		Resources res = getResources();
-		String[] randomFacts = res.getStringArray(R.array.random_facts_array);
-		Random rand = new Random();
-
-		int age = SettingsHelper.getAge(this.getActivity());
-
-		int bpm50 = CalculationsHelper.getTargetHeartRateFromAge(age,
-				CalculationsHelper.TARGET_50);
-		int bpm85 = CalculationsHelper.getTargetHeartRateFromAge(age,
-				CalculationsHelper.TARGET_85);
-		int bpm100 = CalculationsHelper.getTargetHeartRateFromAge(age,
-				CalculationsHelper.TARGET_MAX);
-
-		// Grab text boxes from UI
-		TextView BPM1 = (TextView) this.getActivity().findViewById(R.id.BPM1);
-		TextView BPM2 = (TextView) this.getActivity().findViewById(R.id.BPM2);
-		TextView BPM3 = (TextView) this.getActivity().findViewById(R.id.BPM3);
-
-
-		TextView randomFactsTextView = (TextView) this.getActivity()
-				.findViewById(R.id.randomFact);
-
-		randomFactsTextView.setText(randomFacts[rand
-				.nextInt(randomFacts.length)]);
-
-		// Display text boxes
-		BPM1.setText(bpm50 + " BPM: 50% MHR");
-		BPM2.setText(bpm85 + " BPM: 85% MHR");
-		BPM3.setText(bpm100 + " BPM: 100% MHR");
-
-
+		int myAge = SettingsHelper.getAge(this.getActivity());
+		Typeface typeface = Typeface.createFromAsset(getActivity()
+				.getAssets(), "font/roboto.ttf");
+		
+		// target heart rates
 		TextView targetHR = (TextView) this.getActivity().findViewById(
 				R.id.targertHeartRatesTextView);
+		targetHR.setTypeface(typeface);
+		
+		TextView BPM1 = (TextView) this.getActivity().findViewById(R.id.BPM1);
+		int bpm50 = CalculationsHelper.getTargetHeartRateFromAge(myAge,
+				CalculationsHelper.TARGET_50_PERCENT);
+		BPM1.setText(bpm50 + " BPM: 50% MHR");
+		
+		TextView BPM2 = (TextView) this.getActivity().findViewById(R.id.BPM2);
+		int bpm85 = CalculationsHelper.getTargetHeartRateFromAge(myAge,
+				CalculationsHelper.TARGET_85_PERCENT);
+		BPM2.setText(bpm85 + " BPM: 85% MHR");
+		
+		TextView BPM3 = (TextView) this.getActivity().findViewById(R.id.BPM3);
+		int bpm100 = CalculationsHelper.getTargetHeartRateFromAge(myAge,
+				CalculationsHelper.TARGET_MAX);
+		BPM3.setText(bpm100 + " BPM: 100% MHR");
+		
+		
+		// mets chart
 		TextView metsLogged = (TextView) this.getActivity().findViewById(
 				R.id.metsLoggedTextView);
-
-		Typeface myTypeface = Typeface.createFromAsset(getActivity()
-				.getAssets(), "font/roboto.ttf");
-
-		targetHR.setTypeface(myTypeface);
-		metsLogged.setTypeface(myTypeface);
-
+		metsLogged.setTypeface(typeface);
 		buildMetsChart();
+		
+		// calories chart
+		TextView calsLogged = (TextView) this.getActivity().findViewById(
+				R.id.metsLoggedTextView2);
+		calsLogged.setTypeface(typeface);
 		buildCalsChart();
+		
+		
+		// random facts
+		Random rand = new Random();
+		Resources res = getResources();
+		String[] randomFacts = res.getStringArray(R.array.random_facts_array);
+		
+		TextView randomFactsTextView = (TextView) this.getActivity().findViewById(R.id.randomFact);
+		randomFactsTextView.setText(randomFacts[rand.nextInt(randomFacts.length)]);
+
 	}
 
 	private void buildMetsChart() {
-		ChartView c = (ChartView) activity.findViewById(R.id.chart_view);
-
+		
+		ChartView chart = (ChartView) mActivity.findViewById(R.id.chart_view);
+		chart.setLeftLabelAdapter(new ValueLabelAdapter(getActivity(),
+				LabelOrientation.VERTICAL));
+		
+		// highest achieved mets per day
 		LinearSeries weeklyMetsSeries = new LinearSeries();
-		weeklyMetsSeries.setLineColor(0xFFFF99CC);
-		weeklyMetsSeries.setLineWidth(4);
-
-		List<LinearPoint> points1 = getLinearPointsForTheWeek();
-		for (LinearPoint p : points1) {
+		for (LinearPoint p : getLinearPointsForTheWeek()) {
 			weeklyMetsSeries.addPoint(p);
 		}
-
-		c.addSeries(weeklyMetsSeries);
-
-		// label
-		c.setLeftLabelAdapter(new ValueLabelAdapter(getActivity(),
-				LabelOrientation.VERTICAL));
-		//c.setBottomLabelAdapter(new ValueLabelAdapter(getActivity(),
-		//		LabelOrientation.HORIZONTAL));
-
+		weeklyMetsSeries.setLineColor(0xFFFF99CC);
+		weeklyMetsSeries.setLineWidth(4);
+		chart.addSeries(weeklyMetsSeries);
+		
 	}
 
 	private void buildCalsChart() {
-		ChartView c = (ChartView) activity.findViewById(R.id.chart_view2);
+		
+		ChartView chart = (ChartView) mActivity.findViewById(R.id.chart_view2);
+		chart.setLeftLabelAdapter(new ValueLabelAdapter(getActivity(),
+				LabelOrientation.VERTICAL));
 
+		// calories burned each day
 		LinearSeries weeklyCalSeries = new LinearSeries();
-		weeklyCalSeries.setLineColor(0xFFFF99CC);
-		weeklyCalSeries.setLineWidth(4);
-
-		List<LinearPoint> points1 = getCaloriePointsForTheWeek();
-		for (LinearPoint p : points1) {
+		for (LinearPoint p : getCaloriePointsForTheWeek()) {
 			weeklyCalSeries.addPoint(p);
 		}
-
-		// int age = SettingsHelper.getAge(activity);
-		// double targetLevel = CalculationsHelper.TARGET_85;
-		// double capacity =
-		// CalculationsHelper.getTargetPredictedExerciseCapacityFromAge(age,
-		// targetLevel);
-
-		// int a = (int)capacity;
-		// c.setLineHeight(a);
-		c.addSeries(weeklyCalSeries);
-
-		// labels
-
-		c.setLeftLabelAdapter(new ValueLabelAdapter(getActivity(),
-				LabelOrientation.VERTICAL));
-		//c.setBottomLabelAdapter(new ValueLabelAdapter(getActivity(),
-		//		LabelOrientation.HORIZONTAL));
+		weeklyCalSeries.setLineColor(0xFFFF99CC);
+		weeklyCalSeries.setLineWidth(4);
+		chart.addSeries(weeklyCalSeries);
 
 	}
 
+	/**
+	 * Returns a list of Calories burned per each day of the current calendar week
+	 * @return
+	 */
 	private List<LinearPoint> getCaloriePointsForTheWeek() {
+		
+		int weight = SettingsHelper.getWeight(getActivity());
 		List<Set<MetActivity>> days = getMetActivitiesForTheWeek();
 
 		ArrayList<LinearPoint> points = new ArrayList<LinearPoint>();
 		for (int day = 0; day < 7; day++) {
-			Set<MetActivity> activities = days.get(day);
+			
 			int count = 0;
-			for (MetActivity activity : activities) {
+			for (MetActivity activity : days.get(day)) {
 				count += activity.getMetMinutes();
 			}
-			int weight = SettingsHelper.getWeight(getActivity());
 			double cals = CalculationsHelper.getCaloriesFromMetMinutes(weight,
 					count);
+			
 			points.add(new LinearPoint(day, cals));
-			Log.v("Cals", "day:" + day + " cals:" + cals);
-
 		}
 
 		return points;
@@ -278,19 +261,16 @@ public class HomeFragment extends Fragment implements OnClickListener {
 
 		ArrayList<LinearPoint> points = new ArrayList<LinearPoint>();
 		for (int day = 0; day < 7; day++) {
-
+			
 			double max = 0; // there is no such thing as negative met values
-			Set<MetActivity> activities = days.get(day);
-			for (MetActivity activity : activities) {
+			for (MetActivity activity : days.get(day)) {
 				double metval = activity.getMetsvalue();
 				if (max < metval) {
 					max = metval;
 				}
 			}
-
+			
 			points.add(new LinearPoint(day, max));
-			Log.v("Mets", "day:" + day + " max:" + max);
-
 		}
 
 		return points;
@@ -307,16 +287,17 @@ public class HomeFragment extends Fragment implements OnClickListener {
 	private List<Set<MetActivity>> getMetActivitiesForTheWeek() {
 
 		Calendar c = Calendar.getInstance();
-
 		int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
 		int daysSinceSunday = dayOfWeek - Calendar.SUNDAY;
 		int daysUntilSaturday = Calendar.SATURDAY - dayOfWeek;
 
+		
 		Calendar upperLimit = Calendar.getInstance();
 		upperLimit.roll(Calendar.DAY_OF_WEEK, daysUntilSaturday);
 		Calendar lowerLimit = Calendar.getInstance();
 		lowerLimit.roll(Calendar.DAY_OF_WEEK, -1 * daysSinceSunday);
 
+		
 		Calendar dayCursor = lowerLimit;
 		Date sunday = dayCursor.getTime();
 		dayCursor.roll(Calendar.DATE, true);
@@ -331,15 +312,16 @@ public class HomeFragment extends Fragment implements OnClickListener {
 		Date friday = dayCursor.getTime();
 		dayCursor.roll(Calendar.DATE, true);
 		Date saturday = dayCursor.getTime();
+		
 
 		ArrayList<Set<MetActivity>> days = new ArrayList<Set<MetActivity>>();
-		days.add(0, dbHelper.getMetActivitiesForDay(sunday));
-		days.add(1, dbHelper.getMetActivitiesForDay(monday));
-		days.add(2, dbHelper.getMetActivitiesForDay(tuesday));
-		days.add(3, dbHelper.getMetActivitiesForDay(wednesday));
-		days.add(4, dbHelper.getMetActivitiesForDay(thursday));
-		days.add(5, dbHelper.getMetActivitiesForDay(friday));
-		days.add(6, dbHelper.getMetActivitiesForDay(saturday));
+		days.add(0, mSqlDBHelper.getMetActivitiesForDay(sunday));
+		days.add(1, mSqlDBHelper.getMetActivitiesForDay(monday));
+		days.add(2, mSqlDBHelper.getMetActivitiesForDay(tuesday));
+		days.add(3, mSqlDBHelper.getMetActivitiesForDay(wednesday));
+		days.add(4, mSqlDBHelper.getMetActivitiesForDay(thursday));
+		days.add(5, mSqlDBHelper.getMetActivitiesForDay(friday));
+		days.add(6, mSqlDBHelper.getMetActivitiesForDay(saturday));
 
 		return days;
 	}
@@ -355,11 +337,11 @@ public class HomeFragment extends Fragment implements OnClickListener {
 			break;
 			
 		case R.id.target_hr_card: // Display info on target heart rates
-			intent = new Intent(getActivity(),
-					TargetHRInformationActivity.class);
+			intent = new Intent(getActivity(), TargetHRInformationActivity.class);
 			getActivity().startActivity(intent);
 			break;
-		case R.id.graph_card2: // Display past activites
+			
+		case R.id.graph_card2: // Display mets information
 			intent = new Intent(getActivity(), MetsInformationActivity.class);
 			getActivity().startActivity(intent);
 			break;

@@ -1,7 +1,5 @@
 package com.example.womenshearthealth;
 
-import java.util.List;
-
 import com.example.womenshearthealth.helpers.METSCSVHelper;
 import com.example.womenshearthealth.helpers.SQLDatabaseHelper;
 import com.example.womenshearthealth.models.GeneralMetActivity;
@@ -10,11 +8,9 @@ import com.example.womenshearthealth.models.MetActivity;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Fragment;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.InputType;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -27,26 +23,19 @@ import android.widget.ListView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
-public class METListFragment extends Fragment implements OnClickListener,
-		OnItemClickListener {
+public class METListFragment extends Fragment implements OnClickListener, OnItemClickListener {
 
-	SQLDatabaseHelper dbHelper;
-	Activity activity;
-
-	// ui elems
-	private ListView loadedMetsListView;
-	private ListView extraListView;
-	private Button saveButton;
-
-	// ui adapter elems
+	SQLDatabaseHelper mSQLDbHelper;
+	Activity mActivity;
+	
 	private ArrayAdapter<GeneralMetActivity> loadedMetsListAdapter;
-	private ArrayAdapter<MetActivity> extraListAdapter;
+	private ArrayAdapter<MetActivity> selectedMetsListAdapter;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		activity = getActivity();
-		dbHelper = new SQLDatabaseHelper(activity);
+		mActivity = getActivity();
+		mSQLDbHelper = new SQLDatabaseHelper(mActivity);
 	}
 
 	@Override
@@ -56,204 +45,158 @@ public class METListFragment extends Fragment implements OnClickListener,
 	}
 
 	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-		super.onActivityCreated(savedInstanceState);
-		activity = getActivity();
-		if (activity == null) {
-			return;
-		}
+	public void onStart() {
+		super.onStart();
 
 		// selected mets list
-		extraListAdapter = new ArrayAdapter<MetActivity>(activity,
-				android.R.layout.simple_list_item_1);
-		extraListView = (ListView) activity
-				.findViewById(R.id.lstvw_metlistfragment_extralistview);
-		extraListView.setAdapter(extraListAdapter);
+		selectedMetsListAdapter = new ArrayAdapter<MetActivity>(mActivity, android.R.layout.simple_list_item_1);
+		ListView extraListView = (ListView) mActivity.findViewById(R.id.lstvw_metlistfragment_extralistview);
+		extraListView.setAdapter(selectedMetsListAdapter);
 		extraListView.setOnItemClickListener(this);
 
 		// loaded mets list
-		loadedMetsListAdapter = new ArrayAdapter<GeneralMetActivity>(activity,
-				android.R.layout.simple_list_item_1);
-		loadedMetsListView = (ListView) activity
-				.findViewById(R.id.lstvw_metlistfragment_loadedmets);
+		loadedMetsListAdapter = new ArrayAdapter<GeneralMetActivity>(mActivity, android.R.layout.simple_list_item_1);
+		ListView loadedMetsListView = (ListView) mActivity.findViewById(R.id.lstvw_metlistfragment_loadedmets);
 		loadedMetsListView.setAdapter(loadedMetsListAdapter);
 		loadedMetsListView.setOnItemClickListener(this);
 
 		// save button
-		saveButton = (Button) activity
-				.findViewById(R.id.btn_metlistfragment_savebutton);
+		Button saveButton = (Button) mActivity.findViewById(R.id.btn_metlistfragment_savebutton);
 		saveButton.setOnClickListener(this);
-
-	}
-
-	@Override
-	public void onStart() {
-		super.onStart();
-
 	}
 
 	@Override
 	public void onResume() {
 		super.onResume();
-		loadMetsActivities();
+		
+		updateAvailableMetsList();
 	}
 
-	@Override
-	public void onPause() {
-		super.onPause();
-	}
-
-	@Override
-	public void onStop() {
-		super.onStop();
-	}
-
-	public void addMets() {
-		/*
-		 * dbHelper.addMET("Running", 23, "June 6, 1972");
-		 * dbHelper.addMET("Kicking", 21, "June 77, 1972");
-		 * dbHelper.addMET("punching", 42, "June 34, 1979");
-		 * 
-		 * dbHelper.displayAllMETs();
-		 */
-	}
-
-	public void loadMetsActivities() {
-		List<GeneralMetActivity> l = METSCSVHelper
-				.getAllMetActivities(activity);
+	private void updateAvailableMetsList() {
+		
 		loadedMetsListAdapter.clear();
-		for (GeneralMetActivity a : l) {
-			loadedMetsListAdapter.add(a);
+		for (GeneralMetActivity activity : METSCSVHelper.getAllAvailableMetActivities(mActivity)) {
+			loadedMetsListAdapter.add(activity);
 		}
 		loadedMetsListAdapter.notifyDataSetChanged();
 	}
 
-	public List<GeneralMetActivity> getAllMetActivities() {
-		Context context = activity.getApplicationContext();
-		return METSCSVHelper.getAllMetActivities(context);
-	}
-
-	protected void addToCart(MetActivity a) {
-		extraListAdapter.add(a);
-		extraListAdapter.notifyDataSetChanged();
+	private void addToCart(MetActivity activity) {
+		
+		selectedMetsListAdapter.add(activity);
+		selectedMetsListAdapter.notifyDataSetChanged();
 	}
 
 	@Override
-	public void onItemClick(AdapterView<?> parent, View view, int position,
-			long id) {
-
+	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+		
 		switch (parent.getId()) {
 
-		case R.id.lstvw_metlistfragment_extralistview:
+		case R.id.lstvw_metlistfragment_extralistview: // temporary activity
 			handleExtraList(position);
-			Log.v("hi", "hi");
 			return;
-		case R.id.lstvw_metlistfragment_loadedmets:
-			handleLoadList(position);
-			Log.v("hi", "hi");
+			
+		case R.id.lstvw_metlistfragment_loadedmets: // loaded activities
+			handleAvailableList(position);
 			return;
 
 		}
-
 	}
 
-	public void handleLoadList(int position) {
-		final GeneralMetActivity metActivity = loadedMetsListAdapter
-				.getItem(position);
+	private void handleAvailableList(int position) {
+		
+		final GeneralMetActivity metActivity = loadedMetsListAdapter.getItem(position);
 
-		AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
-
+		// alert dialog
+		final AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
 		alert.setTitle("For How Long Did You Do It?");
-		alert.setMessage("For how many minutes did you do: "
-				+ metActivity.getName());
+		alert.setMessage("For how many minutes did you do: "+metActivity.getName());
 
-		// Set an EditText view to get user input
+		// minutes input
 		final EditText input = new EditText(getActivity());
 		input.setHint("How many minutes?");
 		input.setInputType(InputType.TYPE_CLASS_NUMBER);
 		alert.setView(input);
 
+		// save button
 		alert.setPositiveButton("Save", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int whichButton) {
 				String value = input.getText().toString();
-				if (value.isEmpty())
+				if (value.isEmpty()) {
 					value = "0";
-				int a = Integer.valueOf(value);
-				MetActivity m = new MetActivity(metActivity, a);
-				addToCart(m);
-				Log.v("Metlist", m.toString());
+				}
+				MetActivity activity = new MetActivity(metActivity, Integer.valueOf(value));
+				addToCart(activity);
 			}
 		});
 
+		// cancel button
 		alert.setNegativeButton("Cancel",
 				new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int whichButton) {
-						// Canceled.
+						// Do nothing.
 					}
 				});
 
 		alert.show();
 	}
+	
+	private void handleExtraList(int position) {
+		
+		final MetActivity metActivity = selectedMetsListAdapter.getItem(position);
 
-	public void handleExtraList(int position) {
-		final MetActivity metActivity = extraListAdapter.getItem(position);
-
-		AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
-
+		// alert dialog
+		final AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
 		alert.setTitle("For How Long Did You Do It?");
-		alert.setMessage("For how many minutes did you do: "
-				+ metActivity.getName());
+		alert.setMessage("For how many minutes did you do: "+metActivity.getName());
 
-		// Set an EditText view to get user input
+		// minutes input
 		final EditText input = new EditText(getActivity());
 		input.setText("" + metActivity.getMinutes());
 		input.setInputType(InputType.TYPE_CLASS_NUMBER);
 		alert.setView(input);
 
+		// save button
 		alert.setPositiveButton("Save", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int whichButton) {
 				String value = input.getText().toString();
-				if (value.isEmpty())
+				if (value.isEmpty()) {
 					value = "0";
-				int a = Integer.valueOf(value);
-				metActivity.setMinutes(a);
-				extraListAdapter.notifyDataSetChanged();
+				}
+				metActivity.setMinutes(Integer.valueOf(value));
+				selectedMetsListAdapter.notifyDataSetChanged();
 			}
 		});
 
+		// delete button
 		alert.setNegativeButton("Delete", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int whichButton) {
-				// Canceled.
-				
-				extraListAdapter.remove(metActivity);
-				extraListAdapter.notifyDataSetChanged();
-	
+				selectedMetsListAdapter.remove(metActivity);
+				selectedMetsListAdapter.notifyDataSetChanged();
 			}
 		});
 
 		alert.show();
 	}
 
+
 	@Override
 	public void onClick(View v) {
 
 		switch (v.getId()) {
-		case R.id.btn_metlistfragment_savebutton:
-			handleSave();
+		
+		case R.id.btn_metlistfragment_savebutton: // save selected activities
+			
+			int count = selectedMetsListAdapter.getCount();
+			for (int i = 0; i < count; i++) {
+				MetActivity a = selectedMetsListAdapter.getItem(i);
+				mSQLDbHelper.saveMetActivity(a);
+			}
+			selectedMetsListAdapter.clear();
+			
+			Toast.makeText(mActivity, "Saved", Toast.LENGTH_SHORT).show();
 			break;
 		}
 
 	}
-
-	private void handleSave() {
-		int count = extraListAdapter.getCount();
-		for (int i = 0; i < count; i++) {
-			MetActivity a = extraListAdapter.getItem(i);
-			dbHelper.saveMetActivity(a);
-		}
-		extraListAdapter.clear();
-		extraListAdapter.notifyDataSetChanged();
-		Toast.makeText(activity, "Saved", Toast.LENGTH_SHORT).show();
-	}
-
 }

@@ -43,15 +43,14 @@ public class METSDBAdapter {
 			COLUMN_DATESUBMITTEDASLONG+" Long not null\n" +
 			");";
 
-	private Context context;
-	private METSDBOpenHelper dbHelper;
-	private SQLiteDatabase db;
+	private Context mContext;
+	private METSDBOpenHelper mDbHelper;
+	private SQLiteDatabase mDatabase;
 	
 	
-
 	public METSDBAdapter(Context context) {
-		this.context = context;
-		dbHelper = new METSDBOpenHelper(this.context, DATABASE_NAME, null, DATABASE_VERSION);
+		this.mContext = context;
+		mDbHelper = new METSDBOpenHelper(this.mContext, DATABASE_NAME, null, DATABASE_VERSION);
 	}
 
 	private static class METSDBOpenHelper extends SQLiteOpenHelper {
@@ -88,23 +87,21 @@ public class METSDBAdapter {
 
 	public void saveMetActivity(MetActivity activity, Date date) {
 		
-		// find an activity with same uuid
 		MetActivity original = getMetActivityByUUID(activity.getUUID());
 		
-		// if exsits then delete it
 		if (original != null) {
 			deleteMetActivityByUUID(activity.getUUID());
 		}
-		// then add met activity
+		
 		addMetActivity(activity, date);
 	}
 
 	// Creates
 	public void addMetActivity(MetActivity activity, Date date) {
-		db = dbHelper.getWritableDatabase();
+		mDatabase = mDbHelper.getWritableDatabase();
 		ContentValues dbInputValues = new ContentValues();
 		
-		String uuid = java.util.UUID.randomUUID().toString();
+		String uuid = activity.getUUID();
 		String name = activity.getName();
 		double metsvalue = activity.getMetsvalue();
 		int minutes = activity.getMinutes();
@@ -119,29 +116,31 @@ public class METSDBAdapter {
 		dbInputValues.put(COLUMN_DATESUBMITTEDASLONG, datelong);
 		
 		
-		db.insert(DATABASE_TABLE_NAME, null, dbInputValues);
-		dbHelper.close();
+		mDatabase.insert(DATABASE_TABLE_NAME, null, dbInputValues);
+		mDbHelper.close();
 	};
 	
 	// Deletes
 	public void deleteMetActivityByUUID(String activityUUID) {
-		db = dbHelper.getWritableDatabase();
-		db.delete(DATABASE_TABLE_NAME, COLUMN_UUID+"='"+activityUUID+"'", null);
+		mDatabase = mDbHelper.getWritableDatabase();
+		mDatabase.delete(DATABASE_TABLE_NAME, COLUMN_UUID+"='"+activityUUID+"'", null);
 	}
 	
 	// Reads
 	public List<MetActivity> getAllMetActivities() {
-		db = dbHelper.getReadableDatabase();
+		mDatabase = mDbHelper.getReadableDatabase();
 		List<MetActivity> activities = new LinkedList<MetActivity>();
 		String orderBy = COLUMN_DATESUBMITTEDASLONG + " DESC";
-		Cursor cursor = db.query(DATABASE_TABLE_NAME, COLUMNS, null, null, null, null, orderBy);
+		Cursor cursor = mDatabase.query(DATABASE_TABLE_NAME, COLUMNS, null, null, null, null, orderBy);
 		cursor.moveToFirst();
+		
 		while (!cursor.isAfterLast()) {
-			MetActivity a = cursorToMetActivity(cursor);
-			activities.add(a);
+			MetActivity activity = cursorToMetActivity(cursor);
+			activities.add(activity);
 			cursor.moveToNext();
 		}
-		dbHelper.close();
+		
+		mDbHelper.close();
 		return activities;	
 	}
 	
@@ -152,12 +151,11 @@ public class METSDBAdapter {
 		long starttime = start.getTime();
 		long endtime = end.getTime();
 		
+		mDatabase = mDbHelper.getReadableDatabase();
 		String query = "SELECT * FROM "+tblname+"\n" +
 					   "WHERE "+datecol+" >='"+starttime+"'\n" +
 					   "AND "+datecol+" <='"+endtime+"'";
-		
-		db = dbHelper.getReadableDatabase();
-		Cursor cursor = db.rawQuery(query, null);
+		Cursor cursor = mDatabase.rawQuery(query, null);
 		cursor.moveToFirst();
 		
 		Set<MetActivity> activities = new HashSet<MetActivity>();
@@ -166,7 +164,7 @@ public class METSDBAdapter {
 			activities.add(a);
 			cursor.moveToNext();
 		}
-		dbHelper.close();
+		mDbHelper.close();
 		return activities;
 		
 	}
@@ -175,19 +173,24 @@ public class METSDBAdapter {
 		
 		String tblname = DATABASE_TABLE_NAME;
 		String col = COLUMN_UUID;
-		
+
+		mDatabase = mDbHelper.getReadableDatabase();
 		String query = "SELECT * FROM "+tblname+"\n" +
 					   "WHERE "+col+" ='"+validUUID+"'";
-		
-		db = dbHelper.getReadableDatabase();
-		Cursor cursor = db.rawQuery(query, null);
+		Cursor cursor = mDatabase.rawQuery(query, null);
 		cursor.moveToFirst();
+		
 		if (cursor.getCount() > 0) {
-			MetActivity a = cursorToMetActivity(cursor);
-			dbHelper.close();
-			return a;
+			
+			MetActivity activity = cursorToMetActivity(cursor);
+			mDbHelper.close();
+			
+			return activity;
+			
 		} else {
-			dbHelper.close();
+			
+			mDbHelper.close();
+			
 			return null;
 		}
 	}

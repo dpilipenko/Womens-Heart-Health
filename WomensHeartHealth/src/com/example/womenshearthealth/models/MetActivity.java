@@ -7,38 +7,34 @@ import java.util.Date;
 
 public class MetActivity extends GeneralMetActivity {
 
-	private String uuid;
-	private int minutes;
-	private Date dateSaved;
+	private String mUUID;
+	private int mMinutes;
+	private Date mDateSaved;
 	
 	public MetActivity(GeneralMetActivity activity, int minutes) {
 		super(activity.getName(), activity.getMetsvalue());
-		this.minutes = 0; // default value in case input is invalid
-		setMinutes(minutes);
 		
+		mMinutes = 0;
+		setMinutes(minutes);
+		mUUID = java.util.UUID.randomUUID().toString();
 	}
 	
 	public MetActivity(String uuid, String name, double metsvalue, int minutes) {
 		super(name, metsvalue);
-		this.minutes = 0; // default value in case input is invalid
-		setMinutes(minutes);
-		this.uuid = uuid;
 		
+		mMinutes = 0;
+		setMinutes(minutes);
+		this.mUUID = uuid;
 	}
 
 	public int getMinutes() {
-		return minutes;
+		return mMinutes;
 	}
 
 	public void setMinutes(int minutes) {
-		boolean validMins = true;
-		// check if mets input is valid
-		validMins = (minutes > 0);
-		
-		if (validMins) {
-			this.minutes = minutes;
+		if (minutes > 0) {
+			this.mMinutes = minutes;
 		}
-		
 	}
 	
 	public double getMetMinutes() {
@@ -63,9 +59,9 @@ public class MetActivity extends GeneralMetActivity {
 		String metsvalue = mets_double + " MET-mins";
 		String display = "";
 		
-		if (dateSaved != null) {
+		if (mDateSaved != null) {
 			Calendar c = Calendar.getInstance();
-			c.setTime(dateSaved);
+			c.setTime(mDateSaved);
 			int month = Integer.valueOf(c.get(Calendar.MONTH))+1;
 			int day = Integer.valueOf(c.get(Calendar.DAY_OF_MONTH));
 			String date = "("+month+"/"+day+")";
@@ -77,14 +73,22 @@ public class MetActivity extends GeneralMetActivity {
 	}
 
 	public Date getDateSaved() {
-		return dateSaved;
+		return mDateSaved;
 	}
 
 	public void setDateSaved(Date dateSaved) {
-		this.dateSaved = dateSaved;
+		this.mDateSaved = dateSaved;
 	}
 
+	public void setUUID(String uuid) {
+		try {
+			mUUID = java.util.UUID.fromString(uuid).toString();
+		} catch (Exception e) {
+			
+		}
+	}
+	
 	public String getUUID() {
-		return this.uuid;
+		return this.mUUID;
 	}
 }

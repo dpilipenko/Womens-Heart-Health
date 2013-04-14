@@ -1,7 +1,6 @@
 package com.example.womenshearthealth.helpers;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -21,36 +20,54 @@ import android.app.Activity;
 public class SQLDatabaseHelper {
 
 	
-	private Activity activity;
-	private METSDBAdapter db;
+	private Activity mActivity;
+	private METSDBAdapter mDbAdapter;
 	
-	public SQLDatabaseHelper (Activity activity)
-	{
-		this.activity = activity;
-        this.db = new METSDBAdapter(activity);
+	public SQLDatabaseHelper (Activity activity) {
+		this.mActivity = activity;
+        this.mDbAdapter = new METSDBAdapter(activity);
+        
         initMETSDB();
 	}
 	
 	public void saveMetActivity(MetActivity activity) {
-    	Date date = new Date();
-    	db.saveMetActivity(activity, date);
+    	mDbAdapter.saveMetActivity(activity, new Date());
     }
 	
 	public void deleteMetActivity(MetActivity activity) {
-		db.deleteMetActivityByUUID(activity.getUUID());
+		String uuid = activity.getUUID();
+		mDbAdapter.deleteMetActivityByUUID(uuid);
 	}
 	
 	public List<MetActivity> getAllMetActivities() {
-		List<MetActivity> list = db.getAllMetActivities();
-		return list;
+		return mDbAdapter.getAllMetActivities();
+	}
+	
+	public Set<MetActivity> getMetActivitiesForDay(Date day) {
+		
+		Calendar startCal = Calendar.getInstance();
+		startCal.setTime(day);
+		startCal.set(Calendar.HOUR, 0);
+		startCal.set(Calendar.MINUTE, 0);
+		startCal.set(Calendar.SECOND, 0);
+		Date startTime = startCal.getTime();
+		
+		Calendar endCal = Calendar.getInstance();
+		endCal.setTime(day);
+		endCal.set(Calendar.HOUR, 11);
+		endCal.set(Calendar.MINUTE, 59);
+		endCal.set(Calendar.SECOND, 59);
+		Date endTime = endCal.getTime();
+		
+		return mDbAdapter.getMetActivitiesByDateRange(startTime, endTime);
 	}
 	
 	@SuppressLint("SdCardPath")
 	private void initMETSDB() {
-
+		
 		try {
 
-            String destPath = "/data/data/" + this.activity.getPackageName() +
+            String destPath = "/data/data/" + this.mActivity.getPackageName() +
                 "/databases";
             File f = new File(destPath);
             if (!f.exists()) {            	
@@ -58,20 +75,16 @@ public class SQLDatabaseHelper {
                 f.createNewFile();
             	
             	//Copy db from assets folder to the databases folder
-                CopyDB(activity.getBaseContext().getAssets().open("METS"),
+                CopyDB(mActivity.getBaseContext().getAssets().open("METS"),
                     new FileOutputStream(destPath + "/METS"));
             }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
-       
 	}
 	
-    
-    private void CopyDB(InputStream inputStream, 
-    OutputStream outputStream) throws IOException {
+    private void CopyDB(InputStream inputStream, OutputStream outputStream) throws IOException {
+    	
         byte[] buffer = new byte[1024];
         int length;
         while ((length = inputStream.read(buffer)) > 0) {
@@ -81,29 +94,6 @@ public class SQLDatabaseHelper {
         outputStream.close();
     }
 
-	public Set<MetActivity> getMetActivitiesForDay(Date day) {
-		
-		Calendar startCal = Calendar.getInstance();
-		Calendar endCal = Calendar.getInstance();
-		
-		startCal.setTime(day);
-		endCal.setTime(day);
-		
-		startCal.set(Calendar.HOUR, 0);
-		startCal.set(Calendar.MINUTE, 0);
-		startCal.set(Calendar.SECOND, 0);
-		
-		endCal.set(Calendar.HOUR, 11);
-		endCal.set(Calendar.MINUTE, 59);
-		endCal.set(Calendar.SECOND, 59);
-		
-		Date startTime = startCal.getTime();
-		Date endTime = endCal.getTime();
-		
-		Set<MetActivity> activities = db.getMetActivitiesByDateRange(startTime, endTime);
-		
-		return activities;
-		
-	}
+	
 
 }

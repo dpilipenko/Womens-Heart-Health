@@ -5,7 +5,7 @@ import java.util.Date;
 
 import com.example.womenshearthealth.R;
 
-import android.app.Activity;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
@@ -15,149 +15,111 @@ public class SettingsHelper {
 	
 	/**
 	 * Returns the age
-	 * @param a Should be 'this'.
-	 * @return Returns the age.
+	 * @param context
+	 * @return 
 	 */
-	public static int getAge(Activity a) {
-		// 'a' needs to be an Activity from within the application that is using SettingsHelper
-		// this is in order to access settings that are global only within the application
+	public static int getAge(Context context) {
 		
-		Date birthdate = getBirthdate(a);
-		Calendar b = Calendar.getInstance();
-	    Calendar c = Calendar.getInstance();
-	    c.setTime(birthdate);
-	    int diff = c.get(Calendar.YEAR) - b.get(Calendar.YEAR);
-	    if (b.get(Calendar.MONTH) > c.get(Calendar.MONTH) || 
-	        (b.get(Calendar.MONTH) == c.get(Calendar.MONTH) && 
-	        b.get(Calendar.DATE) > c.get(Calendar.DATE))) {
-	        diff--;
+		Date myBirthdate = getBirthdate(context);
+		
+		Calendar nowCalendar = Calendar.getInstance();
+	    Calendar thenCalendar = Calendar.getInstance();
+	    thenCalendar.setTime(myBirthdate);
+	    int age = thenCalendar.get(Calendar.YEAR) - nowCalendar.get(Calendar.YEAR);
+	    
+	    if (nowCalendar.get(Calendar.MONTH) > thenCalendar.get(Calendar.MONTH) || 
+	        (nowCalendar.get(Calendar.MONTH) == thenCalendar.get(Calendar.MONTH) && 
+	        nowCalendar.get(Calendar.DATE) > thenCalendar.get(Calendar.DATE))) {
+	        
+	    	age--;
 	    }
 	    
-	    if (diff < 0) {
-	    	return 22;
+	    if (age < 0) {
+	    	return -1;
+	    } else {
+	    	return age;
 	    }
-	    
-	    return diff;
-	}
-	
-	/**
-	 * Sets the age
-	 * @param a Should be 'this'.
-	 * @param new_age The new age.
-	 * @return Returns true if the new age was saved.
-	 */
-	public static boolean setAge(Activity a, int new_age) {
-		// 'a' needs to be an Activity from within the application that is using SettingsHelper
-		// this is in order to access settings that are global only within the application
-		
-		
-		Calendar b = Calendar.getInstance();
-		b.roll(Calendar.YEAR, -1*new_age);
-		return setBirthdate(a, b.getTime());
 	}
 	
 	/**
 	 * Returns the weight
-	 * @param a Should be 'this'.
-	 * @return Returns the Weight. -1 if there is no weight.
+	 * @param context
+	 * @return Returns the weight
 	 */
-	public static int getWeight(Activity a) {
-		// 'a' needs to be an Activity from within the application that is using SettingsHelper
-		// this is in order to access settings that are global only within the application
+	public static int getWeight(Context context) {
 		
-		// grabs the preferences for the application that contains 'a'
-		SharedPreferences prefs = a.getApplicationContext().getSharedPreferences(PREF_NAME, 0);
+		SharedPreferences prefs = context.getApplicationContext().getSharedPreferences(PREF_NAME, 0);
 		
-		// returns saved weight, or -1 if there is no saved weight yet
-		int weight = prefs.getInt(a.getApplicationContext().getString(R.string.pref_weight_key), -1);
+		String weightStr = context.getApplicationContext().getString(R.string.pref_weight_key);
+		int weight = prefs.getInt(weightStr, 0);
 		
-		if (weight < 0) {
-			return 230;
-		}
 		return weight;
 	}
 	
 	/**
 	 * Sets the weight
-	 * @param a Should be 'this'.
-	 * @param new_weight The new weight.
+	 * @param context Should be 'this'.
+	 * @param weight The new weight.
 	 * @return Returns true if the new weight was saved.
 	 */
-	public static boolean setWeight(Activity a, int new_weight) {
-		// 'a' needs to be an Activity from within the application that is using SettingsHelper
-		// this is in order to access settings that are global only within the application
+	public static boolean setWeight(Context context, int weight) {
 		
-		// grabs the editor for the preferences for the application that contains 'a'
-		Editor prefsEditor = a.getApplicationContext().getSharedPreferences(PREF_NAME, 0).edit();
+		Editor prefsEditor = context.getApplicationContext().getSharedPreferences(PREF_NAME, 0).edit();
 		
-		// changes the saved Weight value
-		prefsEditor.putInt(a.getApplicationContext().getString(R.string.pref_weight_key), new_weight);
+		String weightKey = context.getApplicationContext().getString(R.string.pref_weight_key);
+		prefsEditor.putInt(weightKey, weight);
 		
-		// saves the changes to preferences
-		// returns true if successful, false if not
 		return prefsEditor.commit();
 	}
 	
-	public static Date getBirthdate(Activity a) {
-		SharedPreferences prefs = a.getApplicationContext().getSharedPreferences(PREF_NAME, 0);
-		long l = prefs.getLong(a.getApplicationContext().getString(R.string.pref_birthdate_key), 0);
+	
+	public static Date getBirthdate(Context context) {
 		
-		return new Date(l);
+		SharedPreferences prefs = context.getApplicationContext().getSharedPreferences(PREF_NAME, 0);
+	
+		String birthdateKey = context.getApplicationContext().getString(R.string.pref_birthdate_key);
+		long birthdate = prefs.getLong(birthdateKey, 0);
+		
+		return new Date(birthdate);
 	}
 	
-	public static boolean setBirthdate(Activity a, Date birthdate) {
-		Editor prefsEditor = a.getApplicationContext().getSharedPreferences(PREF_NAME, 0).edit();
-		prefsEditor.putLong(a.getApplicationContext().getString(R.string.pref_birthdate_key),
-				birthdate.getTime());
+	public static boolean setBirthdate(Context context, Date birthdate) {
+		
+		Editor prefsEditor = context.getApplicationContext().getSharedPreferences(PREF_NAME, 0).edit();
+		
+		String birthdateKey = context.getApplicationContext().getString(R.string.pref_birthdate_key); 
+		prefsEditor.putLong(birthdateKey, birthdate.getTime());
+		
 		return prefsEditor.commit();		
 	}
 	
 	/**
 	 * Returns if this is the initial run
-	 * @param a Should be 'this'
-	 * @return Returns true if it is the first time this method is ever called. False, otherwise.
+	 * @param context
+	 * @return Returns value of InitialRun flag
 	 */
-	public static boolean isInitialRun(Activity a) {
-		// 'a' needs to be an Activity from within the application that is using SettingsHelper
-		// this is in order to access settings that are global only within the application
+	public static boolean isInitialRun(Context context) {
 		
-		// grabs the preferences for the application that contains 'a'
-		SharedPreferences prefs = a.getApplicationContext().getSharedPreferences(PREF_NAME, 0);
+		SharedPreferences prefs = context.getApplicationContext().getSharedPreferences(PREF_NAME, 0);
 		
-		// grabs the String used to uniquely identify this preference
-		String initRunKey = a.getApplicationContext().getString(R.string.pref_isinitialrun_key); 
+		String key = context.getApplicationContext().getString(R.string.pref_isinitialrun_key); 
 		
-		// returns the saved isInitialRun value, or true if does not exist
-		// 
-		// based on the work flow, the first time the SettingsHelper is run, isInitialRun should
-		// not yet exist and this returns true. Then elsewhere in the project, the flag is created
-		// and set to false
-		
-		return prefs.getBoolean(initRunKey, true);
+		return prefs.getBoolean(key, true);
 	}
 	
 	/**
 	 * Sets the initialRun preference value
-	 * @param a Should be 'this'
+	 * @param context
 	 * @param value 'true' or 'false'
 	 * @return Returns the initialRun property
 	 */
-	public static boolean setInitialRun(Activity a, boolean value) {
-		// 'a' needs to be an Activity from within the application that is using SettingsHelper
-		// this is in order to access settings that are global only within the application
+	public static boolean setInitialRun(Context context, boolean value) {
 		
-		// grabs the editor for the preferences for the application that contains 'a'
-		Editor prefsEditor = a.getApplicationContext().getSharedPreferences(PREF_NAME, 0).edit();
+		Editor prefsEditor = context.getApplicationContext().getSharedPreferences(PREF_NAME, 0).edit();
 		
-		// grabs the String used to uniquely identify this preference
-		String initRunKey = a.getApplicationContext().getString(R.string.pref_isinitialrun_key); 
+		String key = context.getApplicationContext().getString(R.string.pref_isinitialrun_key); 
+		prefsEditor.putBoolean(key, value);
 		
-		// changes the saved isInitialRun value
-		
-		prefsEditor.putBoolean(initRunKey, value);
-		
-		// saves the changes to preferences
-		// returns true if successful, false if not
 		return prefsEditor.commit();
 	}
 	

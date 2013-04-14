@@ -55,37 +55,37 @@ public class CalculationsHelperTest extends TestCase {
 		
 		age = 100;
 		expectedHR = 100;
-		calculatedHR = CalculationsHelper.getTargetHeartRateFromAge(age, CalculationsHelper.TARGET_85);
+		calculatedHR = CalculationsHelper.getTargetHeartRateFromAge(age, CalculationsHelper.TARGET_85_PERCENT);
 		assertTrue("Age: " + age + "; Expected HR: " + expectedHR + "; Calculated HR: " + calculatedHR + ".",
 				calculatedHR == expectedHR);
 		
 		age = 80;
 		expectedHR = 115;
-		calculatedHR = CalculationsHelper.getTargetHeartRateFromAge(age, CalculationsHelper.TARGET_85);
+		calculatedHR = CalculationsHelper.getTargetHeartRateFromAge(age, CalculationsHelper.TARGET_85_PERCENT);
 		assertTrue("Age: " + age + "; Expected HR: " + expectedHR + "; Calculated HR: " + calculatedHR + ".",
 				calculatedHR == expectedHR);
 		
 		age = 60;
 		expectedHR = 130;
-		calculatedHR = CalculationsHelper.getTargetHeartRateFromAge(age, CalculationsHelper.TARGET_85);
+		calculatedHR = CalculationsHelper.getTargetHeartRateFromAge(age, CalculationsHelper.TARGET_85_PERCENT);
 		assertTrue("Age: " + age + "; Expected HR: " + expectedHR + "; Calculated HR: " + calculatedHR + ".",
 				calculatedHR == expectedHR);
 		
 		age = 40;
 		expectedHR = 145;
-		calculatedHR = CalculationsHelper.getTargetHeartRateFromAge(age, CalculationsHelper.TARGET_85);
+		calculatedHR = CalculationsHelper.getTargetHeartRateFromAge(age, CalculationsHelper.TARGET_85_PERCENT);
 		assertTrue("Age: " + age + "; Expected HR: " + expectedHR + "; Calculated HR: " + calculatedHR + ".",
 				calculatedHR == expectedHR);
 		
 		age = 20;
 		expectedHR = 160;
-		calculatedHR = CalculationsHelper.getTargetHeartRateFromAge(age, CalculationsHelper.TARGET_85);
+		calculatedHR = CalculationsHelper.getTargetHeartRateFromAge(age, CalculationsHelper.TARGET_85_PERCENT);
 		assertTrue("Age: " + age + "; Expected HR: " + expectedHR + "; Calculated HR: " + calculatedHR + ".",
 				calculatedHR == expectedHR);
 		
 		age = 0;
 		expectedHR = 175;
-		calculatedHR = CalculationsHelper.getTargetHeartRateFromAge(age, CalculationsHelper.TARGET_85);
+		calculatedHR = CalculationsHelper.getTargetHeartRateFromAge(age, CalculationsHelper.TARGET_85_PERCENT);
 		assertTrue("Age: " + age + "; Expected HR: " + expectedHR + "; Calculated HR: " + calculatedHR + ".",
 				calculatedHR == expectedHR);
 	}
@@ -95,37 +95,37 @@ public class CalculationsHelperTest extends TestCase {
 		
 		age = 100;
 		expectedHR = 59;
-		calculatedHR = CalculationsHelper.getTargetHeartRateFromAge(age, CalculationsHelper.TARGET_50);
+		calculatedHR = CalculationsHelper.getTargetHeartRateFromAge(age, CalculationsHelper.TARGET_50_PERCENT);
 		assertTrue("Age: " + age + "; Expected HR: " + expectedHR + "; Calculated HR: " + calculatedHR + ".",
 				calculatedHR == expectedHR);
 		
 		age = 80;
 		expectedHR = 67;
-		calculatedHR = CalculationsHelper.getTargetHeartRateFromAge(age, CalculationsHelper.TARGET_50);
+		calculatedHR = CalculationsHelper.getTargetHeartRateFromAge(age, CalculationsHelper.TARGET_50_PERCENT);
 		assertTrue("Age: " + age + "; Expected HR: " + expectedHR + "; Calculated HR: " + calculatedHR + ".",
 				calculatedHR == expectedHR);
 		
 		age = 60;
 		expectedHR = 76;
-		calculatedHR = CalculationsHelper.getTargetHeartRateFromAge(age, CalculationsHelper.TARGET_50);
+		calculatedHR = CalculationsHelper.getTargetHeartRateFromAge(age, CalculationsHelper.TARGET_50_PERCENT);
 		assertTrue("Age: " + age + "; Expected HR: " + expectedHR + "; Calculated HR: " + calculatedHR + ".",
 				calculatedHR == expectedHR);
 		
 		age = 40;
 		expectedHR = 85;
-		calculatedHR = CalculationsHelper.getTargetHeartRateFromAge(age, CalculationsHelper.TARGET_50);
+		calculatedHR = CalculationsHelper.getTargetHeartRateFromAge(age, CalculationsHelper.TARGET_50_PERCENT);
 		assertTrue("Age: " + age + "; Expected HR: " + expectedHR + "; Calculated HR: " + calculatedHR + ".",
 				calculatedHR == expectedHR);
 		
 		age = 20;
 		expectedHR = 94;
-		calculatedHR = CalculationsHelper.getTargetHeartRateFromAge(age, CalculationsHelper.TARGET_50);
+		calculatedHR = CalculationsHelper.getTargetHeartRateFromAge(age, CalculationsHelper.TARGET_50_PERCENT);
 		assertTrue("Age: " + age + "; Expected HR: " + expectedHR + "; Calculated HR: " + calculatedHR + ".",
 				calculatedHR == expectedHR);
 		
 		age = 0;
 		expectedHR = 103;
-		calculatedHR = CalculationsHelper.getTargetHeartRateFromAge(age, CalculationsHelper.TARGET_50);
+		calculatedHR = CalculationsHelper.getTargetHeartRateFromAge(age, CalculationsHelper.TARGET_50_PERCENT);
 		assertTrue("Age: " + age + "; Expected HR: " + expectedHR + "; Calculated HR: " + calculatedHR + ".",
 				calculatedHR == expectedHR);
 	}

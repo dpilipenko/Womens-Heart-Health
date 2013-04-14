@@ -23,42 +23,42 @@ import android.widget.TextView;
 public class SettingsActivity extends Activity implements OnClickListener,
 		OnDateSetListener {
 
-	private TextView birthdayTextView;
-	private TextView weightTextView;
-	private Button saveButton;
-
-	private Date birthdate;
-	private int weight;
-
-	static final int DATE_DIALOG_ID = 0;
+	public static final int DATE_DIALOG_ID = 0;
+	
+	private TextView mBirthDateTextView;
+	private TextView mWeightTextView;
+	
+	private Date mBirthDate;
+	private int mWeight;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-
-		birthdate = new Date();
-		weight = 0;
-
-		// takes care of whatever overhead it needs
 		super.onCreate(savedInstanceState);
-		// loads activity_settings.xml UI
 		setContentView(R.layout.activity_settings);
-
-		birthdayTextView = (TextView) findViewById(R.id.txtvw_settings_bday);
-		weightTextView = (TextView) findViewById(R.id.txtvw_settings_weight);
-		saveButton = (Button) findViewById(R.id.btn_settings_savebutton);
-
-		birthdayTextView.setOnClickListener(this);
-		weightTextView.setOnClickListener(this);
+		
+		// birth date
+		mBirthDate = new Date();
+		mBirthDateTextView = (TextView) findViewById(R.id.txtvw_settings_bday);
+		mBirthDateTextView.setOnClickListener(this);
+		
+		// weight
+		mWeight = 0;
+		mWeightTextView = (TextView) findViewById(R.id.txtvw_settings_weight);
+		mWeightTextView.setOnClickListener(this);
+		
+		// save button
+		Button saveButton = (Button) findViewById(R.id.btn_settings_savebutton);
 		saveButton.setOnClickListener(this);
-
-		// loads preference data and fills in UI elements
-		populateUI();
+		
+		updateUI();
+		
 	}
 
 	@Override
 	protected void onRestoreInstanceState(Bundle savedInstanceState) {
 		super.onRestoreInstanceState(savedInstanceState);
-		populateUI();
+		
+		updateUI();
 	}
 
 	@SuppressWarnings("deprecation")
@@ -67,90 +67,93 @@ public class SettingsActivity extends Activity implements OnClickListener,
 
 		switch (view.getId()) {
 
-		case R.id.btn_settings_savebutton:
-			finish();
+		case R.id.btn_settings_savebutton: // save button
+			finish(); 
 			break;
-		case R.id.txtvw_settings_bday:
-			// I'm sorry but the android way of using a fragment with datepicker
-			// and then having to have to create listeners, seems awfully dumb
-			// for something so small and basic. If it ain't broke, don't fix
-			// it! ;)
+			
+		case R.id.txtvw_settings_bday: // birth date
 			showDialog(DATE_DIALOG_ID);
 			break;
-		case R.id.txtvw_settings_weight:
+			
+		case R.id.txtvw_settings_weight: // weight
+			
+			// alert
 			AlertDialog.Builder alert = new AlertDialog.Builder(this);
 			alert.setTitle("Update Weight");
 			alert.setMessage("Please enter in your weight in pounds:");
+			
+			// weight input
 			final EditText input = new EditText(this);
+			input.setText(""+this.mWeight);
+			input.requestFocus();
 			input.setInputType(InputType.TYPE_CLASS_NUMBER);
 			alert.setView(input);
-			alert.setPositiveButton("Ok",
-					new DialogInterface.OnClickListener() {
-						public void onClick(DialogInterface dialog,
-								int whichButton) {
-							String value = input.getText().toString();
-							int weight = Integer.valueOf(value).intValue();
-							SettingsHelper.setWeight(SettingsActivity.this,
-									weight);
-							populateUI();
-						}
-					});
-			alert.setNegativeButton("Cancel",
-					new DialogInterface.OnClickListener() {
-						public void onClick(DialogInterface dialog,
-								int whichButton) {
-							// do nothing
-						}
-					});
+			
+			// save button
+			alert.setPositiveButton("Save", new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int whichButton) {
+					String value = input.getText().toString();
+					int weight = Integer.valueOf(value).intValue();
+					SettingsHelper.setWeight(SettingsActivity.this,
+							weight);
+					updateUI();
+				}
+			});
+			
+			// cancel button
+			alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int whichButton) {
+					// do nothing
+				}
+			});
+			
 			alert.show();
-			input.setText(""+this.weight);
-			input.requestFocus();
 			break;
 
 		}
 	}
 
 	@Override
-	public void onDateSet(DatePicker view, int year, int monthOfYear,
-			int dayOfMonth) {
+	public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+		
 		Calendar c = Calendar.getInstance();
 		c.set(year, monthOfYear, dayOfMonth);
 		SettingsHelper.setBirthdate(this, c.getTime());
-		populateUI();
+		
+		updateUI();
 	}
 
 	/**
 	 * Loads saved data and fills in the UI elements
 	 */
-	private void populateUI() {
-		clearUI();
+	private void updateUI() {
 
-		this.weight = SettingsHelper.getWeight(this);
-		this.birthdate = SettingsHelper.getBirthdate(this);
-
+		// birth date
+		this.mBirthDate = SettingsHelper.getBirthdate(this);
 		Calendar c = Calendar.getInstance();
-		c.setTime(birthdate);
-		int month = c.get(Calendar.MONTH)+1;
+		c.setTime(mBirthDate);
+		int month = c.get(Calendar.MONTH); 
 		int date = c.get(Calendar.DATE);
 		int year = c.get(Calendar.YEAR);
 		StringBuilder dateBuilder = new StringBuilder();
+
 		if (month < 10) {
 			dateBuilder.append("0");
 		}
-		dateBuilder.append(month + "/");
+		dateBuilder.append( (month+1) + "/");
+
 		if (date < 10) {
 			dateBuilder.append("0");
 		}
 		dateBuilder.append(date + "/" + year);
+		
+		mBirthDateTextView.setText(dateBuilder.toString());
 
-		birthdayTextView.setText(dateBuilder.toString());
-		weightTextView.setText(weight + " lbs");
-
-	}
-
-	private void clearUI() {
-		birthdayTextView.setText(" ");
-		weightTextView.setText(" ");
+		
+		// weight
+		this.mWeight = SettingsHelper.getWeight(this);
+		mWeightTextView.setText(mWeight + " lbs");
+		
 	}
 
 	@Override
@@ -158,14 +161,16 @@ public class SettingsActivity extends Activity implements OnClickListener,
 	protected Dialog onCreateDialog(int id) {
 
 		switch (id) {
-		case DATE_DIALOG_ID:
+		
+		case DATE_DIALOG_ID: // date picker dialog
+			
 			Calendar c = Calendar.getInstance();
-			c.setTime(birthdate);
+			c.setTime(mBirthDate);
 			int year = c.get(Calendar.YEAR);
 			int month = c.get(Calendar.MONTH);
 			int day = c.get(Calendar.DATE);
+			
 			return new DatePickerDialog(this, this, year, month, day);
-
 		}
 
 		return super.onCreateDialog(id);

@@ -145,7 +145,7 @@
                     chartview:bottomLabelHeight="20dp"
                     chartview:gridLineColor="#E5E5E5"
                     chartview:gridLineWidth="1dp"
-                    chartview:gridLinesHorizontal="6"
+                    chartview:gridLinesHorizontal="0"
                     chartview:gridLinesVertical="5"
                     chartview:leftLabelWidth="56dp" />
             </LinearLayout>
@@ -195,7 +195,7 @@
                     chartview:bottomLabelHeight="20dp"
                     chartview:gridLineColor="#E5E5E5"
                     chartview:gridLineWidth="1dp"
-                    chartview:gridLinesHorizontal="6"
+                    chartview:gridLinesHorizontal="0"
                     chartview:gridLinesVertical="5"
                     chartview:leftLabelWidth="56dp" />
             </LinearLayout>

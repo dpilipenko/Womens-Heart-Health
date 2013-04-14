@@ -212,8 +212,8 @@ public class HomeFragment extends Fragment implements OnClickListener {
 		// label
 		c.setLeftLabelAdapter(new ValueLabelAdapter(getActivity(),
 				LabelOrientation.VERTICAL));
-		c.setBottomLabelAdapter(new ValueLabelAdapter(getActivity(),
-				LabelOrientation.HORIZONTAL));
+		//c.setBottomLabelAdapter(new ValueLabelAdapter(getActivity(),
+		//		LabelOrientation.HORIZONTAL));
 
 	}
 
@@ -243,8 +243,8 @@ public class HomeFragment extends Fragment implements OnClickListener {
 
 		c.setLeftLabelAdapter(new ValueLabelAdapter(getActivity(),
 				LabelOrientation.VERTICAL));
-		c.setBottomLabelAdapter(new ValueLabelAdapter(getActivity(),
-				LabelOrientation.HORIZONTAL));
+		//c.setBottomLabelAdapter(new ValueLabelAdapter(getActivity(),
+		//		LabelOrientation.HORIZONTAL));
 
 	}
 

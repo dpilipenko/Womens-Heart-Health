@@ -17,7 +17,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 
-public class ShowAllMetsActivity extends Activity implements OnItemClickListener {
+public class AllMetsPrintedActivity extends Activity implements OnItemClickListener {
 
 	private ListView listview;
 	private ArrayAdapter<MetActivity> listviewadapter;

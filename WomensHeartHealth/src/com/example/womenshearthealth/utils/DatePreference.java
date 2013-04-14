@@ -7,6 +7,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
@@ -18,6 +19,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.DatePicker;
 
+@SuppressLint("SimpleDateFormat")
 public class DatePreference extends DialogPreference implements
     DatePicker.OnDateChangedListener {
   private String dateString;
@@ -204,7 +206,8 @@ public class DatePreference extends DialogPreference implements
    * Called whenever the user clicks on a button. Invokes {@link #onDateChanged(DatePicker, int, int, int)}
    * and {@link #onDialogClosed(boolean)}. Be sure to call the super when overriding.
    */
-  @Override
+  @SuppressWarnings("deprecation")
+@Override
   public void onClick(DialogInterface dialog, int which) {
     super.onClick(dialog, which);
     datePicker.clearFocus();

@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -14,6 +15,7 @@ import com.example.womenshearthealth.models.MetActivity;
 import com.example.womenshearthealth.utils.METSDBAdapter;
 
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 
 public class SQLDatabaseHelper {
@@ -43,6 +45,7 @@ public class SQLDatabaseHelper {
 		return list;
 	}
 	
+	@SuppressLint("SdCardPath")
 	private void initMETSDB() {
 
 		try {
@@ -80,19 +83,24 @@ public class SQLDatabaseHelper {
 
 	public Set<MetActivity> getMetActivitiesForDay(Date day) {
 		
-		Date startTime = (Date) day.clone();
-		Date endTime = (Date) day.clone();
+		Calendar startCal = Calendar.getInstance();
+		Calendar endCal = Calendar.getInstance();
 		
-		startTime.setHours(0);
-		startTime.setMinutes(0);
-		startTime.setSeconds(0);
+		startCal.setTime(day);
+		endCal.setTime(day);
 		
-		endTime.setHours(23);
-		endTime.setMinutes(59);
-		endTime.setSeconds(59);
+		startCal.set(Calendar.HOUR, 0);
+		startCal.set(Calendar.MINUTE, 0);
+		startCal.set(Calendar.SECOND, 0);
+		
+		endCal.set(Calendar.HOUR, 0);
+		endCal.set(Calendar.MINUTE, 0);
+		endCal.set(Calendar.SECOND, 0);
+		
+		Date startTime = startCal.getTime();
+		Date endTime = endCal.getTime();
 		
 		Set<MetActivity> activities = db.getMetActivitiesByDateRange(startTime, endTime);
-		
 		
 		return activities;
 		

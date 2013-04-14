@@ -1,20 +1,16 @@
 package com.example.womenshearthealth;
 
-import java.util.Calendar;
 
 import com.example.womenshearthealth.helpers.SettingsHelper;
-import com.example.womenshearthealth.utils.DatePreference;
 import com.example.womenshearthealth.utils.TabListener;
 
 import android.os.Bundle;
 import android.os.Handler;
-import android.preference.PreferenceManager;
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.view.Menu;
@@ -23,7 +19,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 public class MainActivity extends Activity {
 	
@@ -175,20 +170,5 @@ public class MainActivity extends Activity {
 		actionBar.addTab(aboutTab);
 		
 	}
-	
-	    private void showUserSettings() {
-		        SharedPreferences sharedPrefs = PreferenceManager
-		                .getDefaultSharedPreferences(this);
-		 
-		        Calendar c  = DatePreference.getDateFor(
-		        	    PreferenceManager.getDefaultSharedPreferences(this),
-		        	    "birthday_Preference");
-		        
-				//c.set(year, monthOfYear, dayOfMonth);
-				SettingsHelper.setBirthdate(this, c.getTime());
-				SettingsHelper.setWeight(this, sharedPrefs.getInt("prefSendReport", 0));
-		    }
-		 
-
 
 }

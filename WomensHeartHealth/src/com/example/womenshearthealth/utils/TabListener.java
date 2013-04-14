@@ -1,7 +1,6 @@
 package com.example.womenshearthealth.utils;
 
 import com.example.womenshearthealth.R;
-import com.example.womenshearthealth.R.id;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;

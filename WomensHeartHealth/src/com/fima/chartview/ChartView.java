@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.example.womenshearthealth.R;
 
-import android.R.color;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
@@ -84,6 +83,7 @@ public class ChartView extends RelativeLayout {
 
 		final TypedArray attributes = context.obtainStyledAttributes(attrs,
 				R.styleable.ChartView);
+		
 
 		mGridLineColor = attributes.getInt(R.styleable.ChartView_gridLineColor,
 				Color.BLACK);
@@ -101,6 +101,7 @@ public class ChartView extends RelativeLayout {
 				R.styleable.ChartView_rightLabelWidth, 0);
 		mBottomLabelHeight = attributes.getDimensionPixelSize(
 				R.styleable.ChartView_bottomLabelHeight, 0);
+		attributes.recycle();
 
 		// left label layout
 		mLeftLabelLayout = new LinearLayout(context);
@@ -355,7 +356,6 @@ public class ChartView extends RelativeLayout {
 		
 			final float left = mGridBounds.left;
 			final float right = mGridBounds.right;
-			final float top = mGridBounds.top;
 
 			for (int i = 0; i < mListOfLinesToDraw.size(); i++) {
 

@@ -19,7 +19,6 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class SettingsActivity extends Activity implements OnClickListener,
 		OnDateSetListener {

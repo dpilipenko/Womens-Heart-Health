@@ -4,7 +4,6 @@ import java.util.Calendar;
 import java.util.Date;
 
 import com.example.womenshearthealth.R;
-import com.example.womenshearthealth.R.string;
 
 import android.app.Activity;
 import android.content.SharedPreferences;

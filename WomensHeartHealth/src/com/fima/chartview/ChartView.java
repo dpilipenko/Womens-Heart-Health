@@ -204,7 +204,10 @@ public class ChartView extends RelativeLayout {
 		mBottomLabelAdapter = adapter;
 
 		final double[] values = new double[mGridLinesHorizontal + 2];
-		final double step = mValueBounds.width() / (mGridLinesHorizontal + 1);
+		
+		//commented out original code so that bottom labels inc by 1.
+		//final double step = mValueBounds.width() / (mGridLinesHorizontal + 1);
+		final double step = 1;
 		for (int i = 0; i < values.length; i++) {
 			values[i] = mValueBounds.left + (step * i);
 		}
@@ -370,6 +373,7 @@ public class ChartView extends RelativeLayout {
 
 		final float stepX = mGridBounds.width()
 				/ (float) (mGridLinesHorizontal + 1);
+		
 		final float stepY = mGridBounds.height()
 				/ (float) (mGridLinesVertical + 1);
 

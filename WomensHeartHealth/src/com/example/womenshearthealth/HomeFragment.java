@@ -210,8 +210,6 @@ public class HomeFragment extends Fragment implements OnClickListener {
 		c.addSeries(weeklyMetsSeries);
 
 		// label
-		// TODO
-
 		c.setLeftLabelAdapter(new ValueLabelAdapter(getActivity(),
 				LabelOrientation.VERTICAL));
 		c.setBottomLabelAdapter(new ValueLabelAdapter(getActivity(),
@@ -241,8 +239,7 @@ public class HomeFragment extends Fragment implements OnClickListener {
 		// c.setLineHeight(a);
 		c.addSeries(weeklyCalSeries);
 
-		// label
-		// TODO
+		// labels
 
 		c.setLeftLabelAdapter(new ValueLabelAdapter(getActivity(),
 				LabelOrientation.VERTICAL));

@@ -32,7 +32,7 @@ public class ValueLabelAdapter extends com.fima.chartview.LabelAdapter {
 		int gravity = Gravity.CENTER;
 		if (mOrientation == LabelOrientation.VERTICAL) {
 			//this next line sets the labels for the graphs to use one decimal place for mets/cals
-			//labelTextView.setText(String.format("%.1f", getItem(position)));
+			labelTextView.setText(String.format("%.1f", getItem(position)));
 			if (position == 0) {
 				gravity = Gravity.BOTTOM | Gravity.RIGHT;
 			} else if (position == getCount() - 1) {
@@ -42,7 +42,7 @@ public class ValueLabelAdapter extends com.fima.chartview.LabelAdapter {
 			}
 		} else if (mOrientation == LabelOrientation.HORIZONTAL) {
 			//this next line sets the labels for the graphs to use ints for the days of the week
-			//labelTextView.setText(String.format("%.0f", getItem(position)));
+			labelTextView.setText(String.format("%.0f", getItem(position)));
 			if (position == 0) {
 				gravity = Gravity.CENTER | Gravity.LEFT;
 			} else if (position == getCount() - 1) {
@@ -56,7 +56,7 @@ public class ValueLabelAdapter extends com.fima.chartview.LabelAdapter {
 		//this next line sets the labels for the graphs to use one decimal place
 		//when using only this setText the cards work fine, but when commenting this out
 		//and using the two above the cards will disappear randomly and re animate
-		labelTextView.setText(String.format("%.1f", getItem(position)));
+		//labelTextView.setText(String.format("%.1f", getItem(position)));
 
 		return convertView;
 	}

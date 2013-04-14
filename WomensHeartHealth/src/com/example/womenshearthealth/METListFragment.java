@@ -3,10 +3,10 @@ package com.example.womenshearthealth;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.example.womenshearthealth.utils.GeneralMetActivity;
-import com.example.womenshearthealth.utils.METSCSVHelper;
-import com.example.womenshearthealth.utils.MetActivity;
-import com.example.womenshearthealth.utils.SQLDatabaseHelper;
+import com.example.womenshearthealth.helpers.METSCSVHelper;
+import com.example.womenshearthealth.helpers.SQLDatabaseHelper;
+import com.example.womenshearthealth.models.GeneralMetActivity;
+import com.example.womenshearthealth.models.MetActivity;
 
 import android.app.Activity;
 import android.app.AlertDialog;

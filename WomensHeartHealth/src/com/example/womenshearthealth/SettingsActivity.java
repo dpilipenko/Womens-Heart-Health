@@ -3,7 +3,7 @@ package com.example.womenshearthealth;
 import java.util.Calendar;
 import java.util.Date;
 
-import com.example.womenshearthealth.utils.SettingsHelper;
+import com.example.womenshearthealth.helpers.SettingsHelper;
 
 import android.os.Bundle;
 import android.app.Activity;

@@ -2,7 +2,7 @@ package com.example.womenshearthealth;
 
 import java.util.List;
 
-import com.example.womenshearthealth.utils.MetActivity;
+import com.example.womenshearthealth.models.MetActivity;
 
 import android.os.Bundle;
 import android.app.Activity;

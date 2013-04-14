@@ -7,10 +7,10 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
-import com.example.womenshearthealth.utils.CalculationsHelper;
-import com.example.womenshearthealth.utils.MetActivity;
-import com.example.womenshearthealth.utils.SQLDatabaseHelper;
-import com.example.womenshearthealth.utils.SettingsHelper;
+import com.example.womenshearthealth.helpers.CalculationsHelper;
+import com.example.womenshearthealth.helpers.SQLDatabaseHelper;
+import com.example.womenshearthealth.helpers.SettingsHelper;
+import com.example.womenshearthealth.models.MetActivity;
 import com.fima.chartview.ChartView;
 import com.fima.chartview.LinearSeries;
 import com.fima.chartview.LinearSeries.LinearPoint;

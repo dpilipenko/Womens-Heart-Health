@@ -1,4 +1,4 @@
-package com.example.womenshearthealth.utils;
+package com.example.womenshearthealth.helpers;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -9,6 +9,9 @@ import java.io.OutputStream;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
+
+import com.example.womenshearthealth.models.MetActivity;
+import com.example.womenshearthealth.utils.METSDBAdapter;
 
 
 import android.app.Activity;

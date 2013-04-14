@@ -1,4 +1,4 @@
-package com.example.womenshearthealth.utils;
+package com.example.womenshearthealth.helpers;
 
 public class CalculationsHelper {
 

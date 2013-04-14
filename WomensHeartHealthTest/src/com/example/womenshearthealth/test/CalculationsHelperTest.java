@@ -2,6 +2,7 @@ package com.example.womenshearthealth.test;
 
 import junit.framework.TestCase;
 import com.example.womenshearthealth.*;
+import com.example.womenshearthealth.utils.CalculationsHelper;
 
 public class CalculationsHelperTest extends TestCase {
 

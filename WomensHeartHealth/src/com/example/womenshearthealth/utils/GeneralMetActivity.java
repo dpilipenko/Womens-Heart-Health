@@ -1,4 +1,4 @@
-package com.example.womenshearthealth;
+package com.example.womenshearthealth.utils;
 
 public class GeneralMetActivity {
 

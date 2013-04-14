@@ -44,6 +44,7 @@ import android.test.ViewAsserts;
 import android.test.MoreAsserts;
 
 import com.example.womenshearthealth.*;
+import com.example.womenshearthealth.utils.SettingsHelper;
 
 public class SettingsActivityTest extends ActivityInstrumentationTestCase2<SettingsActivity> {
 	

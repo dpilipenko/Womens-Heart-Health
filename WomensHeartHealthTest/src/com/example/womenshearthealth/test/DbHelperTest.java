@@ -3,16 +3,15 @@ package com.example.womenshearthealth.test;
 import java.util.Date;
 import java.util.List;
 
-import com.example.womenshearthealth.GeneralMetActivity;
-import com.example.womenshearthealth.MetActivity;
-import com.example.womenshearthealth.SQLDatabaseHelper;
-import com.example.womenshearthealth.ShowAllMetsActivity;
+import com.example.womenshearthealth.*;
+import com.example.womenshearthealth.helpers.*;
+import com.example.womenshearthealth.models.*;
 
 import android.test.ActivityInstrumentationTestCase2;
 
-public class DbHelperTest extends ActivityInstrumentationTestCase2<ShowAllMetsActivity> {
+public class DbHelperTest extends ActivityInstrumentationTestCase2<AllMetsPrintedActivity> {
 
-	private ShowAllMetsActivity mActivity;
+	private AllMetsPrintedActivity mActivity;
 	private SQLDatabaseHelper mSqlDatabaseHelper;
 	
 	public DbHelperTest() {
@@ -20,7 +19,7 @@ public class DbHelperTest extends ActivityInstrumentationTestCase2<ShowAllMetsAc
 	}
 	
 	public DbHelperTest(String name) {
-		super("com.example.womenshearthealth", ShowAllMetsActivity.class);
+		super("com.example.womenshearthealth", AllMetsPrintedActivity.class);
 		setName(name);
 	}
 

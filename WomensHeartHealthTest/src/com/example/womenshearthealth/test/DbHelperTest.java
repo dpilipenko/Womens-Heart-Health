@@ -60,12 +60,10 @@ public class DbHelperTest extends ActivityInstrumentationTestCase2<AllMetsPrinte
 			
 			if (tempActivityName.equalsIgnoreCase(metActivityName) &&
 					tempActivityMets.equals(metActivityMets) &&
-					tempActivityMins == metActivityMins /*&&
+					tempActivityMins == metActivityMins &&
 					tempActivityDate.getYear() == metActivityDate.getYear() &&
 					tempActivityDate.getMonth() == metActivityDate.getMonth() &&
-					tempActivityDate.getDay() == metActivityDate.getDay() &&
-					tempActivityDate.getHours() == metActivityDate.getHours() &&
-					tempActivityDate.getMinutes() == metActivityDate.getMinutes()*/){
+					tempActivityDate.getDay() == metActivityDate.getDay()){
 				
 				foundActivity = true;
 				addedRecord = tempActivity;
@@ -75,8 +73,8 @@ public class DbHelperTest extends ActivityInstrumentationTestCase2<AllMetsPrinte
 		
 		mSqlDatabaseHelper.deleteMetActivity(addedRecord);
 		
-		//fail(metActivity.getUUID());
-		assertTrue("error", foundActivity);
+		String message = "MET Activity not successfully added to DB.";
+		assertTrue(message, foundActivity);
 	}
 
 }

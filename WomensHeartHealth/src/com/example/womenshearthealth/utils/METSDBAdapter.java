@@ -85,6 +85,11 @@ public class METSDBAdapter {
 
 	}
 
+	/**
+	 * Saves MetActivity to the DB
+	 * @param activity MetActivity to be saved to the DB
+	 * @param date Date associated with the DB record
+	 */
 	public void saveMetActivity(MetActivity activity, Date date) {
 		
 		MetActivity original = getMetActivityByUUID(activity.getUUID());
@@ -96,7 +101,11 @@ public class METSDBAdapter {
 		addMetActivity(activity, date);
 	}
 
-	// Creates
+	/**
+	 * Adds MetActivity to the DB
+	 * @param activity MetActivity to be written to the DB
+	 * @param date Date associated with the DB record
+	 */
 	public void addMetActivity(MetActivity activity, Date date) {
 		mDatabase = mDbHelper.getWritableDatabase();
 		ContentValues dbInputValues = new ContentValues();
@@ -120,13 +129,19 @@ public class METSDBAdapter {
 		mDbHelper.close();
 	};
 	
-	// Deletes
+	/**
+	 * Uses a UUID to retrieve and remove activity from the DB
+	 * @param activityUUID String UUID associated with the record to be deleted
+	 */
 	public void deleteMetActivityByUUID(String activityUUID) {
 		mDatabase = mDbHelper.getWritableDatabase();
 		mDatabase.delete(DATABASE_TABLE_NAME, COLUMN_UUID+"='"+activityUUID+"'", null);
 	}
 	
-	// Reads
+	/**
+	 * Returns a list of all MET activities saved in the DB
+	 * @return List<MetActivity>
+	 */
 	public List<MetActivity> getAllMetActivities() {
 		mDatabase = mDbHelper.getReadableDatabase();
 		List<MetActivity> activities = new LinkedList<MetActivity>();
@@ -144,6 +159,12 @@ public class METSDBAdapter {
 		return activities;	
 	}
 	
+	/**
+	 * Retrieves all database records within given time range
+	 * @param start Date beginning date of time range
+	 * @param end Date ending date of time range
+	 * @return Set<MetActivity>
+	 */
 	public Set<MetActivity> getMetActivitiesByDateRange(Date start, Date end) {
 		
 		String tblname = DATABASE_TABLE_NAME;

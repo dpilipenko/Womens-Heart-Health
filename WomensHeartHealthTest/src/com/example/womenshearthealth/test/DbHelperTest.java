@@ -29,11 +29,17 @@ public class DbHelperTest extends ActivityInstrumentationTestCase2<AllMetsPrinte
 		mSqlDatabaseHelper = new SQLDatabaseHelper(mActivity);
 	}
 	
+	/**
+	 * Quick test to assert setUp() worked correctly
+	 */
 	public final void testPreconitions() {
 		assertNotNull(mActivity);
 		assertNotNull(mSqlDatabaseHelper);
 	}
 	
+	/**
+	 * Test to assert that adding a MetActivity object to the DB works correctly
+	 */
 	public final void testAddMetActivity() {
 		String metActivityName = "Activity Example 1";
 		Double metActivityMets = 5.5;

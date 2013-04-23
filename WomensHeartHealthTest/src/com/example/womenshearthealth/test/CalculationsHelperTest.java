@@ -10,6 +10,10 @@ public class CalculationsHelperTest extends TestCase {
 		super.setUp();
 	}
 	
+	/**
+	 * Test to assert the static method CalculationsHelper.getTargetHeartRateFromAge(...)
+	 * is working correctly at TARGET_MAX
+	 */
 	public void testCalculateMaxHeartRate() {
 		int age, expectedHR, calculatedHR;
 		
@@ -50,6 +54,10 @@ public class CalculationsHelperTest extends TestCase {
 				calculatedHR == expectedHR);
 	}
 	
+	/**
+	 * Test to assert the static method CalculationsHelper.getTargetHeartRateFromAge(...)
+	 * is working correctly at TARGET_85_PERCENT
+	 */
 	public void testCalculate85HeartRate() {
 		int age, expectedHR, calculatedHR;
 		
@@ -90,6 +98,10 @@ public class CalculationsHelperTest extends TestCase {
 				calculatedHR == expectedHR);
 	}
 	
+	/**
+	 * Test to assert the static method CalculationsHelper.getTargetHeartRateFromAge(...)
+	 * is working correctly at TARGET_50_PERCENT
+	 */
 	public void testCalculate50HeartRate() {
 		int age, expectedHR, calculatedHR;
 		
@@ -130,6 +142,10 @@ public class CalculationsHelperTest extends TestCase {
 				calculatedHR == expectedHR);
 	}
 	
+	/**
+	 * Test to assert the static method CalculationsHelper.getCaloriesFromMetHours(...)
+	 * is working correctly
+	 */
 	public void testCalculateCaloriesFromMet()
 	{
 		double ACCEPTABLE_PERCENT_ERROR = 0.05;

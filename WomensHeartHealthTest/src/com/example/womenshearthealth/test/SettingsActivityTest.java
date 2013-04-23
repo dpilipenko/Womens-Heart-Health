@@ -68,15 +68,25 @@ public class SettingsActivityTest extends ActivityInstrumentationTestCase2<Setti
 		mWeight   = mActivity.findViewById(com.example.womenshearthealth.R.id.txtvw_settings_weight);
 	}
 	
+	/**
+	 * Quick test to assert setUp() worked correctly
+	 */
 	public final void testPreconditions() {
 		assertNotNull(mActivity);
 	}
 	
+	/**
+	 * Test to assert that input fields for settings activity are instantiated
+	 */
 	public final void testHasInputFields() {
 		assertNotNull(mBirthday);
 		assertNotNull(mWeight);
 	}
 	
+	/**
+	 * Test to assert that input fields for settings activity appear on the
+	 * screen of the device
+	 */
 	public final void testFieldsOnScreen() {
 		final Window window = mActivity.getWindow();
 		final View origin = window.getDecorView();
@@ -84,6 +94,10 @@ public class SettingsActivityTest extends ActivityInstrumentationTestCase2<Setti
 		ViewAsserts.assertOnScreen(origin, mWeight);
 	}
 	
+	/**
+	 * Test to assert changing the weight in the settings helper
+	 * works properly and persists
+	 */
 	public final void testSettingsHelperSetWeight() {
 		int expectedWeight, actualWeight;
 		String errorMessage;
@@ -127,6 +141,10 @@ public class SettingsActivityTest extends ActivityInstrumentationTestCase2<Setti
 		assertTrue(errorMessage, expectedWeight == actualWeight);
 	}
 	
+	/**
+	 * Test to assert changing the birthdate in the settings helper
+	 * works properly and persists
+	 */
 	@SuppressWarnings("deprecation")
 	public final void testSettingsHelperSetBirthdate() {
 		Date expectedDate, actualDate;

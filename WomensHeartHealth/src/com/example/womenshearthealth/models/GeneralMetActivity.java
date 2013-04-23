@@ -5,6 +5,11 @@ public class GeneralMetActivity {
 	private String mName;
 	private double mMetValue;
 	
+	/**
+	 * Instatiates new GeneralMetActivity
+	 * @param name String name of the activity
+	 * @param metsvalue double METs value of the activity
+	 */
 	public GeneralMetActivity(String name, double metsvalue) {
 		this.mName = name;
 		this.mMetValue = metsvalue;

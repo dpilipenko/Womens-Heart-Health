@@ -23,6 +23,10 @@ public class SQLDatabaseHelper {
 	private Activity mActivity;
 	private METSDBAdapter mDbAdapter;
 	
+	/**
+	 * Initializes SQLDatabaseHelper
+	 * @param activity
+	 */
 	public SQLDatabaseHelper (Activity activity) {
 		this.mActivity = activity;
         this.mDbAdapter = new METSDBAdapter(activity);
@@ -30,19 +34,36 @@ public class SQLDatabaseHelper {
         initMETSDB();
 	}
 	
+	/**
+	 * Saves a MetActivity object to the database
+	 * @param activity MetActivity to be saved to the DB
+	 */
 	public void saveMetActivity(MetActivity activity) {
     	mDbAdapter.saveMetActivity(activity, new Date());
     }
 	
+	/**
+	 * Removes the MetActivity object with the same UUID from the DB
+	 * @param activity MetActivity to be removed from the DB
+	 */
 	public void deleteMetActivity(MetActivity activity) {
 		String uuid = activity.getUUID();
 		mDbAdapter.deleteMetActivityByUUID(uuid);
 	}
 	
+	/**
+	 * Returns a list of all MET activities saved in the DB
+	 * @return List<MetActivity>
+	 */
 	public List<MetActivity> getAllMetActivities() {
 		return mDbAdapter.getAllMetActivities();
 	}
 	
+	/**
+	 * Returns a list of all MET activities in the DB on the specified date
+	 * @param day 
+	 * @return Set<MetActivity>
+	 */
 	public Set<MetActivity> getMetActivitiesForDay(Date day) {
 		
 		Calendar startCal = Calendar.getInstance();

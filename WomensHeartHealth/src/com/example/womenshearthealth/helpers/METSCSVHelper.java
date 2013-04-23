@@ -13,6 +13,11 @@ import android.content.Context;
 
 public class METSCSVHelper {
 	
+	/***
+	 * Returns a list of all activities in 'metactivies.csv' located in the application's assets
+	 * @param context Android Context object for the app
+	 * @return List<GeneralMetActivity> produced from the MET activities in 'metactivities.csv'
+	 */
 	public static List<GeneralMetActivity> getAllAvailableMetActivities(Context context) {
 		
 		LinkedList<GeneralMetActivity> activities = new LinkedList<GeneralMetActivity>();

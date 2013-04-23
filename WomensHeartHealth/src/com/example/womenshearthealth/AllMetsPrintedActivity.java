@@ -43,6 +43,9 @@ public class AllMetsPrintedActivity extends Activity implements OnItemClickListe
 		updateMetActivitiesList();
 	}
 
+	/**
+	 * Refreshes MET activities list
+	 */
 	private void updateMetActivitiesList() {
 		mListAdapter.clear();
 		for (MetActivity a: mSqlDBHelper.getAllMetActivities()) {

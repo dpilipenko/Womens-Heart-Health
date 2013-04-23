@@ -44,6 +44,9 @@ public class METListFragment extends Fragment implements OnClickListener, OnItem
 		return inflater.inflate(R.layout.fragment_metlist, container, false);
 	}
 
+	/**
+	 * Builds the Selected METs list, All METs list, and save button
+	 */
 	@Override
 	public void onStart() {
 		super.onStart();
@@ -65,6 +68,9 @@ public class METListFragment extends Fragment implements OnClickListener, OnItem
 		saveButton.setOnClickListener(this);
 	}
 
+	/**
+	 * Refreshes Available METs list
+	 */
 	@Override
 	public void onResume() {
 		super.onResume();
@@ -180,6 +186,9 @@ public class METListFragment extends Fragment implements OnClickListener, OnItem
 	}
 
 
+	/**
+	 * Handles clicks for the MET list fragment
+	 */
 	@Override
 	public void onClick(View v) {
 

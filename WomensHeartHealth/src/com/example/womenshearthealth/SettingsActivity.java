@@ -31,6 +31,9 @@ public class SettingsActivity extends Activity implements OnClickListener,
 	private Date mBirthDate;
 	private int mWeight;
 
+	/**
+	 * onCreate method to set the layout, options, and buttons
+	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -54,6 +57,9 @@ public class SettingsActivity extends Activity implements OnClickListener,
 		
 	}
 
+	/**
+	 * Refreshes user interface upon restoring a saved instance state
+	 */
 	@Override
 	protected void onRestoreInstanceState(Bundle savedInstanceState) {
 		super.onRestoreInstanceState(savedInstanceState);
@@ -61,6 +67,9 @@ public class SettingsActivity extends Activity implements OnClickListener,
 		updateUI();
 	}
 
+	/**
+	 * Performs appropriate actions based on where user clicks
+	 */
 	@SuppressWarnings("deprecation")
 	@Override
 	public void onClick(View view) {
@@ -113,6 +122,9 @@ public class SettingsActivity extends Activity implements OnClickListener,
 		}
 	}
 
+	/**
+	 * Updates interface after user selects a date from a DatePicker view
+	 */
 	@Override
 	public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
 		

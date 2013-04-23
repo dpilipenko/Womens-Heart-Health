@@ -16,6 +16,9 @@ public class AboutFragment extends Fragment {
 		return inflater.inflate(R.layout.fragment_about, container, false);
 	}
 
+	/**
+	 * Method called on starting AboutFragment to add links to AboutPage text
+	 */
 	@Override
 	public void onStart() {
 		super.onStart();

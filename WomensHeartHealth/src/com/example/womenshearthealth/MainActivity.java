@@ -26,6 +26,10 @@ public class MainActivity extends Activity {
 	private ActionBar mActionBar;
 	private Dialog mSplashScreenDialog;
 	
+	/**
+	 * Extends the onCreate method of Activity to show splash screen,
+	 * set the content of the main activity, and setup navigation tabs
+	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -40,6 +44,9 @@ public class MainActivity extends Activity {
         }
     }
 
+	/**
+	 * Method to display splash screen image when starting the app
+	 */
 	protected void showSplashScreen() {
 		
 		ImageView splashscreen = new ImageView(this);
@@ -96,6 +103,9 @@ public class MainActivity extends Activity {
 		SettingsHelper.setInitialRun(this, initRun);
 	}
 	
+	/**
+	 * Method used to hide splash screen image
+	 */
 	protected void dismissSplashScreen() {
 		if (mSplashScreenDialog != null) {
 			mSplashScreenDialog.dismiss();
@@ -103,6 +113,9 @@ public class MainActivity extends Activity {
 		}
 	}
 	
+	/**
+	 * Saves current navigation tab when saving instance state
+	 */
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -116,7 +129,10 @@ public class MainActivity extends Activity {
 		return true;
 	}
 	
-	
+	/**
+	 * Starts selected activity when user selects options menu item
+	 * @return boolean returns true if valid menu option selected
+	 */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 	
